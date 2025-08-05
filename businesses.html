@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Businesses - Persatuan Penduduk E5 QNA</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #ffffff;
+            background: linear-gradient(135deg, #1a0000 0%, #2d0000 25%, #4a0000 50%, #2d0000 75%, #1a0000 100%);
+            min-height: 100vh;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(255, 215, 0, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(220, 20, 60, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 60%, rgba(255, 69, 0, 0.05) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.9) 0%, rgba(20, 0, 0, 0.95) 100%);
+            backdrop-filter: blur(20px);
+            border-bottom: 2px solid #FFD700;
+            box-shadow: 0 4px 30px rgba(255, 215, 0, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, #FFD700, #FFA500, #DC143C);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #ffffff;
+            font-weight: 600;
+            position: relative;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 50%;
+            background: linear-gradient(90deg, #FFD700, #DC143C);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: #FFD700;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+
+        .nav-links a:hover::before,
+        .nav-links a.active::before {
+            width: 100%;
+        }
+
+        .mobile-menu {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .mobile-menu span {
+            width: 25px;
+            height: 3px;
+            background: linear-gradient(90deg, #FFD700, #DC143C);
+            margin: 3px 0;
+            transition: 0.3s;
+        }
+
+        main {
+            padding: 2rem 0;
+        }
+
+        .section {
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.85) 0%, rgba(20, 0, 0, 0.9) 100%);
+            backdrop-filter: blur(15px);
+            border-radius: 25px;
+            padding: 3rem;
+            margin: 2rem 0;
+            box-shadow: 
+                0 15px 35px rgba(0, 0, 0, 0.5),
+                0 0 0 1px rgba(255, 215, 0, 0.1),
+                inset 0 1px 0 rgba(255, 215, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .page-header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 25%, #DC143C 50%, #FFD700 75%, #FFF 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
+        }
+
+        .page-header p {
+            font-size: 1.2rem;
+            color: #cccccc;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        .business-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .business-card {
+            background: linear-gradient(135deg, rgba(20, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.8) 100%);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            position: relative;
+        }
+
+        .business-card::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #FFD700, #DC143C, #000, #FFD700);
+            border-radius: 20px;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .business-card:hover::before {
+            opacity: 1;
+        }
+
+        .business-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.3),
+                0 0 30px rgba(255, 215, 0, 0.2);
+        }
+
+        .business-image {
+            height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.1rem;
+            font-weight: bold;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .business-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.3);
+            z-index: 1;
+        }
+
+        .business-image span {
+            position: relative;
+            z-index: 2;
+            text-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+        }
+
+        .business-info {
+            padding: 2rem;
+        }
+
+        .business-info h3 {
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+
+        .business-info p {
+            color: #cccccc;
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .business-details {
+            margin-bottom: 1.5rem;
+        }
+
+        .business-details div {
+            color: #ffffff;
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .business-details strong {
+            color: #FFD700;
+            min-width: 80px;
+        }
+
+        .business-tags {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .business-tag {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(220, 20, 60, 0.1));
+            color: #FFD700;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            font-weight: 500;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #DC143C 0%, #8B0000 25%, #FFD700 50%, #FFA500 75%, #DC143C 100%);
+            background-size: 200% 200%;
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            width: 100%;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(220, 20, 60, 0.3);
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 
+                0 15px 35px rgba(220, 20, 60, 0.4),
+                0 0 30px rgba(255, 215, 0, 0.3);
+            background-position: right center;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .list-business-card {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(220, 20, 60, 0.1));
+            border: 2px dashed #FFD700;
+            text-align: center;
+        }
+
+        .list-business-card .business-image {
+            background: linear-gradient(135deg, #FFD700, #DC143C);
+        }
+
+        .list-business-card h3 {
+            color: #FFD700;
+        }
+
+        .list-business-card .feature-list {
+            margin-bottom: 2rem;
+        }
+
+        .list-business-card .feature-list div {
+            color: #cccccc;
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .feature-icon {
+            color: #FFD700;
+        }
+
+        footer {
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.95) 0%, rgba(20, 0, 0, 0.9) 100%);
+            backdrop-filter: blur(15px);
+            margin-top: 4rem;
+            padding: 3rem 0;
+            border-top: 2px solid rgba(255, 215, 0, 0.3);
+            position: relative;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h4 {
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        .footer-section p,
+        .footer-section a {
+            color: #cccccc;
+            text-decoration: none;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            transition: all 0.3s ease;
+        }
+
+        .footer-icon {
+            width: 18px;
+            height: 18px;
+            stroke: #FFD700;
+            flex-shrink: 0;
+        }
+
+        .footer-section a:hover {
+            color: #FFD700;
+            text-shadow: 0 0 5px rgba(255, 215, 0, 0.3);
+            transform: translateX(5px);
+        }
+
+        .footer-section a:hover .footer-icon {
+            stroke: #FFA500;
+            filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.5));
+        }
+
+        .footer-bottom {
+            text-align: center;
+            color: #999;
+            border-top: 1px solid rgba(255, 215, 0, 0.2);
+            padding-top: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: linear-gradient(135deg, rgba(0, 0, 0, 0.95) 0%, rgba(20, 0, 0, 0.9) 100%);
+                backdrop-filter: blur(20px);
+                flex-direction: column;
+                padding: 1rem;
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+                border-top: 1px solid rgba(255, 215, 0, 0.2);
+            }
+
+            .nav-links.show {
+                display: flex;
+            }
+
+            .mobile-menu {
+                display: flex;
+            }
+
+            .page-header h1 {
+                font-size: 2.5rem;
+            }
+
+            .business-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section {
+                padding: 2rem;
+            }
+        }
+
+        /* Scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #1a0000;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #FFD700, #DC143C);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, #FFA500, #8B0000);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <div class="logo">PP E5 QNA</div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="membership.html">Membership</a></li>
+                <li><a href="events.html">Events</a></li>
+                <li><a href="businesses.html" class="active">Businesses</a></li>
+                <li><a href="forms.html">Forms</a></li>
+                <li><a href="gallery.html">Gallery</a></li>
+                <li><a href="announcements.html">Announcements</a></li>
+            </ul>
+            <div class="mobile-menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container">
+        <section class="section">
+            <div class="page-header">
+                <h1>Neighborhood Businesses</h1>
+                <p>Support local businesses in our community</p>
+            </div>
+
+            <div class="business-grid">
+                <div class="business-card">
+                    <div class="business-image" style="background: linear-gradient(135deg, #ff6b6b, #ee5a24);">
+                        <span>🍜 Restoran Ah Meng</span>
+                    </div>
+                    <div class="business-info">
+                        <h3>Restoran Ah Meng</h3>
+                        <p>Authentic Chinese and Malaysian cuisine. Famous for their wonton noodles and char siu rice.</p>
+                        <div class="business-details">
+                            <div><strong>📍 Address:</strong> Block E5-G-01</div>
+                            <div><strong>📞 Phone:</strong> 03-1234-5678</div>
+                            <div><strong>🕐 Hours:</strong> 7:00 AM - 10:00 PM</div>
+                        </div>
+                        <div class="business-tags">
+                            <span class="business-tag">Chinese</span>
+                            <span class="business-tag">Malaysian</span>
+                            <span class="business-tag">Halal</span>
+                        </div>
+                        <button onclick="contactBusiness('Restoran Ah Meng', '03-1234-5678')" class="btn">Contact</button>
+                    </div>
+                </div>
+
+                <div class="business-card">
+                    <div class="business-image" style="background: linear-gradient(135deg, #4ecdc4, #26d0ce);">
+                        <span>🛒 Mini Mart Sari</span>
+                    </div>
+                    <div class="business-info">
+                        <h3>Mini Mart Sari</h3>
+                        <p>Your convenient neighborhood store. Daily essentials, fresh groceries, and household items.</p>
+                        <div class="business-details">
+                            <div><strong>📍 Address:</strong> Block E5-G-05</div>
+                            <div><strong>📞 Phone:</strong> 03-1234-5679</div>
+                            <div><strong>🕐 Hours:</strong> 6:00 AM - 11:00 PM</div>
+                        </div>
+                        <div class="business-tags">
+                            <span class="business-tag">Groceries</span>
+                            <span class="business-tag">Convenience</span>
+                            <span class="business-tag">Daily Essentials</span>
+                        </div>
+                        <button onclick="contactBusiness('Mini Mart Sari', '03-1234-5679')" class="btn">Contact</button>
+                    </div>
+                </div>
+
+                <div class="business-card">
+                    <div class="business-image" style="background: linear-gradient(135deg, #a29bfe, #6c5ce0);">
+                        <span>☕ Kafe Kopi Kampung</span>
+                    </div>
+                    <div class="business-info">
+                        <h3>Kafe Kopi Kampung</h3>
+                        <p>Traditional kopitiam serving local breakfast favorites, fresh coffee, and afternoon snacks.</p>
+                        <div class="business-details">
+                            <div><strong>📍 Address:</strong> Block E5-G-03</div>
+                            <div><strong>📞 Phone:</strong> 03-1234-5680</div>
+                            <div><strong>🕐 Hours:</strong> 6:30 AM - 6:00 PM</div>
+                        </div>
+                        <div class="business-tags">
+                            <span class="business-tag">Coffee</span>
+                            <span class="business-tag">Breakfast</span>
+                            <span class="business-tag">Local</span>
+                        </div>
+                        <button onclick="contactBusiness('Kafe Kopi Kampung', '03-1234-5680')" class="btn">Contact</button>
+                    </div>
+                </div>
+
+                <div class="business-card">
+                    <div class="business-image" style="background: linear-gradient(135deg, #fd79a8, #e84393);">
+                        <span>💄 Salon Cantik</span>
+                    </div>
+                    <div class="business-info">
+                        <h3>Salon Cantik</h3>
+                        <p>Full-service beauty salon offering hair styling, facial treatments, manicure, and pedicure services.</p>
+                        <div class="business-details">
+                            <div><strong>📍 Address:</strong> Block E5-G-07</div>
+                            <div><strong>📞 Phone:</strong> 03-1234-5681</div>
+                            <div><strong>🕐 Hours:</strong> 9:00 AM - 8:00 PM</div>
+                        </div>
+                        <div class="business-tags">
+                            <span class="business-tag">Beauty</span>
+                            <span class="business-tag">Hair</span>
+                            <span class="business-tag">Skincare</span>
+                        </div>
+                        <button onclick="contactBusiness('Salon Cantik', '03-1234-5681')" class="btn">Contact</button>
+                    </div>
+                </div>
+
+                <div class="business-card">
+                    <div class="business-image" style="background: linear-gradient(135deg, #00b894, #00cec9);">
+                        <span>🏥 Klinik Kesihatan Dr. Ahmad</span>
+                    </div>
+                    <div class="business-info">
+                        <h3>Klinik Kesihatan Dr. Ahmad</h3>
+                        <p>General medical practice providing healthcare services, consultations, and basic medical treatments.</p>
+                        <div class="business-details">
+                            <div><strong>📍 Address:</strong> Block E5-G-09</div>
+                            <div><strong>📞 Phone:</strong> 03-1234-5682</div>
+                            <div><strong>🕐 Hours:</strong> 8:00 AM - 10:00 PM</div>
+                        </div>
+                        <div class="business-tags">
+                            <span class="business-tag">Healthcare</span>
+                            <span class="business-tag">Medical</span>
+                            <span class="business-tag">Emergency</span>
+                        </div>
+                        <button onclick="contactBusiness('Klinik Kesihatan Dr. Ahmad', '03-1234-5682')" class="btn">Contact</button>
+                    </div>
+                </div>
+
+                <div class="business-card list-business-card">
+                    <div class="business-image">
+                        <span>🏪 Your Business Here</span>
+                    </div>
+                    <div class="business-info">
+                        <h3>List Your Business</h3>
+                        <p>Want to showcase your business to the community? Submit your business information to be featured here.</p>
+                        <div class="feature-list">
+                            <div><span class="feature-icon">✨</span> Free business listing</div>
+                            <div><span class="feature-icon">🎯</span> Reach local customers</div>
+                            <div><span class="feature-icon">🤝</span> Community support</div>
+                            <div><span class="feature-icon">📈</span> Boost local visibility</div>
+                        </div>
+                        <button onclick="openExternalForm('business')" class="btn">Submit Business Info</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Contact Info</h4>
+                    <p>
+                        <svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                            <polyline points="22,6 12,13 2,6"/>
+                        </svg>
+                        ppqna.e5@gmail.com
+                    </p>
+                    <p>
+                        <svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                        </svg>
+                        +60 12-345 6789
+                    </p>
+                    <p>
+                        <svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                            <circle cx="12" cy="10" r="3"/>
+                        </svg>
+                        QNA Residence 5, Jalan Springhill, Port Dickson, N.Sembilan
+                    </p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <a href="membership.html">
+                        <svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                            <circle cx="9" cy="7" r="4"/>
+                            <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                        </svg>
+                        Join Us
+                    </a>
+                    <a href="events.html">
+                        <svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                            <line x1="16" y1="2" x2="16" y2="6"/>
+                            <line x1="8" y1="2" x2="8" y2="6"/>
+                            <line x1="3" y1="10" x2="21" y2="10"/>
+                        </svg>
+                        Upcoming Events
+                    </a>
+                    <a href="forms.html">
+                        <svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/>
+                            <polyline points="14,2 14,8 20,8"/>
+                        </svg>
+                        Submit Forms
+                    </a>
+                </div>
+                <div class="footer-section">
+                    <h4>Community</h4>
+                    <p>Building stronger neighborhoods</p>
+                    <p>Together we thrive</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Persatuan Penduduk E5 QNA. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu functionality
+        document.querySelector('.mobile-menu').addEventListener('click', function() {
+            const navLinks = document.querySelector('.nav-links');
+            navLinks.classList.toggle('show');
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(e) {
+            const mobileMenu = document.querySelector('.mobile-menu');
+            const navLinks = document.querySelector('.nav-links');
+            
+            if (!mobileMenu.contains(e.target) && !navLinks.contains(e.target)) {
+                navLinks.classList.remove('show');
+            }
+        });
+
+        // Event booking functions
+        function bookEvent(eventCode, eventTitle, price) {
+            currentEvent = eventCode;
+            eventPrice = price;
+            document.getElementById('modalEventTitle').textContent = `Book Tickets - ${eventTitle}`;
+            document.getElementById('eventModal').style.display = 'flex';
+        }
+
+        function closeEventModal() {
+            document.getElementById('eventModal').style.display = 'none';
+            document.getElementById('eventBookingForm').reset();
+            document.getElementById('eventTotal').textContent = 'RM 0';
+            document.getElementById('eventStatusMessage').innerHTML = '';
+        }
+
+        function updateEventTotal() {
+            const quantity = document.getElementById('ticketQuantity').value;
+            const total = quantity ? (quantity * eventPrice) : 0;
+            document.getElementById('eventTotal').textContent = `RM ${total}`;
+        }
+
+        function processEventBooking() {
+            const form = document.getElementById('eventBookingForm');
+            const formData = new FormData(form);
+            
+            const requiredFields = ['eventFullName', 'eventEmail', 'eventPhone', 'ticketQuantity'];
+            let isValid = true;
+            
+            requiredFields.forEach(field => {
+                if (!formData.get(field)) isValid = false;
+            });
+            
+            if (!isValid) {
+                showEventStatus('Please fill in all required fields.', 'error');
+                return;
+            }
+            
+            const quantity = formData.get('ticketQuantity');
+            const total = quantity * eventPrice;
+            
+            showEventStatus('Processing ticket booking... Please wait.', 'success');
+            
+            setTimeout(() => {
+                showEventStatus(`Booking confirmed! You have reserved ${quantity} ticket(s) for RM ${total}.
+                              Confirmation details will be sent to your email.
+                              Note: Replace this with your actual payment gateway integration.`, 'success');
+                
+                setTimeout(() => {
+                    closeEventModal();
+                }, 3000);
+            }, 2000);
+        }
+
+        function showEventStatus(message, type) {
+            const statusDiv = document.getElementById('eventStatusMessage');
+            statusDiv.innerHTML = `<div class="status-message ${type}">${message}</div>`;
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('eventModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeEventModal();
+            }
+        });
+
+        // Enhanced hover effects for event cards
+        document.querySelectorAll('.event-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-8px)';
+                this.style.boxShadow = '0 20px 40px rgba(0, 0, 0, 0.4), 0 0 30px rgba(255, 215, 0, 0.2)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+                this.style.boxShadow = '0 10px 30px rgba(0, 0, 0, 0.3)';
+            });
+        });
+
+        // Form validation
+        function validateEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+
+        function validatePhone(phone) {
+            const re = /^[0-9\-\+\s\(\)]+$/;
+            return re.test(phone) && phone.length >= 10;
+        }
+
+        // Enhanced form validation
+        document.getElementById('eventBookingForm').addEventListener('input', function(e) {
+            const field = e.target;
+            
+            if (field.type === 'email' && field.value) {
+                if (!validateEmail(field.value)) {
+                    field.style.borderColor = '#f44336';
+                } else {
+                    field.style.borderColor = '#4caf50';
+                }
+            }
+            
+            if (field.type === 'tel' && field.value) {
+                if (!validatePhone(field.value)) {
+                    field.style.borderColor = '#f44336';
+                } else {
+                    field.style.borderColor = '#4caf50';
+                }
+            }
+        });
+
+        // Smooth scrolling for any anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Add keyboard support for modal
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                const modal = document.getElementById('eventModal');
+                if (modal.style.display === 'flex') {
+                    closeEventModal();
+                }
+            }
+        });
+
+        // Add loading animation to buttons
+        function addLoadingState(button) {
+            const originalText = button.textContent;
+            button.textContent = 'Processing...';
+            button.disabled = true;
+            
+            setTimeout(() => {
+                button.textContent = originalText;
+                button.disabled = false;
+            }, 2000);
+        }
+
+        // Enhanced button interactions
+        document.querySelectorAll('.btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                // Add subtle pulse effect
+                this.style.transform = 'scale(0.98)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 100);
+            });
+        });
+    </script>
+</body>
+</html>

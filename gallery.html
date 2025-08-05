@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery - Persatuan Penduduk E5 QNA</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: #667eea;
+        }
+
+        .mobile-menu {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .mobile-menu span {
+            width: 25px;
+            height: 3px;
+            background: #333;
+            margin: 3px 0;
+            transition: 0.3s;
+        }
+
+        main {
+            padding: 2rem 0;
+        }
+
+        .section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .gallery-item {
+            background: #f8f9fa;
+            border-radius: 15px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .gallery-placeholder {
+            height: 200px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .gallery-info {
+            padding: 1rem;
+        }
+
+        .gallery-info h4 {
+            color: #667eea;
+            margin-bottom: 0.5rem;
+        }
+
+        .gallery-info p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        footer {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            margin-top: 4rem;
+            padding: 2rem 0;
+            border-top: 1px solid rgba(102, 126, 234, 0.1);
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h4 {
+            color: #667eea;
+            margin-bottom: 1rem;
+        }
+
+        .footer-section p,
+        .footer-section a {
+            color: #666;
+            text-decoration: none;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .footer-section a:hover {
+            color: #667eea;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            color: #666;
+            border-top: 1px solid rgba(102, 126, 234, 0.1);
+            padding-top: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: rgba(255, 255, 255, 0.95);
+                backdrop-filter: blur(10px);
+                flex-direction: column;
+                padding: 1rem;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            }
+
+            .nav-links.show {
+                display: flex;
+            }
+
+            .mobile-menu {
+                display: flex;
+            }
+
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <div class="logo">PP E5 QNA</div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="membership.html">Membership</a></li>
+                <li><a href="events.html">Events</a></li>
+                <li><a href="businesses.html">Businesses</a></li>
+                <li><a href="forms.html">Forms</a></li>
+                <li><a href="gallery.html" class="active">Gallery</a></li>
+                <li><a href="announcements.html">Announcements</a></li>
+            </ul>
+            <div class="mobile-menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container">
+        <section class="section">
+            <h2 style="text-align: center; margin-bottom: 2rem; color: #667eea;">Community Gallery</h2>
+            
+            <div class="gallery-grid">
+                <div class="gallery-item" onclick="viewGalleryItem('Annual Dinner 2024')">
+                    <div class="gallery-placeholder">Annual Dinner 2024</div>
+                    <div class="gallery-info">
+                        <h4>Annual Community Dinner</h4>
+                        <p>A wonderful evening bringing neighbors together</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item" onclick="viewGalleryItem('Sports Day')">
+                    <div class="gallery-placeholder">Sports Day</div>
+                    <div class="gallery-info">
+                        <h4>Community Sports Day</h4>
+                        <p>Fun activities for all ages</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item" onclick="viewGalleryItem('Gotong Royong')">
+                    <div class="gallery-placeholder">Gotong Royong</div>
+                    <div class="gallery-info">
+                        <h4>Neighborhood Cleanup</h4>
+                        <p>Working together to keep our area beautiful</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Contact Info</h4>
+                    <p>📧 ppqna.e5@gmail.com</p>
+                    <p>📞 +60 12-345 6789</p>
+                    <p>📍 E5 QNA Residential Area</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <a href="membership.html">Join Us</a>
+                    <a href="events.html">Upcoming Events</a>
+                    <a href="forms.html">Submit Forms</a>
+                </div>
+                <div class="footer-section">
+                    <h4>Community</h4>
+                    <p>Building stronger neighborhoods</p>
+                    <p>Together we thrive</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Persatuan Penduduk E5 QNA. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu functionality
+        document.querySelector('.mobile-menu').addEventListener('click', function() {
+            const navLinks = document.querySelector('.nav-links');
+            navLinks.classList.toggle('show');
+        });
+
+        // Gallery item click functionality
+        function viewGalleryItem(title) {
+            alert(`Gallery feature: ${title}\n\nIn a full implementation, this would open a lightbox gallery or detailed view of the photos.`);
+        }
+
+        // Gallery item hover effects
+        document.querySelectorAll('.gallery-item').forEach(item => {
+            item.addEventListener('mouseenter', function() {
+                this.style.transform = 'scale(1.05)';
+            });
+            
+            item.addEventListener('mouseleave', function() {
+                this.style.transform = 'scale(1)';
+            });
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(e) {
+            const mobileMenu = document.querySelector('.mobile-menu');
+            const navLinks = document.querySelector('.nav-links');
+            
+            if (!mobileMenu.contains(e.target) && !navLinks.contains(e.target)) {
+                navLinks.classList.remove('show');
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1025 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Events - Persatuan Penduduk E5 QNA</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #ffffff;
+            background: linear-gradient(135deg, #1a0000 0%, #2d0000 25%, #4a0000 50%, #2d0000 75%, #1a0000 100%);
+            min-height: 100vh;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(255, 215, 0, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(220, 20, 60, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 60%, rgba(255, 69, 0, 0.05) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.9) 0%, rgba(20, 0, 0, 0.95) 100%);
+            backdrop-filter: blur(20px);
+            border-bottom: 2px solid #FFD700;
+            box-shadow: 0 4px 30px rgba(255, 215, 0, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, #FFD700, #FFA500, #DC143C);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #ffffff;
+            font-weight: 600;
+            position: relative;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 50%;
+            background: linear-gradient(90deg, #FFD700, #DC143C);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: #FFD700;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+
+        .nav-links a:hover::before,
+        .nav-links a.active::before {
+            width: 100%;
+        }
+
+        .mobile-menu {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .mobile-menu span {
+            width: 25px;
+            height: 3px;
+            background: linear-gradient(90deg, #FFD700, #DC143C);
+            margin: 3px 0;
+            transition: 0.3s;
+        }
+
+        main {
+            padding: 2rem 0;
+        }
+
+        .section {
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.85) 0%, rgba(20, 0, 0, 0.9) 100%);
+            backdrop-filter: blur(15px);
+            border-radius: 25px;
+            padding: 3rem;
+            margin: 2rem 0;
+            box-shadow: 
+                0 15px 35px rgba(0, 0, 0, 0.5),
+                0 0 0 1px rgba(255, 215, 0, 0.1),
+                inset 0 1px 0 rgba(255, 215, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            background: linear-gradient(135deg, #FFD700, #DC143C);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 2.5rem;
+            font-weight: 700;
+        }
+
+        .events-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .event-card {
+            background: linear-gradient(135deg, rgba(20, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.8) 100%);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: all 0.4s ease;
+            position: relative;
+        }
+
+        .event-card::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #FFD700, #DC143C, #000, #FFD700);
+            border-radius: 20px;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .event-card:hover::before {
+            opacity: 1;
+        }
+
+        .event-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.4),
+                0 0 30px rgba(255, 215, 0, 0.2);
+        }
+
+        .event-image {
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            font-weight: bold;
+            transition: transform 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .event-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.2), rgba(255, 215, 0, 0.1));
+        }
+
+        .event-card:hover .event-image {
+            transform: scale(1.05);
+        }
+
+        .event-emoji {
+            font-size: 3rem;
+            margin-right: 1rem;
+            filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.5));
+        }
+
+        .event-info {
+            padding: 1.5rem;
+        }
+
+        .event-info h3 {
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+
+        .event-info p {
+            color: #cccccc;
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .event-details {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            gap: 1rem;
+        }
+
+        .event-detail-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 600;
+            color: #e0e0e0;
+        }
+
+        .detail-icon {
+            width: 16px;
+            height: 16px;
+            stroke: #FFD700;
+        }
+
+        .event-pricing {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding: 1rem;
+            background: rgba(255, 215, 0, 0.1);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+        }
+
+        .event-price {
+            font-weight: bold;
+            color: #FFD700;
+            font-size: 1.2rem;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+        }
+
+        .tickets-left {
+            color: #cccccc;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .ticket-icon {
+            width: 14px;
+            height: 14px;
+            stroke: #FFA500;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #DC143C 0%, #8B0000 25%, #FFD700 50%, #FFA500 75%, #DC143C 100%);
+            background-size: 200% 200%;
+            color: white;
+            padding: 0.75rem 2rem;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(220, 20, 60, 0.3);
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(220, 20, 60, 0.4);
+            background-position: right center;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.95) 0%, rgba(20, 0, 0, 0.9) 100%);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 20px;
+            padding: 2rem;
+            max-width: 500px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-title {
+            background: linear-gradient(135deg, #FFD700, #DC143C);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #FFD700;
+        }
+
+        .label-icon {
+            width: 16px;
+            height: 16px;
+            stroke: #FFD700;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            border-radius: 10px;
+            font-size: 1rem;
+            background: rgba(0, 0, 0, 0.3);
+            color: #ffffff;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .form-group input::placeholder {
+            color: #cccccc;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #FFD700;
+            box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.2);
+        }
+
+        .form-group select option {
+            background: #1a0000;
+            color: #ffffff;
+        }
+
+        .total-display {
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: #FFD700;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+        }
+
+        .status-message {
+            padding: 1rem;
+            border-radius: 10px;
+            margin: 1rem 0;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .success {
+            background: rgba(76, 175, 80, 0.2);
+            color: #4caf50;
+            border: 1px solid #4caf50;
+        }
+
+        .error {
+            background: rgba(244, 67, 54, 0.2);
+            color: #f44336;
+            border: 1px solid #f44336;
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #666, #333);
+            color: #ffffff;
+        }
+
+        .btn-secondary:hover {
+            background: linear-gradient(135deg, #555, #222);
+        }
+
+        footer {
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.95) 0%, rgba(20, 0, 0, 0.9) 100%);
+            backdrop-filter: blur(15px);
+            margin-top: 4rem;
+            padding: 3rem 0;
+            border-top: 2px solid rgba(255, 215, 0, 0.3);
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h4 {
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        .footer-section p,
+        .footer-section a {
+            color: #cccccc;
+            text-decoration: none;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            transition: all 0.3s ease;
+        }
+
+        .footer-icon {
+            width: 18px;
+            height: 18px;
+            stroke: #FFD700;
+            flex-shrink: 0;
+        }
+
+        .footer-section a:hover {
+            color: #FFD700;
+            text-shadow: 0 0 5px rgba(255, 215, 0, 0.3);
+            transform: translateX(5px);
+        }
+
+        .footer-section a:hover .footer-icon {
+            stroke: #FFA500;
+            filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.5));
+        }
+
+        .footer-bottom {
+            text-align: center;
+            color: #999;
+            border-top: 1px solid rgba(255, 215, 0, 0.2);
+            padding-top: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: linear-gradient(135deg, rgba(0, 0, 0, 0.95) 0%, rgba(20, 0, 0, 0.9) 100%);
+                backdrop-filter: blur(20px);
+                flex-direction: column;
+                padding: 1rem;
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+                border-top: 1px solid rgba(255, 215, 0, 0.2);
+            }
+
+            .nav-links.show {
+                display: flex;
+            }
+
+            .mobile-menu {
+                display: flex;
+            }
+
+            .events-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-content {
+                width: 95%;
+                margin: 1rem;
+            }
+
+            .section {
+                padding: 2rem;
+            }
+
+            .page-title {
+                font-size: 2rem;
+            }
+
+            .event-details {
+                flex-direction: column;
+                gap: 0.5rem;
+                align-items: flex-start;
+            }
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #1a0000;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #FFD700, #DC143C);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, #FFA500, #8B0000);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <div class="logo">PP E5 QNA</div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="membership.html">Membership</a></li>
+                <li><a href="events.html" class="active">Events</a></li>
+                <li><a href="businesses.html">Businesses</a></li>
+                <li><a href="forms.html">Forms</a></li>
+                <li><a href="gallery.html">Gallery</a></li>
+                <li><a href="announcements.html">Announcements</a></li>
+            </ul>
+            <div class="mobile-menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container">
+        <section class="section">
+            <h2 class="page-title">Community Events</h2>
+            
+            <div class="events-grid">
+                <div class="event-card">
+                    <div class="event-image" style="background: linear-gradient(135deg, #DC143C, #8B0000, #FFD700);">
+                        <span class="event-emoji">🍜</span>
+                        Chinese New Year Celebration
+                    </div>
+                    <div class="event-info">
+                        <h3>Chinese New Year Dinner</h3>
+                        <p>Join us for a festive dinner celebration with traditional performances, lion dance, and delicious food.</p>
+                        <div class="event-details">
+                            <div class="event-detail-item">
+                                <svg class="detail-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                                    <line x1="16" y1="2" x2="16" y2="6"/>
+                                    <line x1="8" y1="2" x2="8" y2="6"/>
+                                    <line x1="3" y1="10" x2="21" y2="10"/>
+                                </svg>
+                                February 10, 2025
+                            </div>
+                            <div class="event-detail-item">
+                                <svg class="detail-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <polyline points="12,6 12,12 16,14"/>
+                                </svg>
+                                7:00 PM
+                            </div>
+                        </div>
+                        <div class="event-pricing">
+                            <span class="event-price">RM 45 per person</span>
+                            <span class="tickets-left">
+                                <svg class="ticket-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v2Z"/>
+                                    <path d="M13 5v2"/>
+                                    <path d="M13 17v2"/>
+                                    <path d="M13 11v2"/>
+                                </svg>
+                                30 tickets left
+                            </span>
+                        </div>
+                        <button onclick="bookEvent('cny2025', 'Chinese New Year Dinner', 45)" class="btn">Book Tickets</button>
+                    </div>
+                </div>
+
+                <div class="event-card">
+                    <div class="event-image" style="background: linear-gradient(135deg, #4caf50, #45a049, #FFD700);">
+                        <span class="event-emoji">🏃</span>
+                        Community Sports Day
+                    </div>
+                    <div class="event-info">
+                        <h3>Annual Sports Tournament</h3>
+                        <p>Fun-filled day with badminton, table tennis, and various games for all ages. Prizes for winners!</p>
+                        <div class="event-details">
+                            <div class="event-detail-item">
+                                <svg class="detail-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                                    <line x1="16" y1="2" x2="16" y2="6"/>
+                                    <line x1="8" y1="2" x2="8" y2="6"/>
+                                    <line x1="3" y1="10" x2="21" y2="10"/>
+                                </svg>
+                                March 15, 2025
+                            </div>
+                            <div class="event-detail-item">
+                                <svg class="detail-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <polyline points="12,6 12,12 16,14"/>
+                                </svg>
+                                9:00 AM
+                            </div>
+                        </div>
+                        <div class="event-pricing">
+                            <span class="event-price">RM 15 per person</span>
+                            <span class="tickets-left">
+                                <svg class="ticket-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v2Z"/>
+                                    <path d="M13 5v2"/>
+                                    <path d="M13 17v2"/>
+                                    <path d="M13 11v2"/>
+                                </svg>
+                                50 tickets left
+                            </span>
+                        </div>
+                        <button onclick="bookEvent('sports2025', 'Annual Sports Tournament', 15)" class="btn">Book Tickets</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <!-- Event Booking Modal -->
+    <div id="eventModal" class="modal">
+        <div class="modal-content">
+            <h3 class="modal-title" id="modalEventTitle">Book Event Tickets</h3>
+            
+            <form id="eventBookingForm">
+                <div class="form-group">
+                    <label for="eventFullName">
+                        <svg class="label-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                            <circle cx="12" cy="7" r="4"/>
+                        </svg>
+                        Full Name *
+                    </label>
+                    <input type="text" id="eventFullName" name="eventFullName" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="eventEmail">
+                        <svg class="label-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                            <polyline points="22,6 12,13 2,6"/>
+                        </svg>
+                        Email Address *
+                    </label>
+                    <input type="email" id="eventEmail" name="eventEmail" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="eventPhone">
+                        <svg class="label-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                        </svg>
+                        Phone Number *
+                    </label>
+                    <input type="tel" id="eventPhone" name="eventPhone" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="ticketQuantity">
+                        <svg class="label-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v2Z"/>
+                            <path d="M13 5v2"/>
+                            <path d="M13 17v2"/>
+                            <path d="M13 11v2"/>
+                        </svg>
+                        Number of Tickets *
+                    </label>
+                    <select id="ticketQuantity" name="ticketQuantity" onchange="updateEventTotal()" required>
+                        <option value="">Select quantity</option>
+                        <option value="1">1 ticket</option>
+                        <option value="2">2 tickets</option>
+                        <option value="3">3 tickets</option>
+                        <option value="4">4 tickets</option>
+                        <option value="5">5 tickets</option>
+                        <option value="6">6 tickets</option>
+                        <option value="7">7 tickets</option>
+                        <option value="8">8 tickets</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Total Amount:</label>
+                    <div id="eventTotal" class="total-display">RM 0</div>
+                </div>
+
+                <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+                    <button type="button" onclick="closeEventModal()" class="btn btn-secondary" style="flex: 1;">Cancel</button>
+                    <button type="button" onclick="processEventBooking()" class="btn" style="flex: 2;">Proceed to Payment</button>
+                </div>
+            </form>
+
+            <div id="eventStatusMessage"></div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Contact Info</h4>
+                    <p>
+                        <svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                            <polyline points="22,6 12,13 2,6"/>
+                        </svg>
+                        ppqna.e5@gmail.com
+                    </p>
+                    <p>
+                        <svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                        </svg>
+                        +60 12-345 6789
+                    </p>
+                    <p>
+                        <svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                            <circle cx="12" cy="10" r="3"/>
+                        </svg>
+                        QNA Residence 5, Jalan Springhill, Port Dickson, N.Sembilan
+                    </p>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <a href="membership.html">
+                        <svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                            <circle cx="9" cy="7" r="4"/>
+                            <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                        </svg>
+                        Join Us
+                    </a>
+                    <a href="events.html">
+                        <svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                            <line x1="16" y1="2" x2="16" y2="6"/>
+                            <line x1="8" y1="2" x2="8" y2="6"/>
+                            <line x1="3" y1="10" x2="21" y2="10"/>
+                        </svg>
+                        Upcoming Events
+                    </a>
+                    <a href="forms.html">
+                        <svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/>
+                            <polyline points="14,2 14,8 20,8"/>
+                        </svg>
+                        Submit Forms
+                    </a>
+                </div>
+                <div class="footer-section">
+                    <h4>Community</h4>
+                    <p>Building stronger neighborhoods</p>
+                    <p>Together we thrive</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Persatuan Penduduk E5 QNA. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Global variables
+        let currentEvent = null;
+        let eventPrice = 0;
+
+        // Mobile menu functionality
+        document.querySelector('.mobile-menu').addEventListener('click', function() {
+            const navLinks = document.querySelector('.nav-links');
+            navLinks.classList.toggle('show');
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(e) {
+            const mobileMenu = document.querySelector('.mobile-menu');
+            const navLinks = document.querySelector('.nav-links');
+            
+            if (!mobileMenu.contains(e.target) && !navLinks.contains(e.target)) {
+                navLinks.classList.remove('show');
+            }
+        });
+
+        // Event booking functions
+        function bookEvent(eventCode, eventTitle, price) {
+            currentEvent = eventCode;
+            eventPrice = price;
+            document.getElementById('modalEventTitle').textContent = `Book Tickets - ${eventTitle}`;
+            document.getElementById('eventModal').style.display = 'flex';
+        }
+
+        function closeEventModal() {
+            document.getElementById('eventModal').style.display = 'none';
+            document.getElementById('eventBookingForm').reset();
+            document.getElementById('eventTotal').textContent = 'RM 0';
+            document.getElementById('eventStatusMessage').innerHTML = '';
+        }
+
+        function updateEventTotal() {
+            const quantity = document.getElementById('ticketQuantity').value;
+            const total = quantity ? (quantity * eventPrice) : 0;
+            document.getElementById('eventTotal').textContent = `RM ${total}`;
+        }
+
+        function processEventBooking() {
+            const form = document.getElementById('eventBookingForm');
+            const formData = new FormData(form);
+            
+            const requiredFields = ['eventFullName', 'eventEmail', 'eventPhone', 'ticketQuantity'];
+            let isValid = true;
+            
+            requiredFields.forEach(field => {
+                if (!formData.get(field)) isValid = false;
+            });
+            
+            if (!isValid) {
+                showEventStatus('Please fill in all required fields.', 'error');
+                return;
+            }
+            
+            const quantity = formData.get('ticketQuantity');
+            const total = quantity * eventPrice;
+            
+            showEventStatus('Processing ticket booking... Please wait.', 'success');
+            
+            setTimeout(() => {
+                showEventStatus(`Booking confirmed! You have reserved ${quantity} ticket(s) for RM ${total}.
+                              Confirmation details will be sent to your email.
+                              Note: Replace this with your actual payment gateway integration.`, 'success');
+                
+                setTimeout(() => {
+                    closeEventModal();
+                }, 3000);
+            }, 2000);
+        }
+
+        function showEventStatus(message, type) {
+            const statusDiv = document.getElementById('eventStatusMessage');
+            statusDiv.innerHTML = `<div class="status-message ${type}">${message}</div>`;
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('eventModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeEventModal();
+            }
+        });
+
+        // Enhanced hover effects for event cards
+        document.querySelectorAll('.event-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-8px)';
+                this.style.boxShadow = '0 20px 40px rgba(0, 0, 0, 0.4), 0 0 30px rgba(255, 215, 0, 0.2)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+                this.style.boxShadow = '0 10px 30px rgba(0, 0, 0, 0.3)';
+            });
+        });
+
+        // Form validation
+        function validateEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+
+        function validatePhone(phone) {
+            const re = /^[0-9\-\+\s\(\)]+$/;
+            return re.test(phone) && phone.length >= 10;
+        }
+
+        // Enhanced form validation
+        document.getElementById('eventBookingForm').addEventListener('input', function(e) {
+            const field = e.target;
+            
+            if (field.type === 'email' && field.value) {
+                if (!validateEmail(field.value)) {
+                    field.style.borderColor = '#f44336';
+                } else {
+                    field.style.borderColor = '#4caf50';
+                }
+            }
+            
+            if (field.type === 'tel' && field.value) {
+                if (!validatePhone(field.value)) {
+                    field.style.borderColor = '#f44336';
+                } else {
+                    field.style.borderColor = '#4caf50';
+                }
+            }
+        });
+
+        // Smooth scrolling for any anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Add keyboard support for modal
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                const modal = document.getElementById('eventModal');
+                if (modal.style.display === 'flex') {
+                    closeEventModal();
+                }
+            }
+        });
+
+        // Add loading animation to buttons
+        function addLoadingState(button) {
+            const originalText = button.textContent;
+            button.textContent = 'Processing...';
+            button.disabled = true;
+            
+            setTimeout(() => {
+                button.textContent = originalText;
+                button.disabled = false;
+            }, 2000);
+        }
+
+        // Enhanced button interactions
+        document.querySelectorAll('.btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                // Add subtle pulse effect
+                this.style.transform = 'scale(0.98)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 100);
+            });
+        });
+    </script>
+</body>
+</html>
