@@ -402,7 +402,7 @@
             <form id="membershipForm">
                 <!-- Section A: Member Information -->
                 <div class="section">
-                    <h3 class="section-title">A. Member Information</h3>
+                    <h3 class="section-title">📋 A. Member Information</h3>
                     
                     <div class="form-group">
                         <label for="fullName">Full Name <span class="required">*</span></label>
@@ -472,7 +472,7 @@
 
                 <!-- Section B: Household Information -->
                 <div class="section">
-                    <h3 class="section-title">B. Household Information</h3>
+                    <h3 class="section-title">🏠 B. Household Information</h3>
                     <p style="margin-bottom: 1rem; color: #666; font-size: 0.9rem;">Please list all family members living at your address (optional but helps us understand our community better)</p>
                     <div class="table-section">
                         <table id="householdTable">
@@ -503,7 +503,7 @@
 
                 <!-- Section C: Vehicle Information -->
                 <div class="section">
-                    <h3 class="section-title">C. Vehicle Information</h3>
+                    <h3 class="section-title">🚗 C. Vehicle Information</h3>
                     <p style="margin-bottom: 1rem; color: #666; font-size: 0.9rem;">Please register your vehicles for parking and security purposes (optional)</p>
                     <div class="table-section">
                         <table id="vehicleTable">
@@ -540,11 +540,11 @@
 
                 <!-- Payment Section -->
                 <div class="payment-section">
-                    <h3>Choose Your Membership Package</h3>
+                    <h3>💳 Choose Your Membership Package</h3>
                     <p>Select one to submit your application and process payment</p>
                     
                     <div class="info-notice">
-                        <strong>Note:</strong> RM50 one-time registration fee + RM10/month membership fee applies.
+                        <strong>How it works:</strong> Submit form → Immediate redirect to secure payment → Manual activation within 24 hours after payment confirmation.
                     </div>
 
                     <div class="payment-options">
@@ -556,7 +556,7 @@
                                 RM50 Registration Fee + RM60 (6 months × RM10)
                             </div>
                             <button type="button" class="payment-btn" onclick="processPayment('package_6months', 110)">
-                                Select This Package
+                                Select 6 Months Package
                             </button>
                         </div>
 
@@ -568,7 +568,7 @@
                                 RM50 Registration Fee + RM120 (12 months × RM10)
                             </div>
                             <button type="button" class="payment-btn" onclick="processPayment('package_12months', 170)">
-                                Select This Package
+                                Select 12 Months Package
                             </button>
                         </div>
                     </div>
@@ -584,10 +584,9 @@
     <script>
         let householdRowCount = 1;
         let vehicleRowCount = 1;
-        let selectedPayments = [];
 
-        // Apps Script Web App URL - UPDATE THIS WITH YOUR NEW DEPLOYMENT URL
-        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzV459uuTOkRaJUGjHLwlEkOjA3Ajz0IcO-8EPTM2GGwb5WVccQY0bkQDoK6j3GTTtiCA/exec';
+        // Apps Script Web App URL - UPDATE THIS WITH YOUR DEPLOYMENT URL
+        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz2RZSnAcUTlrphHJz6fUz4ycx6amAGwdU5bWksL0zbIpd7DkZIBq82_oVG0W38LH0wlA/exec';
 
         function addHouseholdRow() {
             const tbody = document.getElementById('householdTableBody');
@@ -630,104 +629,40 @@
             });
         }
 
-        function processPayment(type, amount) {
+        async function processPayment(packageType, amount) {
             // Validate form before allowing payment
             if (!validateForm()) {
                 return;
             }
 
-            const paymentTypes = {
+            const packageNames = {
                 'package_6months': '6 Months Package',
                 'package_12months': '12 Months Package'
             };
-
-            // Prevent selecting multiple packages
-            if (selectedPayments.length > 0) {
-                const currentPackage = selectedPayments[0];
-                if (confirm(`You've already selected ${currentPackage.name} (RM ${currentPackage.amount}). Do you want to switch to ${paymentTypes[type]} (RM ${amount}) instead?`)) {
-                    selectedPayments = [];
-                    // Reset all buttons
-                    document.querySelectorAll('.payment-btn').forEach(btn => {
-                        btn.disabled = false;
-                        btn.style.opacity = '1';
-                        const originalText = btn.textContent.replace('✅ ', '').replace(' Selected', '');
-                        btn.textContent = originalText;
-                    });
-                } else {
-                    return;
-                }
-            }
 
             // Show processing status
             const statusDiv = document.getElementById('paymentStatus');
             statusDiv.className = 'payment-status pending';
             statusDiv.style.display = 'block';
             statusDiv.innerHTML = `
-                <strong>⏳ Processing Selection</strong><br>
-                Preparing ${paymentTypes[type]} (RM ${amount}) for submission...
+                <strong>⏳ Processing Application</strong><br>
+                Preparing ${packageNames[packageType]} (RM ${amount}) for submission...
             `;
 
-            // Get the clicked button
-            const button = event.target;
-
-            // Process immediately
-            selectedPayments.push({
-                type: type,
-                name: paymentTypes[type],
-                amount: amount,
-                timestamp: new Date().toISOString()
-            });
-
-            // Update button appearance
-            button.disabled = true;
-            button.innerHTML = `✅ ${paymentTypes[type]} Selected`;
-            button.style.opacity = '0.8';
-
-            // Disable other button
+            // Disable all buttons
             document.querySelectorAll('.payment-btn').forEach(btn => {
-                if (btn !== button) {
-                    btn.disabled = true;
-                    btn.style.opacity = '0.5';
-                }
+                btn.disabled = true;
+                btn.innerHTML = '⏳ Processing...';
             });
-
-            // Show success status with submit option
-            statusDiv.className = 'payment-status success';
-            statusDiv.innerHTML = `
-                <strong>✅ Package Selected Successfully</strong><br>
-                ${paymentTypes[type]} (RM ${amount}) ready for submission<br>
-                <button type="button" onclick="submitApplication()" style="margin-top: 1rem; padding: 0.75rem 1.5rem; background: linear-gradient(135deg, #28a745, #20c997); color: white; border: none; border-radius: 25px; font-size: 1rem; font-weight: 500; cursor: pointer; transition: all 0.3s ease;">
-                    Submit Application & Process Payment
-                </button>
-            `;
-
-            console.log('Payment package selected:', selectedPayments);
-        }
-
-        function submitApplication() {
-            // Final validation
-            if (selectedPayments.length === 0) {
-                alert('Please select a membership package first.');
-                return;
-            }
 
             // Collect form data
             const formData = collectFormData();
-            formData.payments = selectedPayments;
-            formData.packageType = selectedPayments[0].type;
-            formData.amount = selectedPayments[0].amount;
+            formData.packageType = packageType;
+            formData.amount = amount;
             formData.submissionTime = new Date().toISOString();
             
-            // Show final processing message
-            const statusDiv = document.getElementById('paymentStatus');
-            statusDiv.className = 'payment-status pending';
-            statusDiv.innerHTML = `
-                <strong>⏳ Submitting Application</strong><br>
-                Processing your membership application and payment...
-            `;
-            
             // Submit to Apps Script
-            submitToAppsScript(formData);
+            await submitToAppsScript(formData);
         }
 
         function validateForm() {
@@ -827,18 +762,9 @@
             try {
                 console.log('Submitting to Apps Script:', formData);
                 
-                // Show detailed loading message
-                statusDiv.className = 'payment-status pending';
-                statusDiv.innerHTML = `
-                    <strong>⏳ Submitting Application</strong><br>
-                    Connecting to server...
-                `;
-                
                 const response = await fetch(APPS_SCRIPT_URL, {
                     method: 'POST',
                     mode: 'cors',
-                    cache: 'no-cache',
-                    credentials: 'omit',
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded',
                     },
@@ -848,32 +774,21 @@
                     })
                 });
 
-                console.log('Response status:', response.status);
-                console.log('Response headers:', [...response.headers.entries()]);
-                
-                // Check if response is ok
                 if (!response.ok) {
                     throw new Error(`HTTP ${response.status}: ${response.statusText}`);
                 }
                 
-                // Try to parse response
-                const responseText = await response.text();
-                console.log('Raw response:', responseText);
-                
-                let result;
-                try {
-                    result = JSON.parse(responseText);
-                } catch (parseError) {
-                    console.error('Failed to parse JSON:', parseError);
-                    throw new Error(`Invalid response format: ${responseText.substring(0, 100)}...`);
-                }
-                
-                console.log('Parsed result:', result);
+                const result = await response.json();
+                console.log('Response:', result);
                 
                 if (result.success) {
                     // Show success message before redirect
-                    const payment = selectedPayments[0];
-                    alert(`🎉 Application Submitted Successfully!\n\nMembership ID: ${result.membershipId}\nPackage: ${payment.name}\nAmount: RM ${payment.amount}\n\nYou will now be redirected to payment.`);
+                    const packageNames = {
+                        'package_6months': '6 Months Package',
+                        'package_12months': '12 Months Package'
+                    };
+                    
+                    alert(`🎉 Application Submitted Successfully!\n\nMembership ID: ${result.membershipId}\nPackage: ${packageNames[formData.packageType]}\nAmount: RM ${formData.amount}\n\nYou will now be redirected to payment.\n\nAfter payment, your membership will be activated within 24 hours.`);
                     
                     // Redirect to Stripe payment link
                     window.location.href = result.checkoutUrl;
@@ -882,18 +797,7 @@
                 }
                 
             } catch (error) {
-                console.error('Detailed error:', error);
-                
-                // Show detailed error information
-                let errorMessage = error.message;
-                
-                if (error.message.includes('CORS')) {
-                    errorMessage = 'Connection blocked by browser security. Please contact support.';
-                } else if (error.message.includes('Failed to fetch')) {
-                    errorMessage = 'Unable to connect to server. Please check your internet connection.';
-                } else if (error.message.includes('HTTP 404')) {
-                    errorMessage = 'Server endpoint not found. Please contact support.';
-                }
+                console.error('Error:', error);
                 
                 // Show error status
                 statusDiv.className = 'payment-status';
@@ -902,22 +806,21 @@
                 statusDiv.style.border = '1px solid #e74c3c';
                 statusDiv.innerHTML = `
                     <strong>❌ Submission Failed</strong><br>
-                    ${errorMessage}<br>
-                    <small>Error details: ${error.message}</small><br>
+                    ${error.message}<br>
                     <button onclick="retrySubmission()" style="margin-top: 1rem; padding: 0.5rem 1rem; background: #e74c3c; color: white; border: none; border-radius: 5px; cursor: pointer;">
                         🔄 Try Again
                     </button>
                 `;
                 
                 // Re-enable buttons
-                document.querySelectorAll('.payment-btn').forEach(btn => {
+                document.querySelectorAll('.payment-btn').forEach((btn, index) => {
                     btn.disabled = false;
-                    btn.style.opacity = '1';
+                    if (index === 0) {
+                        btn.innerHTML = 'Select 6 Months Package';
+                    } else {
+                        btn.innerHTML = 'Select 12 Months Package';
+                    }
                 });
-                
-                // Reset selection
-                selectedPayments = [];
-                resetButtonText();
             }
         }
 
@@ -926,21 +829,16 @@
             document.getElementById('paymentStatus').style.display = 'none';
             
             // Re-enable package selection
-            document.querySelectorAll('.payment-btn').forEach(btn => {
-                btn.disabled = false;
-                btn.style.opacity = '1';
-                btn.innerHTML = 'Select This Package';
-            });
-            
-            selectedPayments = [];
-            
-            alert('Please select your package again and try submitting.');
-        }
-
-        function resetButtonText() {
             document.querySelectorAll('.payment-btn').forEach((btn, index) => {
-                btn.innerHTML = 'Select This Package';
+                btn.disabled = false;
+                if (index === 0) {
+                    btn.innerHTML = 'Select 6 Months Package';
+                } else {
+                    btn.innerHTML = 'Select 12 Months Package';
+                }
             });
+            
+            alert('Please try submitting your application again.');
         }
 
         // IC Number formatting
@@ -963,7 +861,7 @@
             document.getElementById('fullName').focus();
         });
 
-        console.log('New membership form initialized successfully');
+        console.log('Simplified membership form initialized');
     </script>
 </body>
 </html>

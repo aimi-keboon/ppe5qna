@@ -154,6 +154,11 @@
             color: #333;
         }
 
+        .status-pending {
+            background: linear-gradient(135deg, #6c757d, #5a6268);
+            color: white;
+        }
+
         .form-group {
             margin-bottom: 1rem;
         }
@@ -414,7 +419,7 @@
                 <h3>🔍 Find Your Membership Information</h3>
                 
                 <div class="info-notice">
-                    <strong>Step 1:</strong> Enter either your Membership ID or IC Number to check your membership status and proceed with renewal.
+                    <strong>How it works:</strong> Search for your membership → View current status → Renew if needed → Immediate redirect to payment → Manual activation within 24 hours after payment confirmation.
                 </div>
 
                 <!-- TEST CREDENTIALS BOX - Remove when going live -->
@@ -456,7 +461,7 @@
 
             <!-- Payment Section -->
             <div id="paymentSection" class="payment-section">
-                <h3>Choose Your Renewal Period</h3>
+                <h3>💳 Choose Your Renewal Period</h3>
                 <p>Select your preferred membership renewal duration</p>
 
                 <div class="info-notice">
@@ -497,8 +502,8 @@
     </div>
 
     <script>
-        // Apps Script Web App URL
-        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzV459uuTOkRaJUGjHLwlEkOjA3Ajz0IcO-8EPTM2GGwb5WVccQY0bkQDoK6j3GTTtiCA/exec';
+        // Apps Script Web App URL - UPDATE THIS WITH YOUR DEPLOYMENT URL
+        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz2RZSnAcUTlrphHJz6fUz4ycx6amAGwdU5bWksL0zbIpd7DkZIBq82_oVG0W38LH0wlA/exec';
         
         let memberData = null;
 
@@ -626,7 +631,7 @@
 
             const member = result.member;
             memberData = member;
-            const membershipStatus = calculateMembershipStatus(member.membershipExpiry);
+            const membershipStatus = calculateMembershipStatus(member.membershipExpiry, member.membershipStatus);
             
             // Set appropriate styling based on status
             memberInfoDisplay.className = `member-info-display ${membershipStatus.class}`;
@@ -678,9 +683,11 @@
                 </div>
 
                 <div class="action-buttons">
-                    <button onclick="showRenewalSection()" class="action-btn btn-renew">
-                        🔄 ${membershipStatus.urgent ? 'Renew Now' : 'Renew Membership'}
-                    </button>
+                    ${membershipStatus.canRenew ? `
+                        <button onclick="showRenewalSection()" class="action-btn btn-renew">
+                            🔄 ${membershipStatus.urgent ? 'Renew Now' : 'Renew Membership'}
+                        </button>
+                    ` : ''}
                     <button onclick="clearSearch()" class="action-btn btn-update">
                         🔍 Search Again
                     </button>
@@ -689,8 +696,10 @@
             
             memberInfoDisplay.style.display = 'block';
             
-            // Update expiry dates for renewal options
-            updateExpiryDates(member.membershipExpiry);
+            // Update expiry dates for renewal options if renewal is available
+            if (membershipStatus.canRenew) {
+                updateExpiryDates(member.membershipExpiry);
+            }
         }
 
         function showRenewalSection() {
@@ -698,7 +707,20 @@
             document.getElementById('paymentSection').scrollIntoView({ behavior: 'smooth' });
         }
 
-        function calculateMembershipStatus(expiryDate) {
+        function calculateMembershipStatus(expiryDate, membershipStatus) {
+            // If membership is still PENDING, don't show expiry-based status
+            if (membershipStatus === 'PENDING') {
+                return {
+                    class: 'not-found',
+                    badgeClass: 'status-pending',
+                    icon: '⏳',
+                    text: 'PENDING ACTIVATION',
+                    message: 'Your membership is pending activation. Please complete payment if you haven\'t already, or wait for manual activation within 24 hours after payment.',
+                    urgent: false,
+                    canRenew: false
+                };
+            }
+
             const today = new Date();
             const expiry = new Date(expiryDate);
             const daysUntilExpiry = Math.ceil((expiry - today) / (1000 * 60 * 60 * 24));
@@ -710,7 +732,8 @@
                     icon: '❌',
                     text: 'EXPIRED',
                     message: `Your membership expired ${Math.abs(daysUntilExpiry)} days ago. Please renew immediately.`,
-                    urgent: true
+                    urgent: true,
+                    canRenew: true
                 };
             } else if (daysUntilExpiry <= 30) {
                 return {
@@ -719,7 +742,8 @@
                     icon: '⚠️',
                     text: 'EXPIRING SOON',
                     message: `Your membership will expire in ${daysUntilExpiry} days. Please renew your membership.`,
-                    urgent: false
+                    urgent: false,
+                    canRenew: true
                 };
             } else {
                 return {
@@ -728,7 +752,8 @@
                     icon: '✅',
                     text: 'ACTIVE',
                     message: `Your membership is active until ${formatDate(expiryDate)}. Thank you!`,
-                    urgent: false
+                    urgent: false,
+                    canRenew: true
                 };
             }
         }
@@ -752,66 +777,66 @@
         }
 
         async function processRenewal(duration, amount) {
-    if (!memberData) {
-        alert('Please search for your membership first.');
-        return;
-    }
+            if (!memberData) {
+                alert('Please search for your membership first.');
+                return;
+            }
 
-    // Collect renewal data
-    const renewalData = {
-        fullName: memberData.fullName,
-        icNumber: memberData.icNumber,
-        phoneNumber: memberData.phoneNumber,
-        membershipId: memberData.membershipId,
-        duration: duration,
-        amount: amount,
-        type: 'renewal',
-        submissionTime: new Date().toISOString()
-    };
+            // Collect renewal data
+            const renewalData = {
+                fullName: memberData.fullName,
+                icNumber: memberData.icNumber,
+                phoneNumber: memberData.phoneNumber,
+                membershipId: memberData.membershipId,
+                duration: duration,
+                amount: amount,
+                type: 'renewal',
+                submissionTime: new Date().toISOString()
+            };
 
-    console.log('Processing renewal payment for:', renewalData);
+            console.log('Processing renewal payment for:', renewalData);
 
-    // Disable buttons
-    document.querySelectorAll('.renewal-btn').forEach(btn => {
-        btn.disabled = true;
-        btn.innerHTML = '⏳ Processing...';
-    });
+            // Disable buttons
+            document.querySelectorAll('.renewal-btn').forEach(btn => {
+                btn.disabled = true;
+                btn.innerHTML = '⏳ Processing...';
+            });
 
-    try {
-        const response = await fetch(APPS_SCRIPT_URL, {
-            method: 'POST',
-            mode: 'cors',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: new URLSearchParams({
-                action: 'submitRenewal',
-                data: JSON.stringify(renewalData)
-            })
-        });
+            try {
+                const response = await fetch(APPS_SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'cors',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: new URLSearchParams({
+                        action: 'submitRenewal',
+                        data: JSON.stringify(renewalData)
+                    })
+                });
 
-        const result = await response.json();
-        
-        if (result.success) {
-            // Show success message before redirect
-            alert(`✅ Renewal Request Submitted!\n\nMembership ID: ${memberData.membershipId}\nDuration: ${duration === '6months' ? '6 Months' : '12 Months'}\nAmount: RM ${amount}\n\nYou will now be redirected to payment.`);
-            
-            // Redirect to Stripe payment link
-            window.location.href = result.checkoutUrl;
-        } else {
-            throw new Error(result.error || 'Unknown error occurred');
+                const result = await response.json();
+                
+                if (result.success) {
+                    // Show success message before redirect
+                    alert(`✅ Renewal Request Submitted!\n\nMembership ID: ${memberData.membershipId}\nDuration: ${duration === '6months' ? '6 Months' : '12 Months'}\nAmount: RM ${amount}\n\nYou will now be redirected to payment.\n\nAfter payment, your membership will be extended within 24 hours.`);
+                    
+                    // Redirect to Stripe payment link
+                    window.location.href = result.checkoutUrl;
+                } else {
+                    throw new Error(result.message || 'Unknown error occurred');
+                }
+            } catch (error) {
+                console.error('Error processing renewal:', error);
+                alert(`❌ Error\n\nThere was an issue processing the renewal. Please try again.\n\nError: ${error.message}`);
+                
+                // Re-enable buttons
+                document.querySelectorAll('.renewal-btn').forEach(btn => {
+                    btn.disabled = false;
+                });
+                resetButtonText();
+            }
         }
-    } catch (error) {
-        console.error('Error processing renewal:', error);
-        alert(`❌ Error\n\nThere was an issue processing the renewal. Please try again.\n\nError: ${error.message}`);
-        
-        // Re-enable buttons
-        document.querySelectorAll('.renewal-btn').forEach(btn => {
-            btn.disabled = false;
-        });
-        resetButtonText();
-    }
-}
 
         function resetButtonText() {
             document.querySelectorAll('.renewal-btn').forEach((btn, index) => {
@@ -859,7 +884,7 @@
             document.getElementById('membershipId').focus();
         });
 
-        console.log('Membership status and renewal form initialized');
+        console.log('Simplified membership status and renewal form initialized');
     </script>
 </body>
 </html>
