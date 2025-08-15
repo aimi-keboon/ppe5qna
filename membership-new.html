@@ -622,81 +622,78 @@
         }
 
         function processPayment(type, amount) {
-            // Validate form before allowing payment
-            if (!validateForm()) {
-                return;
-            }
+    // Validate form before allowing payment
+    if (!validateForm()) {
+        return;
+    }
 
-            const paymentTypes = {
-                'package_6months': '6 Months Package',
-                'package_12months': '12 Months Package'
-            };
+    const paymentTypes = {
+        'package_6months': '6 Months Package',
+        'package_12months': '12 Months Package'
+    };
 
-            // Prevent selecting multiple packages
-            if (selectedPayments.length > 0) {
-                const currentPackage = selectedPayments[0];
-                if (confirm(`You've already selected ${currentPackage.name} (RM ${currentPackage.amount}). Do you want to switch to ${paymentTypes[type]} (RM ${amount}) instead?`)) {
-                    selectedPayments = [];
-                    // Reset all buttons
-                    document.querySelectorAll('.payment-btn').forEach(btn => {
-                        btn.disabled = false;
-                        btn.style.opacity = '1';
-                        const originalText = btn.textContent.replace('✅ ', '').replace(' Selected', '');
-                        btn.textContent = originalText;
-                    });
-                } else {
-                    return;
-                }
-            }
-
-            // Show processing status
-            const statusDiv = document.getElementById('paymentStatus');
-            statusDiv.className = 'payment-status pending';
-            statusDiv.style.display = 'block';
-            statusDiv.innerHTML = `
-                <strong>⏳ Processing Selection</strong><br>
-                Preparing ${paymentTypes[type]} (RM ${amount}) for submission...
-            `;
-
-            // Get the clicked button
-            const button = event.target;
-
-            // Simulate processing
-            setTimeout(() => {
-                // Add to selected payments
-                selectedPayments.push({
-                    type: type,
-                    name: paymentTypes[type],
-                    amount: amount,
-                    timestamp: new Date().toISOString()
-                });
-
-                // Update button appearance
-                button.disabled = true;
-                button.innerHTML = `✅ ${paymentTypes[type]} Selected`;
-                button.style.opacity = '0.8';
-
-                // Disable other button
-                document.querySelectorAll('.payment-btn').forEach(btn => {
-                    if (btn !== button) {
-                        btn.disabled = true;
-                        btn.style.opacity = '0.5';
-                    }
-                });
-
-                // Show success status with submit option
-                statusDiv.className = 'payment-status success';
-                statusDiv.innerHTML = `
-                    <strong>✅ Package Selected Successfully</strong><br>
-                    ${paymentTypes[type]} (RM ${amount}) ready for submission<br>
-                    <button type="button" onclick="submitApplication()" style="margin-top: 1rem; padding: 0.75rem 1.5rem; background: linear-gradient(135deg, #28a745, #20c997); color: white; border: none; border-radius: 25px; font-size: 1rem; font-weight: 500; cursor: pointer; transition: all 0.3s ease;">
-                        Submit Application & Process Payment
-                    </button>
-                `;
-
-                console.log('Payment package selected:', selectedPayments);
-            }, 1000);
+    // Prevent selecting multiple packages
+    if (selectedPayments.length > 0) {
+        const currentPackage = selectedPayments[0];
+        if (confirm(`You've already selected ${currentPackage.name} (RM ${currentPackage.amount}). Do you want to switch to ${paymentTypes[type]} (RM ${amount}) instead?`)) {
+            selectedPayments = [];
+            // Reset all buttons
+            document.querySelectorAll('.payment-btn').forEach(btn => {
+                btn.disabled = false;
+                btn.style.opacity = '1';
+                const originalText = btn.textContent.replace('✅ ', '').replace(' Selected', '');
+                btn.textContent = originalText;
+            });
+        } else {
+            return;
         }
+    }
+
+    // Show processing status
+    const statusDiv = document.getElementById('paymentStatus');
+    statusDiv.className = 'payment-status pending';
+    statusDiv.style.display = 'block';
+    statusDiv.innerHTML = `
+        <strong>⏳ Processing Selection</strong><br>
+        Preparing ${paymentTypes[type]} (RM ${amount}) for submission...
+    `;
+
+    // Get the clicked button
+    const button = event.target;
+
+    // Process immediately without delay
+    selectedPayments.push({
+        type: type,
+        name: paymentTypes[type],
+        amount: amount,
+        timestamp: new Date().toISOString()
+    });
+
+    // Update button appearance
+    button.disabled = true;
+    button.innerHTML = `✅ ${paymentTypes[type]} Selected`;
+    button.style.opacity = '0.8';
+
+    // Disable other button
+    document.querySelectorAll('.payment-btn').forEach(btn => {
+        if (btn !== button) {
+            btn.disabled = true;
+            btn.style.opacity = '0.5';
+        }
+    });
+
+    // Show success status with submit option
+    statusDiv.className = 'payment-status success';
+    statusDiv.innerHTML = `
+        <strong>✅ Package Selected Successfully</strong><br>
+        ${paymentTypes[type]} (RM ${amount}) ready for submission<br>
+        <button type="button" onclick="submitApplication()" style="margin-top: 1rem; padding: 0.75rem 1.5rem; background: linear-gradient(135deg, #28a745, #20c997); color: white; border: none; border-radius: 25px; font-size: 1rem; font-weight: 500; cursor: pointer; transition: all 0.3s ease;">
+            Submit Application & Process Payment
+        </button>
+    `;
+
+    console.log('Payment package selected:', selectedPayments);
+}
 
         function submitApplication() {
             // Final validation
@@ -816,53 +813,57 @@
         }
 
         async function submitToAppsScript(formData) {
-            try {
-                const response = await fetch(APPS_SCRIPT_URL, {
-                    method: 'POST',
-                    mode: 'cors',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                    },
-                    body: new URLSearchParams({
-                        action: 'submitMembership',
-                        data: JSON.stringify(formData)
-                    })
-                });
+    try {
+        const response = await fetch(APPS_SCRIPT_URL, {
+            method: 'POST',
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: new URLSearchParams({
+                action: 'submitMembership',
+                data: JSON.stringify(formData)
+            })
+        });
 
-                const result = await response.json();
-                
-                if (result.success) {
-                    // Redirect to Stripe Checkout
-                    window.location.href = result.checkoutUrl;
-                } else {
-                    throw new Error(result.error || 'Unknown error occurred');
-                }
-            } catch (error) {
-                console.error('Error submitting form:', error);
-                
-                // Show error status
-                const statusDiv = document.getElementById('paymentStatus');
-                statusDiv.className = 'payment-status';
-                statusDiv.style.background = 'rgba(231, 76, 60, 0.1)';
-                statusDiv.style.color = '#e74c3c';
-                statusDiv.style.border = '1px solid #e74c3c';
-                statusDiv.innerHTML = `
-                    <strong>❌ Error</strong><br>
-                    There was an issue submitting the form. Please try again.<br>
-                    Error: ${error.message}
-                `;
-                
-                // Re-enable buttons
-                document.querySelectorAll('.payment-btn').forEach(btn => {
-                    btn.disabled = false;
-                    btn.style.opacity = '1';
-                });
-                
-                // Reset selection
-                selectedPayments = [];
-                resetButtonText();
-            }
+        const result = await response.json();
+        
+        if (result.success) {
+            // Show success message before redirect
+            const payment = selectedPayments[0];
+            alert(`🎉 Application Submitted Successfully!\n\nMembership ID: ${result.membershipId}\nPackage: ${payment.name}\nAmount: RM ${payment.amount}\n\nYou will now be redirected to payment.`);
+            
+            // Redirect to Stripe payment link
+            window.location.href = result.checkoutUrl;
+        } else {
+            throw new Error(result.error || 'Unknown error occurred');
         }
+    } catch (error) {
+        console.error('Error submitting form:', error);
+        
+        // Show error status
+        const statusDiv = document.getElementById('paymentStatus');
+        statusDiv.className = 'payment-status';
+        statusDiv.style.background = 'rgba(231, 76, 60, 0.1)';
+        statusDiv.style.color = '#e74c3c';
+        statusDiv.style.border = '1px solid #e74c3c';
+        statusDiv.innerHTML = `
+            <strong>❌ Error</strong><br>
+            There was an issue submitting the form. Please try again.<br>
+            Error: ${error.message}
+        `;
+        
+        // Re-enable buttons
+        document.querySelectorAll('.payment-btn').forEach(btn => {
+            btn.disabled = false;
+            btn.style.opacity = '1';
+        });
+        
+        // Reset selection
+        selectedPayments = [];
+        resetButtonText();
+    }
+}
 
         function resetButtonText() {
             document.querySelectorAll('.payment-btn').forEach((btn, index) => {

@@ -752,63 +752,66 @@
         }
 
         async function processRenewal(duration, amount) {
-            if (!memberData) {
-                alert('Please search for your membership first.');
-                return;
-            }
+    if (!memberData) {
+        alert('Please search for your membership first.');
+        return;
+    }
 
-            // Collect renewal data
-            const renewalData = {
-                fullName: memberData.fullName,
-                icNumber: memberData.icNumber,
-                phoneNumber: memberData.phoneNumber,
-                membershipId: memberData.membershipId,
-                duration: duration,
-                amount: amount,
-                type: 'renewal',
-                submissionTime: new Date().toISOString()
-            };
+    // Collect renewal data
+    const renewalData = {
+        fullName: memberData.fullName,
+        icNumber: memberData.icNumber,
+        phoneNumber: memberData.phoneNumber,
+        membershipId: memberData.membershipId,
+        duration: duration,
+        amount: amount,
+        type: 'renewal',
+        submissionTime: new Date().toISOString()
+    };
 
-            console.log('Processing renewal payment for:', renewalData);
+    console.log('Processing renewal payment for:', renewalData);
 
-            // Disable buttons
-            document.querySelectorAll('.renewal-btn').forEach(btn => {
-                btn.disabled = true;
-                btn.innerHTML = '⏳ Processing...';
-            });
+    // Disable buttons
+    document.querySelectorAll('.renewal-btn').forEach(btn => {
+        btn.disabled = true;
+        btn.innerHTML = '⏳ Processing...';
+    });
 
-            try {
-                const response = await fetch(APPS_SCRIPT_URL, {
-                    method: 'POST',
-                    mode: 'cors',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                    },
-                    body: new URLSearchParams({
-                        action: 'submitRenewal',
-                        data: JSON.stringify(renewalData)
-                    })
-                });
+    try {
+        const response = await fetch(APPS_SCRIPT_URL, {
+            method: 'POST',
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: new URLSearchParams({
+                action: 'submitRenewal',
+                data: JSON.stringify(renewalData)
+            })
+        });
 
-                const result = await response.json();
-                
-                if (result.success) {
-                    // Redirect to Stripe Checkout
-                    window.location.href = result.checkoutUrl;
-                } else {
-                    throw new Error(result.error || 'Unknown error occurred');
-                }
-            } catch (error) {
-                console.error('Error processing renewal:', error);
-                alert(`❌ Error\n\nThere was an issue processing the renewal. Please try again.\n\nError: ${error.message}`);
-                
-                // Re-enable buttons
-                document.querySelectorAll('.renewal-btn').forEach(btn => {
-                    btn.disabled = false;
-                });
-                resetButtonText();
-            }
+        const result = await response.json();
+        
+        if (result.success) {
+            // Show success message before redirect
+            alert(`✅ Renewal Request Submitted!\n\nMembership ID: ${memberData.membershipId}\nDuration: ${duration === '6months' ? '6 Months' : '12 Months'}\nAmount: RM ${amount}\n\nYou will now be redirected to payment.`);
+            
+            // Redirect to Stripe payment link
+            window.location.href = result.checkoutUrl;
+        } else {
+            throw new Error(result.error || 'Unknown error occurred');
         }
+    } catch (error) {
+        console.error('Error processing renewal:', error);
+        alert(`❌ Error\n\nThere was an issue processing the renewal. Please try again.\n\nError: ${error.message}`);
+        
+        // Re-enable buttons
+        document.querySelectorAll('.renewal-btn').forEach(btn => {
+            btn.disabled = false;
+        });
+        resetButtonText();
+    }
+}
 
         function resetButtonText() {
             document.querySelectorAll('.renewal-btn').forEach((btn, index) => {
