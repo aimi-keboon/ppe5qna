@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Membership Status & Renewal - Persatuan Penduduk E5 QNA</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 2rem 0;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .form-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .form-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid rgba(102, 126, 234, 0.1);
+            padding-bottom: 1.5rem;
+        }
+
+        .form-header h1 {
+            color: #667eea;
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .back-link:hover {
+            color: #764ba2;
+        }
+
+        .search-section {
+            background: rgba(102, 126, 234, 0.1);
+            border: 2px solid #667eea;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .search-section h3 {
+            color: #667eea;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .member-info-display {
+            background: rgba(40, 167, 69, 0.1);
+            border: 2px solid #28a745;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            display: none;
+        }
+
+        .member-info-display.expired {
+            background: rgba(231, 76, 60, 0.1);
+            border-color: #e74c3c;
+        }
+
+        .member-info-display.expiring {
+            background: rgba(255, 193, 7, 0.1);
+            border-color: #ffc107;
+        }
+
+        .member-info-display.not-found {
+            background: rgba(108, 117, 125, 0.1);
+            border-color: #6c757d;
+        }
+
+        .member-info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .info-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .info-label {
+            font-weight: bold;
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .info-value {
+            color: #333;
+            font-size: 1rem;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            text-align: center;
+            margin: 1rem 0;
+        }
+
+        .status-active {
+            background: linear-gradient(135deg, #28a745, #20c997);
+            color: white;
+        }
+
+        .status-expired {
+            background: linear-gradient(135deg, #e74c3c, #dc3545);
+            color: white;
+        }
+
+        .status-expiring {
+            background: linear-gradient(135deg, #ffc107, #ffb300);
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .required {
+            color: #e74c3c;
+        }
+
+        input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            background: white;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        input:disabled {
+            background: #f8f9fa;
+            color: #666;
+        }
+
+        .search-btn, .renewal-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 0.75rem 2rem;
+            border: none;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 1rem;
+        }
+
+        .search-btn:hover, .renewal-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .search-btn:disabled, .renewal-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .payment-section {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+            border: 2px solid #667eea;
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+            display: none;
+        }
+
+        .payment-section h3 {
+            color: #667eea;
+            margin-bottom: 1.5rem;
+        }
+
+        .renewal-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .renewal-card {
+            background: white;
+            border: 2px solid #667eea;
+            border-radius: 10px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .renewal-card:hover {
+            transform: translateY(-5px);
+            border-color: #764ba2;
+        }
+
+        .renewal-card.popular {
+            border-color: #28a745;
+            background: linear-gradient(135deg, rgba(40, 167, 69, 0.1), rgba(40, 167, 69, 0.05));
+        }
+
+        .renewal-price {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #667eea;
+            margin: 0.5rem 0;
+        }
+
+        .renewal-card.popular .renewal-price {
+            color: #28a745;
+        }
+
+        .renewal-duration {
+            color: #666;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+
+        .package-description {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            line-height: 1.4;
+        }
+
+        .new-expiry {
+            background: rgba(102, 126, 234, 0.1);
+            padding: 0.5rem;
+            border-radius: 5px;
+            font-size: 0.85rem;
+            color: #667eea;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .renewal-card.popular .renewal-btn {
+            background: linear-gradient(135deg, #28a745, #20c997);
+        }
+
+        .renewal-card.popular .renewal-btn:hover {
+            box-shadow: 0 8px 25px rgba(40, 167, 69, 0.4);
+        }
+
+        .info-notice {
+            background: rgba(255, 193, 7, 0.1);
+            border: 1px solid #ffc107;
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+            font-size: 0.9rem;
+            color: #856404;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 2rem;
+            color: #667eea;
+            display: none;
+        }
+
+        .loading-spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .action-btn {
+            flex: 1;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            text-align: center;
+            display: inline-block;
+        }
+
+        .btn-renew {
+            background: linear-gradient(135deg, #28a745, #20c997);
+            color: white;
+        }
+
+        .btn-renew:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(40, 167, 69, 0.4);
+        }
+
+        .btn-update {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .btn-update:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .renewal-options {
+                grid-template-columns: 1fr;
+            }
+
+            .renewal-price {
+                font-size: 2rem;
+            }
+
+            .member-info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="form-container">
+            <div class="form-header">
+                <a href="forms.html" class="back-link">← Back to Forms</a>
+                <h1>Membership Status & Renewal</h1>
+                <p>Check Your Status and Renew Your Membership</p>
+            </div>
+
+            <!-- Search Section -->
+            <div id="searchSection" class="search-section">
+                <h3>🔍 Find Your Membership Information</h3>
+                
+                <div class="info-notice">
+                    <strong>Step 1:</strong> Enter either your Membership ID or IC Number to check your membership status and proceed with renewal.
+                </div>
+
+                <!-- TEST CREDENTIALS BOX - Remove when going live -->
+                <div style="background: rgba(40, 167, 69, 0.1); border: 2px solid #28a745; border-radius: 8px; padding: 1rem; margin: 1rem 0;">
+                    <h4 style="color: #28a745; margin-bottom: 0.5rem;">🧪 Test Credentials (For Testing Only)</h4>
+                    <p style="margin: 0.25rem 0;"><strong>Membership ID:</strong> E5-2024-TEST01</p>
+                    <p style="margin: 0.25rem 0;"><strong>IC Number:</strong> 990101145678</p>
+                    <p style="margin: 0.25rem 0; font-size: 0.9rem; color: #666;">Use either credential above to test the renewal system</p>
+                </div>
+
+                <form id="searchForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="membershipId">Membership ID</label>
+                            <input type="text" id="membershipId" name="membershipId" placeholder="e.g., E5-2024-001" style="text-transform: uppercase;">
+                        </div>
+                        <div class="form-group">
+                            <label for="icNumber">IC Number</label>
+                            <input type="text" id="icNumber" name="icNumber" pattern="[0-9]{12}" placeholder="123456789012">
+                        </div>
+                    </div>
+
+                    <button type="submit" class="search-btn" id="searchBtn">
+                        🔍 Check Status
+                    </button>
+                </form>
+            </div>
+
+            <!-- Loading Section -->
+            <div id="loadingSection" class="loading">
+                <div class="loading-spinner"></div>
+                <p>Searching for your membership information...</p>
+            </div>
+
+            <!-- Member Information Display -->
+            <div id="memberInfoDisplay" class="member-info-display">
+                <!-- Will be populated by JavaScript -->
+            </div>
+
+            <!-- Payment Section -->
+            <div id="paymentSection" class="payment-section">
+                <h3>Choose Your Renewal Period</h3>
+                <p>Select your preferred membership renewal duration</p>
+
+                <div class="info-notice">
+                    <strong>Note:</strong> Your membership will be extended from your current expiry date (RM10/month).
+                </div>
+
+                <div class="renewal-options">
+                    <div class="renewal-card">
+                        <div class="renewal-price">RM 60</div>
+                        <div class="renewal-duration">6 Months Extension</div>
+                        <div class="package-description">
+                            Extend your membership for 6 months
+                        </div>
+                        <div id="newExpiry6" class="new-expiry" style="display: none;">
+                            <!-- Will show new expiry date -->
+                        </div>
+                        <button type="button" class="renewal-btn" onclick="processRenewal('6months', 60)">
+                            Renew for 6 Months
+                        </button>
+                    </div>
+
+                    <div class="renewal-card popular">
+                        <div class="renewal-price">RM 120</div>
+                        <div class="renewal-duration">12 Months Extension (Popular)</div>
+                        <div class="package-description">
+                            Extend your membership for 12 months
+                        </div>
+                        <div id="newExpiry12" class="new-expiry" style="display: none;">
+                            <!-- Will show new expiry date -->
+                        </div>
+                        <button type="button" class="renewal-btn" onclick="processRenewal('12months', 120)">
+                            Renew for 12 Months
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Apps Script Web App URL
+        const APPS_SCRIPT_URL = 'https://script.google.com/a/macros/keboon.net/s/AKfycbwxPXsaxclta0viuHXRFfPV21SsFNfNfcix2gi6WexSBMZMwuc0nqnmUHHfciA1h5Hp0Q/exec';
+        
+        let memberData = null;
+
+        document.getElementById('searchForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            await searchMembership();
+        });
+
+        // IC Number formatting
+        document.getElementById('icNumber').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length > 12) {
+                value = value.slice(0, 12);
+            }
+            e.target.value = value;
+        });
+
+        // Membership ID formatting
+        document.getElementById('membershipId').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/[^a-zA-Z0-9\-]/g, '').toUpperCase();
+            e.target.value = value;
+        });
+
+        async function searchMembership() {
+            const membershipId = document.getElementById('membershipId').value.trim();
+            const icNumber = document.getElementById('icNumber').value.trim();
+
+            // Validation
+            if (!membershipId && !icNumber) {
+                alert('Please enter either Membership ID or IC Number.');
+                return;
+            }
+
+            // Show loading
+            document.getElementById('loadingSection').style.display = 'block';
+            document.getElementById('memberInfoDisplay').style.display = 'none';
+            document.getElementById('paymentSection').style.display = 'none';
+            document.getElementById('searchBtn').disabled = true;
+
+            // HARDCODED TEST MEMBER - Remove when going live
+            if ((membershipId && membershipId.toUpperCase() === 'E5-2024-TEST01') || 
+                (icNumber && icNumber === '990101145678')) {
+                
+                const testMember = {
+                    timestamp: '2024-01-15T10:30:00.000Z',
+                    icNumber: '990101145678',
+                    fullName: 'John Doe Test',
+                    phoneNumber: '+60123456789',
+                    houseNumber: '15, Jalan E5/1',
+                    gender: 'Male',
+                    race: 'Malay',
+                    email: 'john.doe@test.com',
+                    occupation: 'Software Engineer',
+                    status: 'OWNER',
+                    membershipId: 'E5-2024-TEST01',
+                    registrationDate: '2024-01-15T10:30:00.000Z',
+                    membershipExpiry: '2024-06-15T10:30:00.000Z', // Expired for testing
+                    membershipStatus: 'ACTIVE',
+                    lastPaymentDate: '2024-01-15T10:30:00.000Z',
+                    lastPaymentAmount: 110
+                };
+                
+                // Simulate API delay
+                setTimeout(() => {
+                    document.getElementById('loadingSection').style.display = 'none';
+                    document.getElementById('searchBtn').disabled = false;
+                    displaySearchResults({success: true, member: testMember});
+                }, 1500);
+                return;
+            }
+            // END HARDCODED TEST MEMBER
+
+            try {
+                const response = await fetch(APPS_SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'cors',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: new URLSearchParams({
+                        action: 'searchMembership',
+                        membershipId: membershipId,
+                        icNumber: icNumber
+                    })
+                });
+
+                const result = await response.json();
+                displaySearchResults(result);
+
+            } catch (error) {
+                console.error('Error searching membership:', error);
+                displayError('There was an issue searching for information. Please try again.');
+            } finally {
+                document.getElementById('loadingSection').style.display = 'none';
+                document.getElementById('searchBtn').disabled = false;
+            }
+        }
+
+        function displaySearchResults(result) {
+            const memberInfoDisplay = document.getElementById('memberInfoDisplay');
+            
+            if (!result.success || !result.member) {
+                memberInfoDisplay.className = 'member-info-display not-found';
+                memberInfoDisplay.innerHTML = `
+                    <h4>❌ Membership Not Found</h4>
+                    <p>The information you entered was not found in our records. This could mean:</p>
+                    <ul style="margin: 1rem 0; padding-left: 2rem;">
+                        <li>You haven't registered as a member yet</li>
+                        <li>The information provided doesn't match our records</li>
+                        <li>Your Membership ID or IC Number has changed</li>
+                    </ul>
+                    
+                    <div class="action-buttons">
+                        <a href="membership-new.html" class="action-btn btn-renew">
+                            📝 Register as New Member
+                        </a>
+                        <button onclick="clearSearch()" class="action-btn btn-update">
+                            🔄 Try Again
+                        </button>
+                    </div>
+                `;
+                memberInfoDisplay.style.display = 'block';
+                return;
+            }
+
+            const member = result.member;
+            memberData = member;
+            const membershipStatus = calculateMembershipStatus(member.membershipExpiry);
+            
+            // Set appropriate styling based on status
+            memberInfoDisplay.className = `member-info-display ${membershipStatus.class}`;
+            
+            memberInfoDisplay.innerHTML = `
+                <h4>✅ Membership Information Found</h4>
+                
+                <div class="member-info-grid">
+                    <div class="info-item">
+                        <span class="info-label">Full Name:</span>
+                        <span class="info-value">${member.fullName}</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Membership ID:</span>
+                        <span class="info-value">${member.membershipId || 'Pending'}</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">IC Number:</span>
+                        <span class="info-value">${member.icNumber}</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Phone Number:</span>
+                        <span class="info-value">${member.phoneNumber}</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">House Number:</span>
+                        <span class="info-value">${member.houseNumber}</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Status:</span>
+                        <span class="info-value">${member.status}</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Registration Date:</span>
+                        <span class="info-value">${formatDate(member.registrationDate)}</span>
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Current Expiry:</span>
+                        <span class="info-value">${formatDate(member.membershipExpiry)}</span>
+                    </div>
+                </div>
+
+                <div class="status-badge ${membershipStatus.badgeClass}">
+                    ${membershipStatus.icon} ${membershipStatus.text}
+                </div>
+
+                <div style="background: rgba(102, 126, 234, 0.1); padding: 1rem; border-radius: 8px; margin: 1rem 0;">
+                    <strong>${membershipStatus.message}</strong>
+                </div>
+
+                <div class="action-buttons">
+                    <button onclick="showRenewalSection()" class="action-btn btn-renew">
+                        🔄 ${membershipStatus.urgent ? 'Renew Now' : 'Renew Membership'}
+                    </button>
+                    <button onclick="clearSearch()" class="action-btn btn-update">
+                        🔍 Search Again
+                    </button>
+                </div>
+            `;
+            
+            memberInfoDisplay.style.display = 'block';
+            
+            // Update expiry dates for renewal options
+            updateExpiryDates(member.membershipExpiry);
+        }
+
+        function showRenewalSection() {
+            document.getElementById('paymentSection').style.display = 'block';
+            document.getElementById('paymentSection').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function calculateMembershipStatus(expiryDate) {
+            const today = new Date();
+            const expiry = new Date(expiryDate);
+            const daysUntilExpiry = Math.ceil((expiry - today) / (1000 * 60 * 60 * 24));
+
+            if (daysUntilExpiry < 0) {
+                return {
+                    class: 'expired',
+                    badgeClass: 'status-expired',
+                    icon: '❌',
+                    text: 'EXPIRED',
+                    message: `Your membership expired ${Math.abs(daysUntilExpiry)} days ago. Please renew immediately.`,
+                    urgent: true
+                };
+            } else if (daysUntilExpiry <= 30) {
+                return {
+                    class: 'expiring',
+                    badgeClass: 'status-expiring',
+                    icon: '⚠️',
+                    text: 'EXPIRING SOON',
+                    message: `Your membership will expire in ${daysUntilExpiry} days. Please renew your membership.`,
+                    urgent: false
+                };
+            } else {
+                return {
+                    class: 'active',
+                    badgeClass: 'status-active',
+                    icon: '✅',
+                    text: 'ACTIVE',
+                    message: `Your membership is active until ${formatDate(expiryDate)}. Thank you!`,
+                    urgent: false
+                };
+            }
+        }
+
+        function updateExpiryDates(currentExpiry) {
+            const currentExpiryDate = new Date(currentExpiry);
+            
+            // Calculate new expiry dates
+            const sixMonthsExpiry = new Date(currentExpiryDate);
+            sixMonthsExpiry.setMonth(sixMonthsExpiry.getMonth() + 6);
+            
+            const twelveMonthsExpiry = new Date(currentExpiryDate);
+            twelveMonthsExpiry.setMonth(twelveMonthsExpiry.getMonth() + 12);
+            
+            // Update displays
+            document.getElementById('newExpiry6').innerHTML = `New expiry: ${formatDate(sixMonthsExpiry)}`;
+            document.getElementById('newExpiry6').style.display = 'block';
+            
+            document.getElementById('newExpiry12').innerHTML = `New expiry: ${formatDate(twelveMonthsExpiry)}`;
+            document.getElementById('newExpiry12').style.display = 'block';
+        }
+
+        async function processRenewal(duration, amount) {
+            if (!memberData) {
+                alert('Please search for your membership first.');
+                return;
+            }
+
+            // Collect renewal data
+            const renewalData = {
+                fullName: memberData.fullName,
+                icNumber: memberData.icNumber,
+                phoneNumber: memberData.phoneNumber,
+                membershipId: memberData.membershipId,
+                duration: duration,
+                amount: amount,
+                type: 'renewal',
+                submissionTime: new Date().toISOString()
+            };
+
+            console.log('Processing renewal payment for:', renewalData);
+
+            // Disable buttons
+            document.querySelectorAll('.renewal-btn').forEach(btn => {
+                btn.disabled = true;
+                btn.innerHTML = '⏳ Processing...';
+            });
+
+            try {
+                const response = await fetch(APPS_SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'cors',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: new URLSearchParams({
+                        action: 'submitRenewal',
+                        data: JSON.stringify(renewalData)
+                    })
+                });
+
+                const result = await response.json();
+                
+                if (result.success) {
+                    // Redirect to Stripe Checkout
+                    window.location.href = result.checkoutUrl;
+                } else {
+                    throw new Error(result.error || 'Unknown error occurred');
+                }
+            } catch (error) {
+                console.error('Error processing renewal:', error);
+                alert(`❌ Error\n\nThere was an issue processing the renewal. Please try again.\n\nError: ${error.message}`);
+                
+                // Re-enable buttons
+                document.querySelectorAll('.renewal-btn').forEach(btn => {
+                    btn.disabled = false;
+                });
+                resetButtonText();
+            }
+        }
+
+        function resetButtonText() {
+            document.querySelectorAll('.renewal-btn').forEach((btn, index) => {
+                if (index === 0) {
+                    btn.innerHTML = 'Renew for 6 Months';
+                } else {
+                    btn.innerHTML = 'Renew for 12 Months';
+                }
+            });
+        }
+
+        function formatDate(dateString) {
+            if (!dateString) return 'N/A';
+            const date = new Date(dateString);
+            return date.toLocaleDateString('en-GB', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric'
+            });
+        }
+
+        function displayError(message) {
+            const memberInfoDisplay = document.getElementById('memberInfoDisplay');
+            memberInfoDisplay.className = 'member-info-display not-found';
+            memberInfoDisplay.innerHTML = `
+                <h4>❌ Error</h4>
+                <p>${message}</p>
+                <button onclick="clearSearch()" class="action-btn btn-update" style="margin-top: 1rem; width: 100%;">
+                    🔄 Try Again
+                </button>
+            `;
+            memberInfoDisplay.style.display = 'block';
+        }
+
+        function clearSearch() {
+            document.getElementById('searchForm').reset();
+            document.getElementById('memberInfoDisplay').style.display = 'none';
+            document.getElementById('paymentSection').style.display = 'none';
+            memberData = null;
+            document.getElementById('membershipId').focus();
+        }
+
+        // Auto-focus on page load
+        window.addEventListener('load', function() {
+            document.getElementById('membershipId').focus();
+        });
+
+        console.log('Membership status and renewal form initialized');
+    </script>
+</body>
+</html>

@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Member Registration - Persatuan Penduduk E5 QNA</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 2rem 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .form-container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .form-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid rgba(102, 126, 234, 0.1);
+            padding-bottom: 1.5rem;
+        }
+
+        .form-header h1 {
+            color: #28a745;
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-header p {
+            color: #666;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .back-link:hover {
+            color: #764ba2;
+        }
+
+        .section {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: rgba(102, 126, 234, 0.05);
+            border-radius: 15px;
+            border-left: 4px solid #28a745;
+        }
+
+        .section-title {
+            color: #28a745;
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .required {
+            color: #e74c3c;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            background: white;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #28a745;
+            box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.1);
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 1rem;
+            margin-top: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .radio-option input[type="radio"] {
+            width: auto;
+            margin: 0;
+        }
+
+        .table-section {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        th {
+            background: #28a745;
+            color: white;
+            padding: 0.75rem;
+            text-align: left;
+            font-weight: 500;
+        }
+
+        td {
+            padding: 0.5rem;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        td input {
+            border: 1px solid #ddd;
+            padding: 0.5rem;
+            border-radius: 4px;
+        }
+
+        .add-row-btn {
+            margin-top: 1rem;
+            padding: 0.5rem 1rem;
+            background: linear-gradient(135deg, #28a745, #20c997);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: transform 0.2s ease;
+        }
+
+        .add-row-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .remove-row-btn {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+
+        .declaration {
+            background: rgba(255, 193, 7, 0.1);
+            border: 1px solid #ffc107;
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .declaration label {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+            cursor: pointer;
+        }
+
+        .declaration input[type="checkbox"] {
+            width: auto;
+            margin-top: 0.2rem;
+        }
+
+        .payment-section {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+            border: 2px solid #667eea;
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .payment-section h3 {
+            color: #667eea;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+
+        .payment-options {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .payment-card {
+            background: white;
+            border: 2px solid #667eea;
+            border-radius: 10px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+            position: relative;
+        }
+
+        .payment-card:hover {
+            transform: translateY(-5px);
+            border-color: #764ba2;
+        }
+
+        .payment-card.popular {
+            border-color: #28a745;
+            background: linear-gradient(135deg, rgba(40, 167, 69, 0.1), rgba(40, 167, 69, 0.05));
+        }
+
+        .payment-price {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #667eea;
+            margin: 0.5rem 0;
+        }
+
+        .payment-card.popular .payment-price {
+            color: #28a745;
+        }
+
+        .payment-duration {
+            color: #666;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+
+        .package-description {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            line-height: 1.4;
+        }
+
+        .payment-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .payment-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .payment-card.popular .payment-btn {
+            background: linear-gradient(135deg, #28a745, #20c997);
+        }
+
+        .payment-card.popular .payment-btn:hover {
+            box-shadow: 0 8px 25px rgba(40, 167, 69, 0.4);
+        }
+
+        .payment-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .info-notice {
+            background: rgba(255, 193, 7, 0.1);
+            border: 1px solid #ffc107;
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+            font-size: 0.9rem;
+            color: #856404;
+        }
+
+        .payment-status {
+            display: none;
+            text-align: center;
+            padding: 1rem;
+            margin-top: 1rem;
+            border-radius: 8px;
+            font-weight: 500;
+        }
+
+        .payment-status.success {
+            background: rgba(40, 167, 69, 0.1);
+            color: #28a745;
+            border: 1px solid #28a745;
+        }
+
+        .payment-status.pending {
+            background: rgba(255, 193, 7, 0.1);
+            color: #856404;
+            border: 1px solid #ffc107;
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .radio-group {
+                flex-direction: column;
+            }
+
+            .table-section {
+                font-size: 0.9rem;
+            }
+
+            th, td {
+                padding: 0.5rem 0.25rem;
+            }
+
+            .payment-options {
+                grid-template-columns: 1fr;
+            }
+
+            .payment-price {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="form-container">
+            <div class="form-header">
+                <a href="forms.html" class="back-link">← Back to Forms</a>
+                <h1>New Member Registration</h1>
+                <p>Welcome to Persatuan Penduduk E5 QNA</p>
+            </div>
+
+            <form id="membershipForm">
+                <!-- Section A: Member Information -->
+                <div class="section">
+                    <h3 class="section-title">A. Member Information</h3>
+                    
+                    <div class="form-group">
+                        <label for="fullName">Full Name <span class="required">*</span></label>
+                        <input type="text" id="fullName" name="fullName" required>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="icNumber">IC Number <span class="required">*</span></label>
+                            <input type="text" id="icNumber" name="icNumber" pattern="[0-9]{12}" placeholder="123456789012" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="gender">Gender <span class="required">*</span></label>
+                            <select id="gender" name="gender" required>
+                                <option value="">Select Gender</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="race">Race</label>
+                            <input type="text" id="race" name="race" placeholder="Malay, Chinese, Indian, etc.">
+                        </div>
+                        <div class="form-group">
+                            <label for="houseNumber">House Number <span class="required">*</span></label>
+                            <input type="text" id="houseNumber" name="houseNumber" placeholder="e.g., 15, Jalan E5/1" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="phoneNumber">Phone Number <span class="required">*</span></label>
+                            <input type="tel" id="phoneNumber" name="phoneNumber" pattern="[0-9+\-\s]+" placeholder="+60 12-345 6789" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" name="email" placeholder="your.email@gmail.com">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="occupation">Occupation</label>
+                        <input type="text" id="occupation" name="occupation" placeholder="e.g., Teacher, Engineer, Business Owner">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Status <span class="required">*</span></label>
+                        <div class="radio-group">
+                            <div class="radio-option">
+                                <input type="radio" id="owner" name="status" value="OWNER" required>
+                                <label for="owner">Property Owner</label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="familyMember" name="status" value="FAMILY_MEMBER" required>
+                                <label for="familyMember">Family Member of Owner</label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="tenant" name="status" value="TENANT" required>
+                                <label for="tenant">Tenant</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section B: Household Information -->
+                <div class="section">
+                    <h3 class="section-title">B. Household Information</h3>
+                    <p style="margin-bottom: 1rem; color: #666; font-size: 0.9rem;">Please list all family members living at your address (optional but helps us understand our community better)</p>
+                    <div class="table-section">
+                        <table id="householdTable">
+                            <thead>
+                                <tr>
+                                    <th>No.</th>
+                                    <th>Full Name</th>
+                                    <th>IC Number</th>
+                                    <th>Relationship</th>
+                                    <th>Phone Number</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="householdTableBody">
+                                <tr>
+                                    <td>1</td>
+                                    <td><input type="text" name="household[0][name]" placeholder="Full Name"></td>
+                                    <td><input type="text" name="household[0][ic]" placeholder="IC Number"></td>
+                                    <td><input type="text" name="household[0][relationship]" placeholder="e.g., Spouse, Child"></td>
+                                    <td><input type="text" name="household[0][phone]" placeholder="Phone Number"></td>
+                                    <td>-</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <button type="button" class="add-row-btn" onclick="addHouseholdRow()">+ Add Family Member</button>
+                    </div>
+                </div>
+
+                <!-- Section C: Vehicle Information -->
+                <div class="section">
+                    <h3 class="section-title">C. Vehicle Information</h3>
+                    <p style="margin-bottom: 1rem; color: #666; font-size: 0.9rem;">Please register your vehicles for parking and security purposes (optional)</p>
+                    <div class="table-section">
+                        <table id="vehicleTable">
+                            <thead>
+                                <tr>
+                                    <th>No.</th>
+                                    <th>Vehicle Type</th>
+                                    <th>Color</th>
+                                    <th>Registration Number</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="vehicleTableBody">
+                                <tr>
+                                    <td>1</td>
+                                    <td><input type="text" name="vehicle[0][type]" placeholder="e.g., Car, Motorcycle"></td>
+                                    <td><input type="text" name="vehicle[0][color]" placeholder="Vehicle Color"></td>
+                                    <td><input type="text" name="vehicle[0][registration]" placeholder="ABC 1234"></td>
+                                    <td>-</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <button type="button" class="add-row-btn" onclick="addVehicleRow()">+ Add Vehicle</button>
+                    </div>
+                </div>
+
+                <!-- Declaration -->
+                <div class="declaration">
+                    <label>
+                        <input type="checkbox" id="declaration" name="declaration" required>
+                        <span><strong>Declaration:</strong> I declare that all information provided is true and accurate. I agree to comply with the association's constitution, rules, and regulations. I understand that membership fees are required and payment must be completed to activate my membership.</span>
+                    </label>
+                </div>
+
+                <!-- Payment Section -->
+                <div class="payment-section">
+                    <h3>Choose Your Membership Package</h3>
+                    <p>Select one to submit your application and process payment</p>
+                    
+                    <div class="info-notice">
+                        <strong>Note:</strong> RM50 one-time registration fee + RM10/month membership fee applies.
+                    </div>
+
+                    <div class="payment-options">
+                        <!-- 6 Months Package -->
+                        <div class="payment-card">
+                            <div class="payment-price">RM 110</div>
+                            <div class="payment-duration"><strong>6 Months</strong></div>
+                            <div class="package-description">
+                                RM50 Registration Fee + RM60 (6 months × RM10)
+                            </div>
+                            <button type="button" class="payment-btn" onclick="processPayment('package_6months', 110)">
+                                Select This Package
+                            </button>
+                        </div>
+
+                        <!-- 12 Months Package -->
+                        <div class="payment-card popular">
+                            <div class="payment-price">RM 170</div>
+                            <div class="payment-duration"><strong>12 Months (Popular)</strong></div>
+                            <div class="package-description">
+                                RM50 Registration Fee + RM120 (12 months × RM10)
+                            </div>
+                            <button type="button" class="payment-btn" onclick="processPayment('package_12months', 170)">
+                                Select This Package
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="paymentStatus" class="payment-status">
+                        <!-- Payment status will be shown here -->
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        let householdRowCount = 1;
+        let vehicleRowCount = 1;
+        let selectedPayments = [];
+
+        // Apps Script Web App URL
+        const APPS_SCRIPT_URL = 'https://script.google.com/a/macros/keboon.net/s/AKfycbwxPXsaxclta0viuHXRFfPV21SsFNfNfcix2gi6WexSBMZMwuc0nqnmUHHfciA1h5Hp0Q/exec';
+
+        function addHouseholdRow() {
+            const tbody = document.getElementById('householdTableBody');
+            const newRow = tbody.insertRow();
+            newRow.innerHTML = `
+                <td>${householdRowCount + 1}</td>
+                <td><input type="text" name="household[${householdRowCount}][name]" placeholder="Full Name"></td>
+                <td><input type="text" name="household[${householdRowCount}][ic]" placeholder="IC Number"></td>
+                <td><input type="text" name="household[${householdRowCount}][relationship]" placeholder="e.g., Spouse, Child"></td>
+                <td><input type="text" name="household[${householdRowCount}][phone]" placeholder="Phone Number"></td>
+                <td><button type="button" class="remove-row-btn" onclick="removeRow(this, 'household')">Remove</button></td>
+            `;
+            householdRowCount++;
+        }
+
+        function addVehicleRow() {
+            const tbody = document.getElementById('vehicleTableBody');
+            const newRow = tbody.insertRow();
+            newRow.innerHTML = `
+                <td>${vehicleRowCount + 1}</td>
+                <td><input type="text" name="vehicle[${vehicleRowCount}][type]" placeholder="e.g., Car, Motorcycle"></td>
+                <td><input type="text" name="vehicle[${vehicleRowCount}][color]" placeholder="Vehicle Color"></td>
+                <td><input type="text" name="vehicle[${vehicleRowCount}][registration]" placeholder="ABC 1234"></td>
+                <td><button type="button" class="remove-row-btn" onclick="removeRow(this, 'vehicle')">Remove</button></td>
+            `;
+            vehicleRowCount++;
+        }
+
+        function removeRow(button, type) {
+            const row = button.closest('tr');
+            row.remove();
+            updateRowNumbers(type);
+        }
+
+        function updateRowNumbers(type) {
+            const tableId = type === 'household' ? 'householdTableBody' : 'vehicleTableBody';
+            const rows = document.querySelectorAll(`#${tableId} tr`);
+            rows.forEach((row, index) => {
+                row.cells[0].textContent = index + 1;
+            });
+        }
+
+        function processPayment(type, amount) {
+            // Validate form before allowing payment
+            if (!validateForm()) {
+                return;
+            }
+
+            const paymentTypes = {
+                'package_6months': '6 Months Package',
+                'package_12months': '12 Months Package'
+            };
+
+            // Prevent selecting multiple packages
+            if (selectedPayments.length > 0) {
+                const currentPackage = selectedPayments[0];
+                if (confirm(`You've already selected ${currentPackage.name} (RM ${currentPackage.amount}). Do you want to switch to ${paymentTypes[type]} (RM ${amount}) instead?`)) {
+                    selectedPayments = [];
+                    // Reset all buttons
+                    document.querySelectorAll('.payment-btn').forEach(btn => {
+                        btn.disabled = false;
+                        btn.style.opacity = '1';
+                        const originalText = btn.textContent.replace('✅ ', '').replace(' Selected', '');
+                        btn.textContent = originalText;
+                    });
+                } else {
+                    return;
+                }
+            }
+
+            // Show processing status
+            const statusDiv = document.getElementById('paymentStatus');
+            statusDiv.className = 'payment-status pending';
+            statusDiv.style.display = 'block';
+            statusDiv.innerHTML = `
+                <strong>⏳ Processing Selection</strong><br>
+                Preparing ${paymentTypes[type]} (RM ${amount}) for submission...
+            `;
+
+            // Get the clicked button
+            const button = event.target;
+
+            // Simulate processing
+            setTimeout(() => {
+                // Add to selected payments
+                selectedPayments.push({
+                    type: type,
+                    name: paymentTypes[type],
+                    amount: amount,
+                    timestamp: new Date().toISOString()
+                });
+
+                // Update button appearance
+                button.disabled = true;
+                button.innerHTML = `✅ ${paymentTypes[type]} Selected`;
+                button.style.opacity = '0.8';
+
+                // Disable other button
+                document.querySelectorAll('.payment-btn').forEach(btn => {
+                    if (btn !== button) {
+                        btn.disabled = true;
+                        btn.style.opacity = '0.5';
+                    }
+                });
+
+                // Show success status with submit option
+                statusDiv.className = 'payment-status success';
+                statusDiv.innerHTML = `
+                    <strong>✅ Package Selected Successfully</strong><br>
+                    ${paymentTypes[type]} (RM ${amount}) ready for submission<br>
+                    <button type="button" onclick="submitApplication()" style="margin-top: 1rem; padding: 0.75rem 1.5rem; background: linear-gradient(135deg, #28a745, #20c997); color: white; border: none; border-radius: 25px; font-size: 1rem; font-weight: 500; cursor: pointer; transition: all 0.3s ease;">
+                        Submit Application & Process Payment
+                    </button>
+                `;
+
+                console.log('Payment package selected:', selectedPayments);
+            }, 1000);
+        }
+
+        function submitApplication() {
+            // Final validation
+            if (selectedPayments.length === 0) {
+                alert('Please select a membership package first.');
+                return;
+            }
+
+            // Collect form data
+            const formData = collectFormData();
+            formData.payments = selectedPayments;
+            formData.packageType = selectedPayments[0].type;
+            formData.amount = selectedPayments[0].amount;
+            formData.submissionTime = new Date().toISOString();
+            
+            // Show final processing message
+            const statusDiv = document.getElementById('paymentStatus');
+            statusDiv.className = 'payment-status pending';
+            statusDiv.innerHTML = `
+                <strong>⏳ Submitting Application</strong><br>
+                Processing your membership application and payment...
+            `;
+            
+            // Submit to Apps Script
+            submitToAppsScript(formData);
+        }
+
+        function validateForm() {
+            const requiredFields = ['fullName', 'icNumber', 'phoneNumber', 'houseNumber'];
+            let hasRequiredInfo = true;
+            let missingFields = [];
+            
+            requiredFields.forEach(fieldName => {
+                const field = document.getElementById(fieldName);
+                if (!field.value.trim()) {
+                    hasRequiredInfo = false;
+                    missingFields.push(field.labels[0].textContent.replace(' *', ''));
+                    field.style.borderColor = '#e74c3c';
+                } else {
+                    field.style.borderColor = '#28a745';
+                }
+            });
+
+            // Check gender selection
+            const gender = document.getElementById('gender');
+            if (!gender.value) {
+                hasRequiredInfo = false;
+                missingFields.push('Gender');
+                gender.style.borderColor = '#e74c3c';
+            } else {
+                gender.style.borderColor = '#28a745';
+            }
+
+            // Check status radio buttons
+            const statusRadios = document.querySelectorAll('input[name="status"]');
+            const statusChecked = Array.from(statusRadios).some(radio => radio.checked);
+            if (!statusChecked) {
+                hasRequiredInfo = false;
+                missingFields.push('Status');
+            }
+
+            // Check declaration checkbox
+            const declaration = document.getElementById('declaration');
+            if (!declaration.checked) {
+                hasRequiredInfo = false;
+                missingFields.push('Declaration');
+            }
+
+            if (!hasRequiredInfo) {
+                alert(`⚠️ Required Information Missing\n\nPlease complete the following fields:\n• ${missingFields.join('\n• ')}`);
+                document.getElementById('fullName').focus();
+                return false;
+            }
+
+            return true;
+        }
+
+        function collectFormData() {
+            const formData = new FormData(document.getElementById('membershipForm'));
+            const data = {};
+            
+            // Convert FormData to object
+            for (let [key, value] of formData.entries()) {
+                data[key] = value;
+            }
+
+            // Collect household data
+            data.household = [];
+            const householdRows = document.querySelectorAll('#householdTableBody tr');
+            householdRows.forEach((row, index) => {
+                const inputs = row.querySelectorAll('input');
+                if (inputs[0].value.trim()) { // Only add if name is provided
+                    data.household.push({
+                        name: inputs[0].value,
+                        ic: inputs[1].value,
+                        relationship: inputs[2].value,
+                        phone: inputs[3].value
+                    });
+                }
+            });
+
+            // Collect vehicle data
+            data.vehicles = [];
+            const vehicleRows = document.querySelectorAll('#vehicleTableBody tr');
+            vehicleRows.forEach((row, index) => {
+                const inputs = row.querySelectorAll('input');
+                if (inputs[0].value.trim()) { // Only add if type is provided
+                    data.vehicles.push({
+                        type: inputs[0].value,
+                        color: inputs[1].value,
+                        registration: inputs[2].value
+                    });
+                }
+            });
+
+            return data;
+        }
+
+        async function submitToAppsScript(formData) {
+            try {
+                const response = await fetch(APPS_SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'cors',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: new URLSearchParams({
+                        action: 'submitMembership',
+                        data: JSON.stringify(formData)
+                    })
+                });
+
+                const result = await response.json();
+                
+                if (result.success) {
+                    // Redirect to Stripe Checkout
+                    window.location.href = result.checkoutUrl;
+                } else {
+                    throw new Error(result.error || 'Unknown error occurred');
+                }
+            } catch (error) {
+                console.error('Error submitting form:', error);
+                
+                // Show error status
+                const statusDiv = document.getElementById('paymentStatus');
+                statusDiv.className = 'payment-status';
+                statusDiv.style.background = 'rgba(231, 76, 60, 0.1)';
+                statusDiv.style.color = '#e74c3c';
+                statusDiv.style.border = '1px solid #e74c3c';
+                statusDiv.innerHTML = `
+                    <strong>❌ Error</strong><br>
+                    There was an issue submitting the form. Please try again.<br>
+                    Error: ${error.message}
+                `;
+                
+                // Re-enable buttons
+                document.querySelectorAll('.payment-btn').forEach(btn => {
+                    btn.disabled = false;
+                    btn.style.opacity = '1';
+                });
+                
+                // Reset selection
+                selectedPayments = [];
+                resetButtonText();
+            }
+        }
+
+        function resetButtonText() {
+            document.querySelectorAll('.payment-btn').forEach((btn, index) => {
+                btn.innerHTML = 'Select This Package';
+            });
+        }
+
+        // IC Number formatting
+        document.getElementById('icNumber').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length > 12) {
+                value = value.slice(0, 12);
+            }
+            e.target.value = value;
+        });
+
+        // Phone number formatting
+        document.getElementById('phoneNumber').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/[^\d+\-\s]/g, '');
+            e.target.value = value;
+        });
+
+        // Auto-focus on form load
+        window.addEventListener('load', function() {
+            document.getElementById('fullName').focus();
+        });
+
+        console.log('New membership form initialized successfully');
+    </script>
+</body>
+</html>

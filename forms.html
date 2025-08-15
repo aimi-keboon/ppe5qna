@@ -111,21 +111,34 @@
             padding: 1.5rem;
             text-align: center;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 2px solid transparent;
         }
 
         .form-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            border-color: rgba(102, 126, 234, 0.2);
         }
 
         .form-card h3 {
             color: #667eea;
             margin-bottom: 1rem;
+            font-size: 1.3rem;
         }
 
         .form-card p {
             color: #666;
             margin-bottom: 1rem;
+            font-size: 0.95rem;
+        }
+
+        .form-card.membership {
+            background: linear-gradient(135deg, rgba(40, 167, 69, 0.1), rgba(25, 135, 84, 0.1));
+            border-color: rgba(40, 167, 69, 0.2);
+        }
+
+        .form-card.membership h3 {
+            color: #28a745;
         }
 
         .fee-notice {
@@ -134,25 +147,49 @@
             border-radius: 8px;
             padding: 0.8rem;
             margin: 1rem 0;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             color: #856404;
+            text-align: left;
+        }
+
+        .membership-notice {
+            background: rgba(40, 167, 69, 0.1);
+            border: 1px solid #28a745;
+            border-radius: 8px;
+            padding: 0.8rem;
+            margin: 1rem 0;
+            font-size: 0.85rem;
+            color: #155724;
+            text-align: left;
         }
 
         .btn {
             display: inline-block;
             background: linear-gradient(135deg, #667eea, #764ba2);
             color: white;
-            padding: 0.5rem 1.5rem;
+            padding: 0.6rem 1.5rem;
             text-decoration: none;
             border-radius: 25px;
             font-weight: 500;
             transition: all 0.3s ease;
             border: none;
             cursor: pointer;
+            font-size: 0.95rem;
         }
 
         .btn:hover {
             transform: scale(1.05);
+        }
+
+        .btn.membership {
+            background: linear-gradient(135deg, #28a745, #20c997);
+        }
+
+        .membership-options {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
         }
 
         footer {
@@ -219,6 +256,14 @@
             .forms-grid {
                 grid-template-columns: 1fr;
             }
+
+            .membership-options {
+                flex-direction: column;
+            }
+
+            .membership-options .btn {
+                margin-bottom: 0.5rem;
+            }
         }
     </style>
 </head>
@@ -248,12 +293,23 @@
             <h2 style="text-align: center; margin-bottom: 2rem; color: #667eea;">Community Forms</h2>
             
             <div class="forms-grid">
+                <!-- Membership Forms -->
+                <div class="form-card membership">
+                    <h3>Membership</h3>
+                    <p>Join our community or access member services and information updates.</p>
+                    
+                    <div class="membership-options">
+                        <a href="membership-new.html" class="btn membership">Register as a Member</a>
+                        <a href="membership-existing.html" class="btn membership">Renew my Membership</a>
+                    </div>
+                </div>
+
                 <div class="form-card">
                     <h3>Host an Event</h3>
                     <p>Planning a community event? Submit your proposal and get approval from the committee.</p>
                     <div class="fee-notice">
                         <strong>Note:</strong> Once approved, a committee fee is required to finalize publication on the website. Your event will be featured for 6 months.<br>
-                        <strong>Members:</strong> RM 50 | <strong>Non-members:</strong> RM 100
+                        <strong>Members:</strong> RM 50  <br><strong>Non-members:</strong> RM 100
                     </div>
                     <button onclick="openExternalForm('event')" class="btn">Submit Event Form</button>
                 </div>
@@ -263,7 +319,7 @@
                     <p>Promote your local business to neighbors. Submit your business information for listing.</p>
                     <div class="fee-notice">
                         <strong>Note:</strong> Once approved, a committee fee is required to finalize publication on the website. Your business will be listed for 1 year.<br>
-                        <strong>Members:</strong> RM 100 | <strong>Non-members:</strong> RM 200
+                        <strong>Members:</strong> RM 100 <br><strong>Non-members:</strong> RM 200
                     </div>
                     <button onclick="openExternalForm('business')" class="btn">List Your Business</button>
                 </div>
@@ -271,13 +327,22 @@
                 <div class="form-card">
                     <h3>Neighborhood Inquiry</h3>
                     <p>Have questions, concerns, or want to report an issue? Let us know and we'll address it.</p>
+                    <p><strong>Registered member submission will be prioritised</strong></p>
                     <button onclick="openExternalForm('inquiry')" class="btn">Submit Inquiry</button>
                 </div>
 
                 <div class="form-card">
                     <h3>Maintenance Request</h3>
                     <p>Report maintenance issues in common areas or request community improvements.</p>
+                    <p><strong>Registered member submission will be prioritised</strong></p>
                     <button onclick="openExternalForm('maintenance')" class="btn">Report Issue</button>
+                </div>
+
+                <div class="form-card">
+                    <h3>Committee Meeting</h3>
+                    <p>Submit agenda items or request to speak at upcoming committee meetings.</p>
+                    <p><strong>Registered member submission will be prioritised</strong></p>
+                    <button onclick="openExternalForm('committee')" class="btn">Submit Request</button>
                 </div>
             </div>
         </section>
@@ -294,7 +359,7 @@
                 </div>
                 <div class="footer-section">
                     <h4>Quick Links</h4>
-                    <a href="membership.html">Join Us</a>
+                    <a href="membership-new.html">Join Us</a>
                     <a href="events.html">Upcoming Events</a>
                     <a href="forms.html">Submit Forms</a>
                 </div>
@@ -333,6 +398,9 @@
                     break;
                 case 'maintenance':
                     message = 'Redirecting to Maintenance Request Form...\n\nReplace this with your Google Form link for maintenance requests.';
+                    break;
+                case 'committee':
+                    message = 'Redirecting to Committee Meeting Request Form...\n\nReplace this with your Google Form link for committee requests.';
                     break;
             }
             
