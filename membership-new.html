@@ -581,7 +581,7 @@
             <form id="membershipForm">
                 <!-- Section A: Member Information -->
                 <div class="section">
-                    <h3 class="section-title">📋 A. Member Information</h3>
+                    <h3 class="section-title">A. Member Information</h3>
                     
                     <div class="form-group">
                         <label for="fullName">Full Name <span class="required">*</span></label>
@@ -651,7 +651,7 @@
 
                 <!-- Section B: Household Information -->
                 <div class="section">
-                    <h3 class="section-title">🏠 B. Household Information</h3>
+                    <h3 class="section-title">B. Household Information</h3>
                     <p style="margin-bottom: 1rem; color: #cccccc; font-size: 0.9rem;">Please list all family members living at your address (optional but helps us understand our community better)</p>
                     <div class="table-section">
                         <table id="householdTable">
@@ -682,7 +682,7 @@
 
                 <!-- Section C: Vehicle Information -->
                 <div class="section">
-                    <h3 class="section-title">🚗 C. Vehicle Information</h3>
+                    <h3 class="section-title">C. Vehicle Information</h3>
                     <p style="margin-bottom: 1rem; color: #cccccc; font-size: 0.9rem;">Please register your vehicles for parking and security purposes (optional)</p>
                     <div class="table-section">
                         <table id="vehicleTable">
@@ -719,12 +719,9 @@
 
                 <!-- Payment Section -->
                 <div class="payment-section">
-                    <h3>💳 Choose Your Membership Package</h3>
+                    <h3>Choose Your Membership Package</h3>
                     <p>Select one to submit your application and process payment</p>
                     
-                    <div class="info-notice">
-                        <strong>How it works:</strong> Submit form → Immediate redirect to secure payment → Manual activation within 24 hours after payment confirmation.
-                    </div>
 
                     <div class="payment-options">
                         <!-- 6 Months Package -->
@@ -742,7 +739,7 @@
                         <!-- 12 Months Package -->
                         <div class="payment-card popular">
                             <div class="payment-price">RM 170</div>
-                            <div class="payment-duration"><strong>12 Months (Popular)</strong></div>
+                            <div class="payment-duration"><strong>12 Months</strong></div>
                             <div class="package-description">
                                 RM50 Registration Fee + RM120 (12 months × RM10)
                             </div>
@@ -764,7 +761,7 @@
         // ==========================================
         // CONFIGURATION - UPDATE THIS URL
         // ==========================================
-        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzvkDXHGHU4YqHydcliTsBcomko79OY8MpRvEYna6bZkj3TL6_UtwmaEiyLQpOulRU73Q/exec';
+        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyGfTPiStXlIxfIFEeBvp31yu_K0IWF52ZMSsqRinHPWxdWpvxlFa0Uqp2BjI1C2qnqbA/exec';
         // Replace with your actual deployed Apps Script URL
         // Example: 'https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec'
 
@@ -830,14 +827,14 @@
             statusDiv.className = 'payment-status pending';
             statusDiv.style.display = 'block';
             statusDiv.innerHTML = `
-                <strong>⏳ Processing Application</strong><br>
+                <strong>Processing Application</strong><br>
                 Preparing ${packageNames[packageType]} (RM ${amount}) for submission...
             `;
 
             // Disable all buttons
             document.querySelectorAll('.payment-btn').forEach(btn => {
                 btn.disabled = true;
-                btn.innerHTML = '⏳ Processing...';
+                btn.innerHTML = 'Processing...';
             });
 
             // Collect form data
@@ -892,7 +889,7 @@
             }
 
             if (!hasRequiredInfo) {
-                alert(`⚠️ Required Information Missing\n\nPlease complete the following fields:\n• ${missingFields.join('\n• ')}`);
+                alert(`Required Information Missing\n\nPlease complete the following fields:\n• ${missingFields.join('\n• ')}`);
                 document.getElementById('fullName').focus();
                 return false;
             }
@@ -970,7 +967,7 @@
                     // Show success message
                     statusDiv.className = 'payment-status success';
                     statusDiv.innerHTML = `
-                        <strong>✅ Application Submitted Successfully!</strong><br>
+                        <strong>Application Submitted Successfully!</strong><br>
                         Membership ID: <strong>${result.membershipId}</strong><br>
                         You will be redirected to payment in 3 seconds...
                     `;
@@ -990,10 +987,10 @@
                 // Show error status
                 statusDiv.className = 'payment-status error';
                 statusDiv.innerHTML = `
-                    <strong>❌ Submission Failed</strong><br>
+                    <strong>Submission Failed</strong><br>
                     ${error.message}<br>
                     <button onclick="retrySubmission()" style="margin-top: 1rem; padding: 0.5rem 1rem; background: #e74c3c; color: white; border: none; border-radius: 5px; cursor: pointer;">
-                        🔄 Try Again
+                        Try Again
                     </button>
                 `;
                 
@@ -1038,20 +1035,6 @@
         // Auto-focus on form load
         window.addEventListener('load', function() {
             document.getElementById('fullName').focus();
-        });
-
-        // Check if Apps Script URL is configured
-        window.addEventListener('load', function() {
-            if (APPS_SCRIPT_URL === 'https://script.google.com/macros/s/AKfycbzvkDXHGHU4YqHydcliTsBcomko79OY8MpRvEYna6bZkj3TL6_UtwmaEiyLQpOulRU73Q/exec') {
-                console.warn('⚠️ Apps Script URL not configured! Please update APPS_SCRIPT_URL in the script.');
-                const statusDiv = document.getElementById('paymentStatus');
-                statusDiv.className = 'payment-status error';
-                statusDiv.style.display = 'block';
-                statusDiv.innerHTML = `
-                    <strong>⚠️ Configuration Required</strong><br>
-                    Apps Script URL not configured. Please update the APPS_SCRIPT_URL variable in the code.
-                `;
-            }
         });
 
         console.log('New member registration form initialized');
