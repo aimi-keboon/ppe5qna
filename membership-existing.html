@@ -831,7 +831,7 @@
         document.getElementById("searchBtn").disabled = true;
 
         try {
-          console.log("Searching membership:", { membershipId, icNumber });
+          console.log("Searching membership:", { membershipId});
 
           const response = await fetch(APPS_SCRIPT_URL, {
             method: "POST",
@@ -842,7 +842,6 @@
             body: new URLSearchParams({
               action: "searchMembership",
               membershipId: membershipId,
-              icNumber: "",
             }),
           });
 
