@@ -14,9 +14,25 @@
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
-            color: #333;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #ffffff;
+            background: linear-gradient(135deg, #1a0000 0%, #2d0000 25%, #4a0000 50%, #2d0000 75%, #1a0000 100%);
             min-height: 100vh;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(255, 215, 0, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(220, 20, 60, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 60%, rgba(255, 69, 0, 0.05) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: -1;
         }
 
         .container {
@@ -26,9 +42,10 @@
         }
 
         header {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.9) 0%, rgba(20, 0, 0, 0.95) 100%);
+            backdrop-filter: blur(20px);
+            border-bottom: 2px solid #FFD700;
+            box-shadow: 0 4px 30px rgba(255, 215, 0, 0.2);
             position: sticky;
             top: 0;
             z-index: 1000;
@@ -42,27 +59,52 @@
         }
 
         .logo {
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             font-weight: bold;
-            color: #667eea;
+            background: linear-gradient(45deg, #FFD700, #FFA500, #DC143C);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
         }
 
         .nav-links {
             display: flex;
-            gap: 2rem;
+            gap: 2.5rem;
             list-style: none;
         }
 
         .nav-links a {
             text-decoration: none;
-            color: #333;
-            font-weight: 500;
-            transition: color 0.3s ease;
+            color: #ffffff;
+            font-weight: 600;
+            position: relative;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 50%;
+            background: linear-gradient(90deg, #FFD700, #DC143C);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
         }
 
         .nav-links a:hover,
         .nav-links a.active {
-            color: #667eea;
+            color: #FFD700;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+
+        .nav-links a:hover::before,
+        .nav-links a.active::before {
+            width: 100%;
         }
 
         .mobile-menu {
@@ -74,7 +116,7 @@
         .mobile-menu span {
             width: 25px;
             height: 3px;
-            background: #333;
+            background: linear-gradient(90deg, #FFD700, #DC143C);
             margin: 3px 0;
             transition: 0.3s;
         }
@@ -84,71 +126,131 @@
         }
 
         .section {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 2rem;
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.85) 0%, rgba(20, 0, 0, 0.9) 100%);
+            backdrop-filter: blur(15px);
+            border-radius: 25px;
+            padding: 3rem;
             margin: 2rem 0;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            animation: fadeIn 0.5s ease-in;
+            box-shadow: 
+                0 15px 35px rgba(0, 0, 0, 0.5),
+                0 0 0 1px rgba(255, 215, 0, 0.1),
+                inset 0 1px 0 rgba(255, 215, 0, 0.1);
+            position: relative;
+            overflow: hidden;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        h2 {
+            text-align: center;
+            margin-bottom: 3rem;
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 25%, #DC143C 50%, #FFD700 75%, #FFF 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
+            font-size: 2.5rem;
         }
 
         .gallery-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 1rem;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
             margin-top: 2rem;
         }
 
         .gallery-item {
-            background: #f8f9fa;
-            border-radius: 15px;
+            background: linear-gradient(135deg, rgba(20, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.8) 100%);
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            border-radius: 20px;
             overflow: hidden;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            transition: all 0.4s ease;
             cursor: pointer;
+            position: relative;
+        }
+
+        .gallery-item::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #FFD700, #DC143C, #000, #FFD700);
+            border-radius: 20px;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .gallery-item:hover::before {
+            opacity: 1;
         }
 
         .gallery-item:hover {
             transform: scale(1.05);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.3),
+                0 0 30px rgba(255, 215, 0, 0.2);
         }
 
         .gallery-placeholder {
-            height: 200px;
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            height: 250px;
+            background: linear-gradient(135deg, #DC143C 0%, #8B0000 25%, #FFD700 50%, #FFA500 75%, #DC143C 100%);
+            background-size: 200% 200%;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
-            font-size: 1.2rem;
+            font-size: 1.4rem;
             font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .gallery-placeholder::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .gallery-item:hover .gallery-placeholder::before {
+            left: 100%;
         }
 
         .gallery-info {
-            padding: 1rem;
+            padding: 1.5rem;
         }
 
         .gallery-info h4 {
-            color: #667eea;
-            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.8rem;
+            font-size: 1.2rem;
+            font-weight: 700;
         }
 
         .gallery-info p {
-            color: #666;
-            font-size: 0.9rem;
+            color: #cccccc;
+            font-size: 0.95rem;
+            line-height: 1.6;
         }
 
         footer {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.95) 0%, rgba(20, 0, 0, 0.9) 100%);
+            backdrop-filter: blur(15px);
             margin-top: 4rem;
-            padding: 2rem 0;
-            border-top: 1px solid rgba(102, 126, 234, 0.1);
+            padding: 3rem 0;
+            border-top: 2px solid rgba(255, 215, 0, 0.3);
+            position: relative;
         }
 
         .footer-content {
@@ -159,26 +261,48 @@
         }
 
         .footer-section h4 {
-            color: #667eea;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
             margin-bottom: 1rem;
+            font-size: 1.2rem;
+            font-weight: 700;
         }
 
         .footer-section p,
         .footer-section a {
-            color: #666;
+            color: #cccccc;
             text-decoration: none;
             margin-bottom: 0.5rem;
-            display: block;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            transition: all 0.3s ease;
+        }
+
+        .footer-icon {
+            width: 18px;
+            height: 18px;
+            stroke: #FFD700;
+            flex-shrink: 0;
         }
 
         .footer-section a:hover {
-            color: #667eea;
+            color: #FFD700;
+            text-shadow: 0 0 5px rgba(255, 215, 0, 0.3);
+            transform: translateX(5px);
+        }
+
+        .footer-section a:hover .footer-icon {
+            stroke: #FFA500;
+            filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.5));
         }
 
         .footer-bottom {
             text-align: center;
-            color: #666;
-            border-top: 1px solid rgba(102, 126, 234, 0.1);
+            color: #999;
+            border-top: 1px solid rgba(255, 215, 0, 0.2);
             padding-top: 2rem;
         }
 
@@ -189,11 +313,12 @@
                 top: 100%;
                 left: 0;
                 right: 0;
-                background: rgba(255, 255, 255, 0.95);
-                backdrop-filter: blur(10px);
+                background: linear-gradient(135deg, rgba(0, 0, 0, 0.95) 0%, rgba(20, 0, 0, 0.9) 100%);
+                backdrop-filter: blur(20px);
                 flex-direction: column;
                 padding: 1rem;
-                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+                border-top: 1px solid rgba(255, 215, 0, 0.2);
             }
 
             .nav-links.show {
@@ -205,8 +330,34 @@
             }
 
             .gallery-grid {
-                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
             }
+
+            .section {
+                padding: 2rem;
+            }
+
+            h2 {
+                font-size: 2rem;
+            }
+        }
+
+        /* Scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #1a0000;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #FFD700, #DC143C);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, #FFA500, #8B0000);
         }
     </style>
 </head>
@@ -233,14 +384,14 @@
 
     <main class="container">
         <section class="section">
-            <h2 style="text-align: center; margin-bottom: 2rem; color: #667eea;">Community Gallery</h2>
+            <h2>Community Gallery</h2>
             
             <div class="gallery-grid">
                 <div class="gallery-item" onclick="viewGalleryItem('Annual Dinner 2024')">
                     <div class="gallery-placeholder">Annual Dinner 2024</div>
                     <div class="gallery-info">
                         <h4>Annual Community Dinner</h4>
-                        <p>A wonderful evening bringing neighbors together</p>
+                        <p>A wonderful evening bringing neighbors together in celebration and unity</p>
                     </div>
                 </div>
 
@@ -248,7 +399,7 @@
                     <div class="gallery-placeholder">Sports Day</div>
                     <div class="gallery-info">
                         <h4>Community Sports Day</h4>
-                        <p>Fun activities for all ages</p>
+                        <p>Fun activities and competitions for all ages in our neighborhood</p>
                     </div>
                 </div>
 
@@ -256,7 +407,31 @@
                     <div class="gallery-placeholder">Gotong Royong</div>
                     <div class="gallery-info">
                         <h4>Neighborhood Cleanup</h4>
-                        <p>Working together to keep our area beautiful</p>
+                        <p>Working together to keep our exclusive area beautiful and pristine</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item" onclick="viewGalleryItem('CNY 2024')">
+                    <div class="gallery-placeholder">CNY 2024</div>
+                    <div class="gallery-info">
+                        <h4>Chinese New Year Celebration</h4>
+                        <p>Traditional festivities with lion dance and cultural performances</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item" onclick="viewGalleryItem('Raya Open House')">
+                    <div class="gallery-placeholder">Raya Open House</div>
+                    <div class="gallery-info">
+                        <h4>Hari Raya Open House</h4>
+                        <p>Community gathering celebrating the spirit of forgiveness and togetherness</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item" onclick="viewGalleryItem('Security Meeting')">
+                    <div class="gallery-placeholder">Security Meeting</div>
+                    <div class="gallery-info">
+                        <h4>Community Security Forum</h4>
+                        <p>Important discussions on maintaining our neighborhood's safety and security</p>
                     </div>
                 </div>
             </div>
@@ -268,15 +443,54 @@
             <div class="footer-content">
                 <div class="footer-section">
                     <h4>Contact Info</h4>
-                    <p>📧 ppqna.e5@gmail.com</p>
-                    <p>📞 +60 12-345 6789</p>
-                    <p>📍 E5 QNA Residential Area</p>
+                    <p>
+                        <svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                            <polyline points="22,6 12,13 2,6"/>
+                        </svg>
+                        ppqna.e5@gmail.com
+                    </p>
+                    <p>
+                        <svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                        </svg>
+                        +60 12-345 6789
+                    </p>
+                    <p>
+                        <svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                            <circle cx="12" cy="10" r="3"/>
+                        </svg>
+                        QNA Residence 5, Jalan Springhill, Port Dickson, N.Sembilan
+                    </p>
                 </div>
                 <div class="footer-section">
                     <h4>Quick Links</h4>
-                    <a href="membership.html">Join Us</a>
-                    <a href="events.html">Upcoming Events</a>
-                    <a href="forms.html">Submit Forms</a>
+                    <a href="membership.html">
+                        <svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                            <circle cx="9" cy="7" r="4"/>
+                            <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                        </svg>
+                        Join Us
+                    </a>
+                    <a href="events.html">
+                        <svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                            <line x1="16" y1="2" x2="16" y2="6"/>
+                            <line x1="8" y1="2" x2="8" y2="6"/>
+                            <line x1="3" y1="10" x2="21" y2="10"/>
+                        </svg>
+                        Upcoming Events
+                    </a>
+                    <a href="forms.html">
+                        <svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/>
+                            <polyline points="14,2 14,8 20,8"/>
+                        </svg>
+                        Submit Forms
+                    </a>
                 </div>
                 <div class="footer-section">
                     <h4>Community</h4>
