@@ -14,10 +14,25 @@
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
-            color: #333;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #ffffff;
+            background: linear-gradient(135deg, #1a0000 0%, #2d0000 25%, #4a0000 50%, #2d0000 75%, #1a0000 100%);
             min-height: 100vh;
-            padding: 2rem 0;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(255, 215, 0, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(220, 20, 60, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 60%, rgba(255, 69, 0, 0.05) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: -1;
         }
 
         .container {
@@ -26,12 +41,66 @@
             padding: 0 20px;
         }
 
+        header {
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.9) 0%, rgba(20, 0, 0, 0.95) 100%);
+            backdrop-filter: blur(20px);
+            border-bottom: 2px solid #FFD700;
+            box-shadow: 0 4px 30px rgba(255, 215, 0, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, #FFD700, #FFA500, #DC143C);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #FFD700;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .back-link:hover {
+            color: #FFA500;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+            transform: translateX(-5px);
+        }
+
+        main {
+            padding: 2rem 0;
+        }
+
         .form-container {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 2rem;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.85) 0%, rgba(20, 0, 0, 0.9) 100%);
+            backdrop-filter: blur(15px);
+            border-radius: 25px;
+            padding: 3rem;
+            box-shadow: 
+                0 15px 35px rgba(0, 0, 0, 0.5),
+                0 0 0 1px rgba(255, 215, 0, 0.1),
+                inset 0 1px 0 rgba(255, 215, 0, 0.1);
+            position: relative;
+            overflow: hidden;
             animation: fadeIn 0.5s ease-in;
         }
 
@@ -43,56 +112,50 @@
         .form-header {
             text-align: center;
             margin-bottom: 2rem;
-            border-bottom: 2px solid rgba(102, 126, 234, 0.1);
+            border-bottom: 2px solid rgba(255, 215, 0, 0.1);
             padding-bottom: 1.5rem;
         }
 
         .form-header h1 {
-            color: #28a745;
-            font-size: 2rem;
+            background: linear-gradient(135deg, #FFD700, #DC143C);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 2.5rem;
             margin-bottom: 0.5rem;
+            font-weight: 700;
         }
 
         .form-header p {
-            color: #666;
+            color: #cccccc;
             font-size: 1.1rem;
             margin-bottom: 1rem;
         }
 
-        .back-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: #667eea;
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s ease;
-        }
-
-        .back-link:hover {
-            color: #764ba2;
-        }
-
         .section {
             margin: 2rem 0;
-            padding: 1.5rem;
-            background: rgba(102, 126, 234, 0.05);
+            padding: 2rem;
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.05) 0%, rgba(220, 20, 60, 0.05) 100%);
             border-radius: 15px;
-            border-left: 4px solid #28a745;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            position: relative;
         }
 
         .section-title {
-            color: #28a745;
-            font-size: 1.2rem;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 1.3rem;
             font-weight: bold;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
             display: flex;
             align-items: center;
             gap: 0.5rem;
         }
 
         .form-group {
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
         }
 
         .form-row {
@@ -104,33 +167,39 @@
         label {
             display: block;
             margin-bottom: 0.5rem;
-            font-weight: 500;
-            color: #333;
+            font-weight: 600;
+            color: #FFD700;
         }
 
         .required {
-            color: #e74c3c;
+            color: #DC143C;
         }
 
         input, select, textarea {
             width: 100%;
             padding: 0.75rem;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            border-radius: 10px;
             font-size: 1rem;
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
-            background: white;
+            background: rgba(0, 0, 0, 0.3);
+            color: #ffffff;
+            transition: all 0.3s ease;
+        }
+
+        input::placeholder, textarea::placeholder {
+            color: #cccccc;
         }
 
         input:focus, select:focus, textarea:focus {
             outline: none;
-            border-color: #28a745;
-            box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.1);
+            border-color: #FFD700;
+            box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.2);
+            background: rgba(0, 0, 0, 0.5);
         }
 
         .radio-group {
             display: flex;
-            gap: 1rem;
+            gap: 1.5rem;
             margin-top: 0.5rem;
             flex-wrap: wrap;
         }
@@ -139,11 +208,22 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            cursor: pointer;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+        }
+
+        .radio-option:hover {
+            background: rgba(255, 215, 0, 0.1);
+            border-color: #FFD700;
         }
 
         .radio-option input[type="radio"] {
             width: auto;
             margin: 0;
+            accent-color: #FFD700;
         }
 
         .table-section {
@@ -153,168 +233,235 @@
         table {
             width: 100%;
             border-collapse: collapse;
-            background: white;
-            border-radius: 8px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
             overflow: hidden;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         }
 
         th {
-            background: #28a745;
+            background: linear-gradient(135deg, #DC143C, #FFD700);
             color: white;
-            padding: 0.75rem;
+            padding: 1rem 0.75rem;
             text-align: left;
-            font-weight: 500;
+            font-weight: 600;
         }
 
         td {
-            padding: 0.5rem;
-            border-bottom: 1px solid #e0e0e0;
+            padding: 0.75rem;
+            border-bottom: 1px solid rgba(255, 215, 0, 0.2);
         }
 
         td input {
-            border: 1px solid #ddd;
+            border: 1px solid rgba(255, 215, 0, 0.3);
             padding: 0.5rem;
-            border-radius: 4px;
+            border-radius: 6px;
+            background: rgba(0, 0, 0, 0.3);
         }
 
         .add-row-btn {
             margin-top: 1rem;
-            padding: 0.5rem 1rem;
+            padding: 0.75rem 1.5rem;
             background: linear-gradient(135deg, #28a745, #20c997);
             color: white;
             border: none;
-            border-radius: 8px;
+            border-radius: 10px;
             cursor: pointer;
             font-size: 0.9rem;
-            transition: transform 0.2s ease;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .add-row-btn:hover {
-            transform: scale(1.05);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(40, 167, 69, 0.3);
         }
 
         .remove-row-btn {
             background: #e74c3c;
             color: white;
             border: none;
-            padding: 0.25rem 0.5rem;
-            border-radius: 4px;
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
             cursor: pointer;
             font-size: 0.8rem;
+            transition: all 0.2s ease;
+        }
+
+        .remove-row-btn:hover {
+            background: #c0392b;
+            transform: scale(1.05);
         }
 
         .declaration {
-            background: rgba(255, 193, 7, 0.1);
-            border: 1px solid #ffc107;
-            border-radius: 8px;
-            padding: 1rem;
-            margin: 1.5rem 0;
+            background: linear-gradient(135deg, rgba(255, 193, 7, 0.1) 0%, rgba(255, 165, 0, 0.1) 100%);
+            border: 2px solid rgba(255, 193, 7, 0.5);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin: 2rem 0;
         }
 
         .declaration label {
             display: flex;
             align-items: flex-start;
-            gap: 0.5rem;
+            gap: 1rem;
             cursor: pointer;
+            color: #e0e0e0;
         }
 
         .declaration input[type="checkbox"] {
             width: auto;
             margin-top: 0.2rem;
+            accent-color: #FFD700;
+            transform: scale(1.2);
         }
 
         .payment-section {
-            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
-            border: 2px solid #667eea;
-            border-radius: 15px;
-            padding: 2rem;
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1) 0%, rgba(220, 20, 60, 0.1) 100%);
+            border: 2px solid #FFD700;
+            border-radius: 20px;
+            padding: 2.5rem;
             margin: 2rem 0;
             text-align: center;
         }
 
         .payment-section h3 {
-            color: #667eea;
+            background: linear-gradient(135deg, #FFD700, #DC143C);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
             margin-bottom: 1.5rem;
-            font-size: 1.5rem;
+            font-size: 1.8rem;
+            font-weight: 700;
         }
 
         .payment-options {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 1.5rem;
-            margin: 1.5rem 0;
+            gap: 2rem;
+            margin: 2rem 0;
         }
 
         .payment-card {
-            background: white;
-            border: 2px solid #667eea;
-            border-radius: 10px;
-            padding: 1.5rem;
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.8) 0%, rgba(20, 0, 0, 0.9) 100%);
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            border-radius: 15px;
+            padding: 2rem;
             text-align: center;
-            transition: transform 0.3s ease, border-color 0.3s ease;
+            transition: all 0.4s ease;
             position: relative;
+            overflow: hidden;
+        }
+
+        .payment-card::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #FFD700, #DC143C, #000, #FFD700);
+            border-radius: 15px;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .payment-card:hover::before {
+            opacity: 1;
         }
 
         .payment-card:hover {
-            transform: translateY(-5px);
-            border-color: #764ba2;
+            transform: translateY(-8px);
+            border-color: #FFD700;
+            box-shadow: 0 15px 35px rgba(255, 215, 0, 0.3);
         }
 
         .payment-card.popular {
             border-color: #28a745;
-            background: linear-gradient(135deg, rgba(40, 167, 69, 0.1), rgba(40, 167, 69, 0.05));
+            background: linear-gradient(135deg, rgba(40, 167, 69, 0.1) 0%, rgba(0, 0, 0, 0.8) 100%);
         }
 
         .payment-price {
-            font-size: 2.5rem;
+            font-size: 3rem;
             font-weight: bold;
-            color: #667eea;
-            margin: 0.5rem 0;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 1rem 0;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
         }
 
         .payment-card.popular .payment-price {
-            color: #28a745;
+            background: linear-gradient(135deg, #28a745, #20c997);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .payment-duration {
-            color: #666;
-            font-size: 1rem;
+            color: #cccccc;
+            font-size: 1.1rem;
             margin-bottom: 1rem;
-            font-weight: 500;
+            font-weight: 600;
         }
 
         .package-description {
-            color: #666;
-            font-size: 0.9rem;
-            margin-bottom: 1rem;
-            line-height: 1.4;
+            color: #e0e0e0;
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.5;
         }
 
         .payment-btn {
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            background: linear-gradient(135deg, #DC143C 0%, #8B0000 25%, #FFD700 50%, #FFA500 75%, #DC143C 100%);
+            background-size: 200% 200%;
             color: white;
-            padding: 0.75rem 1.5rem;
+            padding: 1rem 2rem;
             border: none;
-            border-radius: 25px;
+            border-radius: 12px;
             font-size: 1rem;
-            font-weight: 500;
+            font-weight: bold;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.4s ease;
             width: 100%;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .payment-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
         }
 
         .payment-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(220, 20, 60, 0.4);
+            background-position: right center;
+        }
+
+        .payment-btn:hover::before {
+            left: 100%;
         }
 
         .payment-card.popular .payment-btn {
-            background: linear-gradient(135deg, #28a745, #20c997);
+            background: linear-gradient(135deg, #28a745 0%, #20c997 25%, #FFD700 50%, #FFA500 75%, #28a745 100%);
+            background-size: 200% 200%;
         }
 
         .payment-card.popular .payment-btn:hover {
-            box-shadow: 0 8px 25px rgba(40, 167, 69, 0.4);
+            box-shadow: 0 10px 25px rgba(40, 167, 69, 0.4);
         }
 
         .payment-btn:disabled {
@@ -324,46 +471,51 @@
         }
 
         .info-notice {
-            background: rgba(255, 193, 7, 0.1);
-            border: 1px solid #ffc107;
-            border-radius: 8px;
+            background: linear-gradient(135deg, rgba(255, 193, 7, 0.1) 0%, rgba(255, 165, 0, 0.1) 100%);
+            border: 1px solid rgba(255, 193, 7, 0.5);
+            border-radius: 10px;
             padding: 1rem;
             margin: 1rem 0;
             font-size: 0.9rem;
-            color: #856404;
+            color: #f0d03f;
         }
 
         .payment-status {
             display: none;
             text-align: center;
-            padding: 1rem;
-            margin-top: 1rem;
-            border-radius: 8px;
-            font-weight: 500;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+            border-radius: 10px;
+            font-weight: 600;
         }
 
         .payment-status.success {
-            background: rgba(40, 167, 69, 0.1);
-            color: #28a745;
-            border: 1px solid #28a745;
+            background: rgba(40, 167, 69, 0.2);
+            color: #4caf50;
+            border: 2px solid #28a745;
         }
 
         .payment-status.pending {
-            background: rgba(255, 193, 7, 0.1);
-            color: #856404;
-            border: 1px solid #ffc107;
+            background: rgba(255, 193, 7, 0.2);
+            color: #ffc107;
+            border: 2px solid #ffc107;
         }
 
-        .error-message {
-            background: rgba(231, 76, 60, 0.1);
-            border: 1px solid #e74c3c;
-            border-radius: 8px;
-            padding: 1rem;
-            margin: 1rem 0;
-            color: #e74c3c;
+        .payment-status.error {
+            background: rgba(231, 76, 60, 0.2);
+            color: #ff6b6b;
+            border: 2px solid #e74c3c;
         }
 
         @media (max-width: 768px) {
+            .container {
+                padding: 0 15px;
+            }
+
+            .form-container {
+                padding: 2rem 1.5rem;
+            }
+
             .form-row {
                 grid-template-columns: 1fr;
             }
@@ -385,18 +537,45 @@
             }
 
             .payment-price {
+                font-size: 2.5rem;
+            }
+
+            .form-header h1 {
                 font-size: 2rem;
             }
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #1a0000;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #FFD700, #DC143C);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, #FFA500, #8B0000);
         }
     </style>
 </head>
 <body>
+    <header>
+        <nav class="container">
+            <div class="logo">PP E5 QNA</div>
+            <a href="membership.html" class="back-link">← Back to Membership</a>
+        </nav>
+    </header>
+
     <div class="container">
         <div class="form-container">
             <div class="form-header">
-                <a href="forms.html" class="back-link">← Back to Forms</a>
                 <h1>New Member Registration</h1>
-                <p>Welcome to Persatuan Penduduk E5 QNA</p>
+                <p>Welcome to Persatuan Penduduk E5 QNA Community</p>
             </div>
 
             <form id="membershipForm">
@@ -473,7 +652,7 @@
                 <!-- Section B: Household Information -->
                 <div class="section">
                     <h3 class="section-title">🏠 B. Household Information</h3>
-                    <p style="margin-bottom: 1rem; color: #666; font-size: 0.9rem;">Please list all family members living at your address (optional but helps us understand our community better)</p>
+                    <p style="margin-bottom: 1rem; color: #cccccc; font-size: 0.9rem;">Please list all family members living at your address (optional but helps us understand our community better)</p>
                     <div class="table-section">
                         <table id="householdTable">
                             <thead>
@@ -504,7 +683,7 @@
                 <!-- Section C: Vehicle Information -->
                 <div class="section">
                     <h3 class="section-title">🚗 C. Vehicle Information</h3>
-                    <p style="margin-bottom: 1rem; color: #666; font-size: 0.9rem;">Please register your vehicles for parking and security purposes (optional)</p>
+                    <p style="margin-bottom: 1rem; color: #cccccc; font-size: 0.9rem;">Please register your vehicles for parking and security purposes (optional)</p>
                     <div class="table-section">
                         <table id="vehicleTable">
                             <thead>
@@ -582,11 +761,15 @@
     </div>
 
     <script>
+        // ==========================================
+        // CONFIGURATION - UPDATE THIS URL
+        // ==========================================
+        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzvkDXHGHU4YqHydcliTsBcomko79OY8MpRvEYna6bZkj3TL6_UtwmaEiyLQpOulRU73Q/exec';
+        // Replace with your actual deployed Apps Script URL
+        // Example: 'https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec'
+
         let householdRowCount = 1;
         let vehicleRowCount = 1;
-
-        // Apps Script Web App URL - UPDATE THIS WITH YOUR DEPLOYMENT URL
-        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz2RZSnAcUTlrphHJz6fUz4ycx6amAGwdU5bWksL0zbIpd7DkZIBq82_oVG0W38LH0wlA/exec';
 
         function addHouseholdRow() {
             const tbody = document.getElementById('householdTableBody');
@@ -630,6 +813,8 @@
         }
 
         async function processPayment(packageType, amount) {
+            console.log('Processing payment for:', packageType, amount);
+
             // Validate form before allowing payment
             if (!validateForm()) {
                 return;
@@ -779,31 +964,31 @@
                 }
                 
                 const result = await response.json();
-                console.log('Response:', result);
+                console.log('Response from Apps Script:', result);
                 
                 if (result.success) {
-                    // Show success message before redirect
-                    const packageNames = {
-                        'package_6months': '6 Months Package',
-                        'package_12months': '12 Months Package'
-                    };
+                    // Show success message
+                    statusDiv.className = 'payment-status success';
+                    statusDiv.innerHTML = `
+                        <strong>✅ Application Submitted Successfully!</strong><br>
+                        Membership ID: <strong>${result.membershipId}</strong><br>
+                        You will be redirected to payment in 3 seconds...
+                    `;
                     
-                    alert(`🎉 Application Submitted Successfully!\n\nMembership ID: ${result.membershipId}\nPackage: ${packageNames[formData.packageType]}\nAmount: RM ${formData.amount}\n\nYou will now be redirected to payment.\n\nAfter payment, your membership will be activated within 24 hours.`);
+                    // Redirect to Stripe payment link after 3 seconds
+                    setTimeout(() => {
+                        window.location.href = result.checkoutUrl;
+                    }, 3000);
                     
-                    // Redirect to Stripe payment link
-                    window.location.href = result.checkoutUrl;
                 } else {
                     throw new Error(result.message || 'Unknown error occurred');
                 }
                 
             } catch (error) {
-                console.error('Error:', error);
+                console.error('Error submitting to Apps Script:', error);
                 
                 // Show error status
-                statusDiv.className = 'payment-status';
-                statusDiv.style.background = 'rgba(231, 76, 60, 0.1)';
-                statusDiv.style.color = '#e74c3c';
-                statusDiv.style.border = '1px solid #e74c3c';
+                statusDiv.className = 'payment-status error';
                 statusDiv.innerHTML = `
                     <strong>❌ Submission Failed</strong><br>
                     ${error.message}<br>
@@ -813,22 +998,18 @@
                 `;
                 
                 // Re-enable buttons
-                document.querySelectorAll('.payment-btn').forEach((btn, index) => {
-                    btn.disabled = false;
-                    if (index === 0) {
-                        btn.innerHTML = 'Select 6 Months Package';
-                    } else {
-                        btn.innerHTML = 'Select 12 Months Package';
-                    }
-                });
+                enablePaymentButtons();
             }
         }
 
         function retrySubmission() {
             // Clear error and try again
             document.getElementById('paymentStatus').style.display = 'none';
-            
-            // Re-enable package selection
+            enablePaymentButtons();
+            alert('Please try submitting your application again.');
+        }
+
+        function enablePaymentButtons() {
             document.querySelectorAll('.payment-btn').forEach((btn, index) => {
                 btn.disabled = false;
                 if (index === 0) {
@@ -837,8 +1018,6 @@
                     btn.innerHTML = 'Select 12 Months Package';
                 }
             });
-            
-            alert('Please try submitting your application again.');
         }
 
         // IC Number formatting
@@ -861,7 +1040,22 @@
             document.getElementById('fullName').focus();
         });
 
-        console.log('Simplified membership form initialized');
+        // Check if Apps Script URL is configured
+        window.addEventListener('load', function() {
+            if (APPS_SCRIPT_URL === 'https://script.google.com/macros/s/AKfycbzvkDXHGHU4YqHydcliTsBcomko79OY8MpRvEYna6bZkj3TL6_UtwmaEiyLQpOulRU73Q/exec') {
+                console.warn('⚠️ Apps Script URL not configured! Please update APPS_SCRIPT_URL in the script.');
+                const statusDiv = document.getElementById('paymentStatus');
+                statusDiv.className = 'payment-status error';
+                statusDiv.style.display = 'block';
+                statusDiv.innerHTML = `
+                    <strong>⚠️ Configuration Required</strong><br>
+                    Apps Script URL not configured. Please update the APPS_SCRIPT_URL variable in the code.
+                `;
+            }
+        });
+
+        console.log('New member registration form initialized');
+        console.log('Apps Script URL:', APPS_SCRIPT_URL);
     </script>
 </body>
 </html>

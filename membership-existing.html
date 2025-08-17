@@ -14,10 +14,25 @@
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
-            color: #333;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #ffffff;
+            background: linear-gradient(135deg, #1a0000 0%, #2d0000 25%, #4a0000 50%, #2d0000 75%, #1a0000 100%);
             min-height: 100vh;
-            padding: 2rem 0;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(255, 215, 0, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(220, 20, 60, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 60%, rgba(255, 69, 0, 0.05) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: -1;
         }
 
         .container {
@@ -26,12 +41,66 @@
             padding: 0 20px;
         }
 
+        header {
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.9) 0%, rgba(20, 0, 0, 0.95) 100%);
+            backdrop-filter: blur(20px);
+            border-bottom: 2px solid #FFD700;
+            box-shadow: 0 4px 30px rgba(255, 215, 0, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, #FFD700, #FFA500, #DC143C);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #FFD700;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .back-link:hover {
+            color: #FFA500;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+            transform: translateX(-5px);
+        }
+
+        main {
+            padding: 2rem 0;
+        }
+
         .form-container {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 2rem;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.85) 0%, rgba(20, 0, 0, 0.9) 100%);
+            backdrop-filter: blur(15px);
+            border-radius: 25px;
+            padding: 3rem;
+            box-shadow: 
+                0 15px 35px rgba(0, 0, 0, 0.5),
+                0 0 0 1px rgba(255, 215, 0, 0.1),
+                inset 0 1px 0 rgba(255, 215, 0, 0.1);
+            position: relative;
+            overflow: hidden;
             animation: fadeIn 0.5s ease-in;
         }
 
@@ -43,73 +112,73 @@
         .form-header {
             text-align: center;
             margin-bottom: 2rem;
-            border-bottom: 2px solid rgba(102, 126, 234, 0.1);
+            border-bottom: 2px solid rgba(255, 215, 0, 0.1);
             padding-bottom: 1.5rem;
         }
 
         .form-header h1 {
-            color: #667eea;
-            font-size: 2rem;
+            background: linear-gradient(135deg, #FFD700, #DC143C);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 2.5rem;
             margin-bottom: 0.5rem;
+            font-weight: 700;
         }
 
-        .back-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: #667eea;
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s ease;
-        }
-
-        .back-link:hover {
-            color: #764ba2;
+        .form-header p {
+            color: #cccccc;
+            font-size: 1.1rem;
         }
 
         .search-section {
-            background: rgba(102, 126, 234, 0.1);
-            border: 2px solid #667eea;
-            border-radius: 15px;
-            padding: 2rem;
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1) 0%, rgba(220, 20, 60, 0.1) 100%);
+            border: 2px solid #FFD700;
+            border-radius: 20px;
+            padding: 2.5rem;
             margin-bottom: 2rem;
         }
 
         .search-section h3 {
-            color: #667eea;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
             margin-bottom: 1.5rem;
             text-align: center;
+            font-size: 1.5rem;
+            font-weight: 700;
         }
 
         .member-info-display {
-            background: rgba(40, 167, 69, 0.1);
+            background: linear-gradient(135deg, rgba(40, 167, 69, 0.1) 0%, rgba(40, 167, 69, 0.05) 100%);
             border: 2px solid #28a745;
-            border-radius: 15px;
-            padding: 1.5rem;
+            border-radius: 20px;
+            padding: 2rem;
             margin-bottom: 2rem;
             display: none;
         }
 
         .member-info-display.expired {
-            background: rgba(231, 76, 60, 0.1);
+            background: linear-gradient(135deg, rgba(231, 76, 60, 0.1) 0%, rgba(231, 76, 60, 0.05) 100%);
             border-color: #e74c3c;
         }
 
         .member-info-display.expiring {
-            background: rgba(255, 193, 7, 0.1);
+            background: linear-gradient(135deg, rgba(255, 193, 7, 0.1) 0%, rgba(255, 193, 7, 0.05) 100%);
             border-color: #ffc107;
         }
 
         .member-info-display.not-found {
-            background: rgba(108, 117, 125, 0.1);
+            background: linear-gradient(135deg, rgba(108, 117, 125, 0.1) 0%, rgba(108, 117, 125, 0.05) 100%);
             border-color: #6c757d;
         }
 
         .member-info-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-            margin-bottom: 1rem;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
         }
 
         .info-item {
@@ -119,24 +188,24 @@
 
         .info-label {
             font-weight: bold;
-            color: #666;
+            color: #FFD700;
             font-size: 0.9rem;
             margin-bottom: 0.25rem;
         }
 
         .info-value {
-            color: #333;
+            color: #e0e0e0;
             font-size: 1rem;
         }
 
         .status-badge {
             display: inline-block;
-            padding: 0.5rem 1rem;
+            padding: 0.75rem 1.5rem;
             border-radius: 25px;
             font-weight: bold;
-            font-size: 0.9rem;
+            font-size: 1rem;
             text-align: center;
-            margin: 1rem 0;
+            margin: 1.5rem 0;
         }
 
         .status-active {
@@ -160,7 +229,7 @@
         }
 
         .form-group {
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
         }
 
         .form-row {
@@ -172,52 +241,70 @@
         label {
             display: block;
             margin-bottom: 0.5rem;
-            font-weight: 500;
-            color: #333;
-        }
-
-        .required {
-            color: #e74c3c;
+            font-weight: 600;
+            color: #FFD700;
         }
 
         input {
             width: 100%;
             padding: 0.75rem;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            border-radius: 10px;
             font-size: 1rem;
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
-            background: white;
+            background: rgba(0, 0, 0, 0.3);
+            color: #ffffff;
+            transition: all 0.3s ease;
+        }
+
+        input::placeholder {
+            color: #cccccc;
         }
 
         input:focus {
             outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-        }
-
-        input:disabled {
-            background: #f8f9fa;
-            color: #666;
+            border-color: #FFD700;
+            box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.2);
+            background: rgba(0, 0, 0, 0.5);
         }
 
         .search-btn, .renewal-btn {
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            background: linear-gradient(135deg, #DC143C 0%, #8B0000 25%, #FFD700 50%, #FFA500 75%, #DC143C 100%);
+            background-size: 200% 200%;
             color: white;
-            padding: 0.75rem 2rem;
+            padding: 1rem 2rem;
             border: none;
-            border-radius: 25px;
+            border-radius: 15px;
             font-size: 1rem;
-            font-weight: 500;
+            font-weight: bold;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.4s ease;
             width: 100%;
             margin-top: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .search-btn::before, .renewal-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
         }
 
         .search-btn:hover, .renewal-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(220, 20, 60, 0.4);
+            background-position: right center;
+        }
+
+        .search-btn:hover::before, .renewal-btn:hover::before {
+            left: 100%;
         }
 
         .search-btn:disabled, .renewal-btn:disabled {
@@ -227,114 +314,149 @@
         }
 
         .payment-section {
-            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
-            border: 2px solid #667eea;
-            border-radius: 15px;
-            padding: 2rem;
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1) 0%, rgba(220, 20, 60, 0.1) 100%);
+            border: 2px solid #FFD700;
+            border-radius: 20px;
+            padding: 2.5rem;
             margin: 2rem 0;
             text-align: center;
             display: none;
         }
 
         .payment-section h3 {
-            color: #667eea;
+            background: linear-gradient(135deg, #FFD700, #DC143C);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
             margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            font-weight: 700;
         }
 
         .renewal-options {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 1.5rem;
-            margin: 1.5rem 0;
+            gap: 2rem;
+            margin: 2rem 0;
         }
 
         .renewal-card {
-            background: white;
-            border: 2px solid #667eea;
-            border-radius: 10px;
-            padding: 1.5rem;
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.8) 0%, rgba(20, 0, 0, 0.9) 100%);
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            border-radius: 15px;
+            padding: 2rem;
             text-align: center;
-            transition: transform 0.3s ease, border-color 0.3s ease;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .renewal-card::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #FFD700, #DC143C, #000, #FFD700);
+            border-radius: 15px;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .renewal-card:hover::before {
+            opacity: 1;
         }
 
         .renewal-card:hover {
-            transform: translateY(-5px);
-            border-color: #764ba2;
+            transform: translateY(-8px);
+            border-color: #FFD700;
+            box-shadow: 0 15px 35px rgba(255, 215, 0, 0.3);
         }
 
         .renewal-card.popular {
             border-color: #28a745;
-            background: linear-gradient(135deg, rgba(40, 167, 69, 0.1), rgba(40, 167, 69, 0.05));
+            background: linear-gradient(135deg, rgba(40, 167, 69, 0.1) 0%, rgba(0, 0, 0, 0.8) 100%);
         }
 
         .renewal-price {
-            font-size: 2.5rem;
+            font-size: 3rem;
             font-weight: bold;
-            color: #667eea;
-            margin: 0.5rem 0;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 1rem 0;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
         }
 
         .renewal-card.popular .renewal-price {
-            color: #28a745;
+            background: linear-gradient(135deg, #28a745, #20c997);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .renewal-duration {
-            color: #666;
-            font-size: 1rem;
+            color: #cccccc;
+            font-size: 1.1rem;
             margin-bottom: 1rem;
-            font-weight: 500;
+            font-weight: 600;
         }
 
         .package-description {
-            color: #666;
-            font-size: 0.9rem;
-            margin-bottom: 1rem;
-            line-height: 1.4;
+            color: #e0e0e0;
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.5;
         }
 
         .new-expiry {
-            background: rgba(102, 126, 234, 0.1);
-            padding: 0.5rem;
-            border-radius: 5px;
-            font-size: 0.85rem;
-            color: #667eea;
+            background: rgba(255, 215, 0, 0.1);
+            padding: 0.75rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            color: #FFD700;
             font-weight: bold;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(255, 215, 0, 0.3);
         }
 
         .renewal-card.popular .renewal-btn {
-            background: linear-gradient(135deg, #28a745, #20c997);
+            background: linear-gradient(135deg, #28a745 0%, #20c997 25%, #FFD700 50%, #FFA500 75%, #28a745 100%);
+            background-size: 200% 200%;
         }
 
         .renewal-card.popular .renewal-btn:hover {
-            box-shadow: 0 8px 25px rgba(40, 167, 69, 0.4);
+            box-shadow: 0 10px 25px rgba(40, 167, 69, 0.4);
         }
 
         .info-notice {
-            background: rgba(255, 193, 7, 0.1);
-            border: 1px solid #ffc107;
-            border-radius: 8px;
+            background: linear-gradient(135deg, rgba(255, 193, 7, 0.1) 0%, rgba(255, 165, 0, 0.1) 100%);
+            border: 1px solid rgba(255, 193, 7, 0.5);
+            border-radius: 10px;
             padding: 1rem;
             margin: 1rem 0;
             font-size: 0.9rem;
-            color: #856404;
+            color: #f0d03f;
         }
 
         .loading {
             text-align: center;
-            padding: 2rem;
-            color: #667eea;
+            padding: 3rem;
+            color: #FFD700;
             display: none;
         }
 
         .loading-spinner {
-            border: 3px solid #f3f3f3;
-            border-top: 3px solid #667eea;
+            border: 3px solid rgba(255, 215, 0, 0.3);
+            border-top: 3px solid #FFD700;
             border-radius: 50%;
-            width: 40px;
-            height: 40px;
+            width: 50px;
+            height: 50px;
             animation: spin 1s linear infinite;
-            margin: 0 auto 1rem;
+            margin: 0 auto 1.5rem;
         }
 
         @keyframes spin {
@@ -345,21 +467,23 @@
         .action-buttons {
             display: flex;
             gap: 1rem;
-            margin-top: 1.5rem;
+            margin-top: 2rem;
         }
 
         .action-btn {
             flex: 1;
-            padding: 0.75rem 1.5rem;
+            padding: 1rem 1.5rem;
             border: none;
-            border-radius: 25px;
+            border-radius: 15px;
             font-size: 1rem;
-            font-weight: 500;
+            font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
             text-decoration: none;
             text-align: center;
             display: inline-block;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .btn-renew {
@@ -368,21 +492,56 @@
         }
 
         .btn-renew:hover {
-            transform: translateY(-2px);
+            transform: translateY(-3px);
             box-shadow: 0 8px 25px rgba(40, 167, 69, 0.4);
         }
 
         .btn-update {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            color: white;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            color: #333;
         }
 
         .btn-update:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 215, 0, 0.4);
+        }
+
+        .payment-status {
+            display: none;
+            text-align: center;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+            border-radius: 10px;
+            font-weight: 600;
+        }
+
+        .payment-status.success {
+            background: rgba(40, 167, 69, 0.2);
+            color: #4caf50;
+            border: 2px solid #28a745;
+        }
+
+        .payment-status.pending {
+            background: rgba(255, 193, 7, 0.2);
+            color: #ffc107;
+            border: 2px solid #ffc107;
+        }
+
+        .payment-status.error {
+            background: rgba(231, 76, 60, 0.2);
+            color: #ff6b6b;
+            border: 2px solid #e74c3c;
         }
 
         @media (max-width: 768px) {
+            .container {
+                padding: 0 15px;
+            }
+
+            .form-container {
+                padding: 2rem 1.5rem;
+            }
+
             .form-row {
                 grid-template-columns: 1fr;
             }
@@ -392,7 +551,7 @@
             }
 
             .renewal-price {
-                font-size: 2rem;
+                font-size: 2.5rem;
             }
 
             .member-info-grid {
@@ -402,33 +561,48 @@
             .action-buttons {
                 flex-direction: column;
             }
+
+            .form-header h1 {
+                font-size: 2rem;
+            }
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #1a0000;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #FFD700, #DC143C);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, #FFA500, #8B0000);
         }
     </style>
 </head>
 <body>
+    <header>
+        <nav class="container">
+            <div class="logo">PP E5 QNA</div>
+            <a href="membership.html" class="back-link">← Back to Membership</a>
+        </nav>
+    </header>
+
     <div class="container">
         <div class="form-container">
             <div class="form-header">
-                <a href="forms.html" class="back-link">← Back to Forms</a>
                 <h1>Membership Status & Renewal</h1>
                 <p>Check Your Status and Renew Your Membership</p>
             </div>
 
             <!-- Search Section -->
             <div id="searchSection" class="search-section">
-                <h3>🔍 Find Your Membership Information</h3>
-                
-                <div class="info-notice">
-                    <strong>How it works:</strong> Search for your membership → View current status → Renew if needed → Immediate redirect to payment → Manual activation within 24 hours after payment confirmation.
-                </div>
-
-                <!-- TEST CREDENTIALS BOX - Remove when going live -->
-                <div style="background: rgba(40, 167, 69, 0.1); border: 2px solid #28a745; border-radius: 8px; padding: 1rem; margin: 1rem 0;">
-                    <h4 style="color: #28a745; margin-bottom: 0.5rem;">🧪 Test Credentials (For Testing Only)</h4>
-                    <p style="margin: 0.25rem 0;"><strong>Membership ID:</strong> E5-2024-TEST01</p>
-                    <p style="margin: 0.25rem 0;"><strong>IC Number:</strong> 990101145678</p>
-                    <p style="margin: 0.25rem 0; font-size: 0.9rem; color: #666;">Use either credential above to test the renewal system</p>
-                </div>
+                <h3>Find Your Membership Information</h3>
 
                 <form id="searchForm">
                     <div class="form-row">
@@ -497,13 +671,21 @@
                         </button>
                     </div>
                 </div>
+
+                <div id="paymentStatus" class="payment-status">
+                    <!-- Payment status will be shown here -->
+                </div>
             </div>
         </div>
     </div>
 
     <script>
-        // Apps Script Web App URL - UPDATE THIS WITH YOUR DEPLOYMENT URL
-        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz2RZSnAcUTlrphHJz6fUz4ycx6amAGwdU5bWksL0zbIpd7DkZIBq82_oVG0W38LH0wlA/exec';
+        // ==========================================
+        // CONFIGURATION - UPDATE THIS URL
+        // ==========================================
+        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzvkDXHGHU4YqHydcliTsBcomko79OY8MpRvEYna6bZkj3TL6_UtwmaEiyLQpOulRU73Q/exec';
+        // Replace with your actual deployed Apps Script URL
+        // Example: 'https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec'
         
         let memberData = null;
 
@@ -543,40 +725,9 @@
             document.getElementById('paymentSection').style.display = 'none';
             document.getElementById('searchBtn').disabled = true;
 
-            // HARDCODED TEST MEMBER - Remove when going live
-            if ((membershipId && membershipId.toUpperCase() === 'E5-2024-TEST01') || 
-                (icNumber && icNumber === '990101145678')) {
-                
-                const testMember = {
-                    timestamp: '2024-01-15T10:30:00.000Z',
-                    icNumber: '990101145678',
-                    fullName: 'John Doe Test',
-                    phoneNumber: '+60123456789',
-                    houseNumber: '15, Jalan E5/1',
-                    gender: 'Male',
-                    race: 'Malay',
-                    email: 'john.doe@test.com',
-                    occupation: 'Software Engineer',
-                    status: 'OWNER',
-                    membershipId: 'E5-2024-TEST01',
-                    registrationDate: '2024-01-15T10:30:00.000Z',
-                    membershipExpiry: '2024-06-15T10:30:00.000Z', // Expired for testing
-                    membershipStatus: 'ACTIVE',
-                    lastPaymentDate: '2024-01-15T10:30:00.000Z',
-                    lastPaymentAmount: 110
-                };
-                
-                // Simulate API delay
-                setTimeout(() => {
-                    document.getElementById('loadingSection').style.display = 'none';
-                    document.getElementById('searchBtn').disabled = false;
-                    displaySearchResults({success: true, member: testMember});
-                }, 1500);
-                return;
-            }
-            // END HARDCODED TEST MEMBER
-
             try {
+                console.log('Searching membership:', { membershipId, icNumber });
+                
                 const response = await fetch(APPS_SCRIPT_URL, {
                     method: 'POST',
                     mode: 'cors',
@@ -590,12 +741,17 @@
                     })
                 });
 
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+
                 const result = await response.json();
+                console.log('Search result:', result);
                 displaySearchResults(result);
 
             } catch (error) {
                 console.error('Error searching membership:', error);
-                displayError('There was an issue searching for information. Please try again.');
+                displayError('There was an issue searching for information. Please try again. Error: ' + error.message);
             } finally {
                 document.getElementById('loadingSection').style.display = 'none';
                 document.getElementById('searchBtn').disabled = false;
@@ -608,20 +764,21 @@
             if (!result.success || !result.member) {
                 memberInfoDisplay.className = 'member-info-display not-found';
                 memberInfoDisplay.innerHTML = `
-                    <h4>❌ Membership Not Found</h4>
-                    <p>The information you entered was not found in our records. This could mean:</p>
-                    <ul style="margin: 1rem 0; padding-left: 2rem;">
+                    <h4>Membership Not Found</h4>
+                    <p style="color: #cccccc;">The information you entered was not found in our records. This could mean:</p>
+                    <ul style="margin: 1rem 0; padding-left: 2rem; color: #cccccc;">
                         <li>You haven't registered as a member yet</li>
                         <li>The information provided doesn't match our records</li>
                         <li>Your Membership ID or IC Number has changed</li>
                     </ul>
+                    <p style="color: #cccccc; font-size: 0.9rem;">Error: ${result.message || 'Unknown error'}</p>
                     
                     <div class="action-buttons">
                         <a href="membership-new.html" class="action-btn btn-renew">
-                            📝 Register as New Member
+                            Register as New Member
                         </a>
                         <button onclick="clearSearch()" class="action-btn btn-update">
-                            🔄 Try Again
+                            Try Again
                         </button>
                     </div>
                 `;
@@ -670,26 +827,26 @@
                     </div>
                     <div class="info-item">
                         <span class="info-label">Current Expiry:</span>
-                        <span class="info-value">${formatDate(member.membershipExpiry)}</span>
-                    </div>
+                        <span class="info-value">${formatDate(member.membershipExpiry) || 'Not Set'}
+                            </div>
                 </div>
 
                 <div class="status-badge ${membershipStatus.badgeClass}">
                     ${membershipStatus.icon} ${membershipStatus.text}
                 </div>
 
-                <div style="background: rgba(102, 126, 234, 0.1); padding: 1rem; border-radius: 8px; margin: 1rem 0;">
-                    <strong>${membershipStatus.message}</strong>
+                <div style="background: rgba(255, 215, 0, 0.1); padding: 1.5rem; border-radius: 10px; margin: 1.5rem 0; border: 1px solid rgba(255, 215, 0, 0.3);">
+                    <strong style="color: #FFD700;">${membershipStatus.message}</strong>
                 </div>
 
                 <div class="action-buttons">
                     ${membershipStatus.canRenew ? `
                         <button onclick="showRenewalSection()" class="action-btn btn-renew">
-                            🔄 ${membershipStatus.urgent ? 'Renew Now' : 'Renew Membership'}
+                            ${membershipStatus.urgent ? 'Renew Now' : 'Renew Membership'}
                         </button>
                     ` : ''}
                     <button onclick="clearSearch()" class="action-btn btn-update">
-                        🔍 Search Again
+                        Search Again
                     </button>
                 </div>
             `;
@@ -697,7 +854,7 @@
             memberInfoDisplay.style.display = 'block';
             
             // Update expiry dates for renewal options if renewal is available
-            if (membershipStatus.canRenew) {
+            if (membershipStatus.canRenew && member.membershipExpiry) {
                 updateExpiryDates(member.membershipExpiry);
             }
         }
@@ -715,9 +872,21 @@
                     badgeClass: 'status-pending',
                     icon: '⏳',
                     text: 'PENDING ACTIVATION',
-                    message: 'Your membership is pending activation. Please complete payment if you haven\'t already, or wait for manual activation within 24 hours after payment.',
+                    message: 'Your membership is pending activation. Please complete payment if you haven\'t already, or wait for activation within 48 hours after payment.',
                     urgent: false,
                     canRenew: false
+                };
+            }
+
+            if (!expiryDate) {
+                return {
+                    class: 'not-found',
+                    badgeClass: 'status-pending',
+                    icon: '⏳',
+                    text: 'EXPIRY NOT SET',
+                    message: 'Your membership expiry date is not set. Please contact admin or renew to activate.',
+                    urgent: true,
+                    canRenew: true
                 };
             }
 
@@ -782,6 +951,8 @@
                 return;
             }
 
+            console.log('Processing renewal:', { duration, amount, memberData });
+
             // Collect renewal data
             const renewalData = {
                 fullName: memberData.fullName,
@@ -794,7 +965,14 @@
                 submissionTime: new Date().toISOString()
             };
 
-            console.log('Processing renewal payment for:', renewalData);
+            // Show processing status
+            const statusDiv = document.getElementById('paymentStatus');
+            statusDiv.className = 'payment-status pending';
+            statusDiv.style.display = 'block';
+            statusDiv.innerHTML = `
+                <strong>⏳ Processing Renewal Request</strong><br>
+                Preparing ${duration === '6months' ? '6 Months' : '12 Months'} renewal (RM ${amount}) for submission...
+            `;
 
             // Disable buttons
             document.querySelectorAll('.renewal-btn').forEach(btn => {
@@ -815,31 +993,60 @@
                     })
                 });
 
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+
                 const result = await response.json();
+                console.log('Renewal response:', result);
                 
                 if (result.success) {
-                    // Show success message before redirect
-                    alert(`✅ Renewal Request Submitted!\n\nMembership ID: ${memberData.membershipId}\nDuration: ${duration === '6months' ? '6 Months' : '12 Months'}\nAmount: RM ${amount}\n\nYou will now be redirected to payment.\n\nAfter payment, your membership will be extended within 24 hours.`);
+                    // Show success message
+                    statusDiv.className = 'payment-status success';
+                    statusDiv.innerHTML = `
+                        <strong>✅ Renewal Request Submitted Successfully!</strong><br>
+                        Membership ID: <strong>${memberData.membershipId}</strong><br>
+                        Duration: <strong>${duration === '6months' ? '6 Months' : '12 Months'}</strong><br>
+                        Amount: <strong>RM ${amount}</strong><br>
+                        You will be redirected to payment in 3 seconds...
+                    `;
                     
-                    // Redirect to Stripe payment link
-                    window.location.href = result.checkoutUrl;
+                    // Redirect to Stripe payment link after 3 seconds
+                    setTimeout(() => {
+                        window.location.href = result.checkoutUrl;
+                    }, 3000);
+                    
                 } else {
                     throw new Error(result.message || 'Unknown error occurred');
                 }
             } catch (error) {
                 console.error('Error processing renewal:', error);
-                alert(`❌ Error\n\nThere was an issue processing the renewal. Please try again.\n\nError: ${error.message}`);
+                
+                // Show error status
+                statusDiv.className = 'payment-status error';
+                statusDiv.innerHTML = `
+                    <strong>❌ Renewal Submission Failed</strong><br>
+                    ${error.message}<br>
+                    <button onclick="retryRenewal('${duration}', ${amount})" style="margin-top: 1rem; padding: 0.5rem 1rem; background: #e74c3c; color: white; border: none; border-radius: 5px; cursor: pointer;">
+                        🔄 Try Again
+                    </button>
+                `;
                 
                 // Re-enable buttons
-                document.querySelectorAll('.renewal-btn').forEach(btn => {
-                    btn.disabled = false;
-                });
-                resetButtonText();
+                enableRenewalButtons();
             }
         }
 
-        function resetButtonText() {
+        function retryRenewal(duration, amount) {
+            document.getElementById('paymentStatus').style.display = 'none';
+            enableRenewalButtons();
+            // Retry the renewal process
+            setTimeout(() => processRenewal(duration, amount), 100);
+        }
+
+        function enableRenewalButtons() {
             document.querySelectorAll('.renewal-btn').forEach((btn, index) => {
+                btn.disabled = false;
                 if (index === 0) {
                     btn.innerHTML = 'Renew for 6 Months';
                 } else {
@@ -851,6 +1058,7 @@
         function formatDate(dateString) {
             if (!dateString) return 'N/A';
             const date = new Date(dateString);
+            if (isNaN(date.getTime())) return 'Invalid Date';
             return date.toLocaleDateString('en-GB', {
                 day: '2-digit',
                 month: '2-digit',
@@ -862,10 +1070,10 @@
             const memberInfoDisplay = document.getElementById('memberInfoDisplay');
             memberInfoDisplay.className = 'member-info-display not-found';
             memberInfoDisplay.innerHTML = `
-                <h4>❌ Error</h4>
-                <p>${message}</p>
-                <button onclick="clearSearch()" class="action-btn btn-update" style="margin-top: 1rem; width: 100%;">
-                    🔄 Try Again
+                <h4>Error</h4>
+                <p style="color: #cccccc;">${message}</p>
+                <button onclick="clearSearch()" class="action-btn btn-update" style="margin-top: 1.5rem; width: 100%;">
+                    Try Again
                 </button>
             `;
             memberInfoDisplay.style.display = 'block';
@@ -875,6 +1083,7 @@
             document.getElementById('searchForm').reset();
             document.getElementById('memberInfoDisplay').style.display = 'none';
             document.getElementById('paymentSection').style.display = 'none';
+            document.getElementById('paymentStatus').style.display = 'none';
             memberData = null;
             document.getElementById('membershipId').focus();
         }
@@ -883,8 +1092,9 @@
         window.addEventListener('load', function() {
             document.getElementById('membershipId').focus();
         });
-
-        console.log('Simplified membership status and renewal form initialized');
+        
+        console.log('Existing member status and renewal form initialized');
+        console.log('Apps Script URL:', APPS_SCRIPT_URL);
     </script>
 </body>
 </html>

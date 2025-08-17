@@ -122,175 +122,69 @@
         }
 
         main {
-            padding: 2rem 0;
+            padding: 4rem 0;
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
         }
 
-        .section {
+        .membership-section {
             background: linear-gradient(135deg, rgba(0, 0, 0, 0.85) 0%, rgba(20, 0, 0, 0.9) 100%);
             backdrop-filter: blur(15px);
             border-radius: 25px;
-            padding: 3rem;
-            margin: 2rem 0;
+            padding: 4rem 3rem;
             box-shadow: 
                 0 15px 35px rgba(0, 0, 0, 0.5),
                 0 0 0 1px rgba(255, 215, 0, 0.1),
                 inset 0 1px 0 rgba(255, 215, 0, 0.1);
             position: relative;
             overflow: hidden;
+            width: 100%;
         }
 
         .page-title {
             text-align: center;
-            margin-bottom: 2rem;
+            margin-bottom: 1rem;
             background: linear-gradient(135deg, #FFD700, #DC143C);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            font-size: 2.5rem;
+            font-size: 3rem;
             font-weight: 700;
         }
 
-        .form-container {
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .tabs {
-            display: flex;
-            margin-bottom: 2rem;
-            border-radius: 15px;
-            overflow: hidden;
-            background: rgba(0, 0, 0, 0.5);
-            border: 1px solid rgba(255, 215, 0, 0.3);
-        }
-
-        .tab {
-            flex: 1;
-            padding: 1rem 2rem;
-            background: transparent;
-            border: none;
-            cursor: pointer;
-            font-size: 1rem;
-            font-weight: 600;
-            color: #FFD700;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .tab.active {
-            background: linear-gradient(135deg, #DC143C, #8B0000, #FFD700);
-            color: white;
-        }
-
-        .tab-content {
-            display: none;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        .info-box {
-            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1) 0%, rgba(220, 20, 60, 0.1) 100%);
-            border: 1px solid rgba(255, 215, 0, 0.3);
-            border-radius: 15px;
-            padding: 1.5rem;
-            margin: 1.5rem 0;
-            color: #e0e0e0;
-        }
-
-        .info-box h4 {
-            margin-bottom: 0.5rem;
-            background: linear-gradient(135deg, #FFD700, #FFA500);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .info-icon {
-            width: 24px;
-            height: 24px;
-            stroke: #FFD700;
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-group label {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-            color: #FFD700;
-        }
-
-        .label-icon {
-            width: 16px;
-            height: 16px;
-            stroke: #FFD700;
-        }
-
-        .form-group input,
-        .form-group select,
-        .form-group textarea {
-            width: 100%;
-            padding: 0.75rem;
-            border: 2px solid rgba(255, 215, 0, 0.3);
-            border-radius: 10px;
-            font-size: 1rem;
-            background: rgba(0, 0, 0, 0.3);
-            color: #ffffff;
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .form-group input::placeholder,
-        .form-group textarea::placeholder {
-            color: #cccccc;
-        }
-
-        .form-group input:focus,
-        .form-group select:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: #FFD700;
-            box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.2);
-        }
-
-        .section-heading {
-            margin: 2rem 0 1rem;
-            background: linear-gradient(135deg, #FFD700, #DC143C);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            font-size: 1.5rem;
-            font-weight: 700;
-        }
-
-        .payment-options {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1rem;
-            margin: 2rem 0;
-        }
-
-        .payment-option {
-            border: 2px solid rgba(255, 215, 0, 0.3);
-            border-radius: 15px;
-            padding: 1.5rem;
+        .page-subtitle {
             text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            background: linear-gradient(135deg, rgba(20, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.8) 100%);
-            position: relative;
-            overflow: hidden;
+            margin-bottom: 3rem;
+            color: #cccccc;
+            font-size: 1.2rem;
+            font-weight: 300;
         }
 
-        .payment-option::before {
+        .membership-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 3rem;
+            margin: 3rem 0;
+        }
+
+        .membership-card {
+            background: linear-gradient(135deg, rgba(20, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.8) 100%);
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            border-radius: 20px;
+            padding: 3rem 2rem;
+            text-align: center;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .membership-card::before {
             content: '';
             position: absolute;
             top: -2px;
@@ -298,93 +192,104 @@
             right: -2px;
             bottom: -2px;
             background: linear-gradient(45deg, #FFD700, #DC143C, #000, #FFD700);
-            border-radius: 15px;
+            border-radius: 20px;
             z-index: -1;
             opacity: 0;
-            transition: opacity 0.3s ease;
+            transition: opacity 0.4s ease;
         }
 
-        .payment-option:hover::before {
+        .membership-card:hover::before {
             opacity: 1;
         }
 
-        .payment-option:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(255, 215, 0, 0.2);
-        }
-
-        .payment-option.selected {
+        .membership-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 
+                0 20px 40px rgba(255, 215, 0, 0.3),
+                0 0 50px rgba(220, 20, 60, 0.2);
             border-color: #FFD700;
-            background: linear-gradient(135deg, rgba(220, 20, 60, 0.2) 0%, rgba(0, 0, 0, 0.9) 100%);
-            box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
         }
 
-        .payment-option h3 {
+        .card-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 2rem;
+            background: linear-gradient(135deg, #FFD700, #DC143C);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.3);
+        }
+
+        .card-icon svg {
+            width: 40px;
+            height: 40px;
+            stroke: white;
+            stroke-width: 2;
+        }
+
+        .card-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
             background: linear-gradient(135deg, #FFD700, #FFA500);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            margin-bottom: 0.5rem;
-            font-size: 1.3rem;
         }
 
-        .price {
-            font-size: 2rem;
-            font-weight: bold;
+        .card-description {
+            color: #cccccc;
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+            flex-grow: 1;
+        }
+
+        .card-features {
+            list-style: none;
+            margin: 1.5rem 0;
+            text-align: left;
+        }
+
+        .card-features li {
+            color: #e0e0e0;
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            font-size: 0.95rem;
+        }
+
+        .card-features li::before {
+            content: '✓';
             color: #FFD700;
-            margin: 0.5rem 0;
-            text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
-        }
-
-        .payment-breakdown {
-            background: rgba(255, 215, 0, 0.1);
-            padding: 1rem;
-            border-radius: 10px;
-            margin-bottom: 1rem;
-            border: 1px solid rgba(255, 215, 0, 0.3);
-        }
-
-        .breakdown-row {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 0.5rem;
-        }
-
-        .breakdown-total {
-            display: flex;
-            justify-content: space-between;
-            font-weight: bold;
-            font-size: 1.1rem;
-            padding-top: 0.5rem;
-            border-top: 1px solid rgba(255, 215, 0, 0.5);
-        }
-
-        .total-amount {
             font-weight: bold;
             font-size: 1.2rem;
-            color: #FFD700;
-            text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
         }
 
-        .btn {
+        .card-button {
             background: linear-gradient(135deg, #DC143C 0%, #8B0000 25%, #FFD700 50%, #FFA500 75%, #DC143C 100%);
             background-size: 200% 200%;
             color: white;
-            padding: 0.75rem 2rem;
+            padding: 1rem 2rem;
             border: none;
-            border-radius: 10px;
-            font-size: 1rem;
+            border-radius: 15px;
+            font-size: 1.1rem;
             font-weight: bold;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.4s ease;
             text-transform: uppercase;
             letter-spacing: 1px;
-            box-shadow: 0 4px 15px rgba(220, 20, 60, 0.3);
+            box-shadow: 0 6px 20px rgba(220, 20, 60, 0.3);
             position: relative;
             overflow: hidden;
+            width: 100%;
+            margin-top: auto;
         }
 
-        .btn::before {
+        .card-button::before {
             content: '';
             position: absolute;
             top: 0;
@@ -395,40 +300,38 @@
             transition: left 0.5s;
         }
 
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(220, 20, 60, 0.4);
+        .card-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(220, 20, 60, 0.5);
             background-position: right center;
         }
 
-        .btn:hover::before {
+        .card-button:hover::before {
             left: 100%;
         }
 
-        .btn:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .status-message {
-            padding: 1rem;
-            border-radius: 10px;
-            margin: 1rem 0;
+        .info-banner {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1) 0%, rgba(220, 20, 60, 0.1) 100%);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 3rem 0;
             text-align: center;
-            font-weight: bold;
         }
 
-        .success {
-            background: rgba(76, 175, 80, 0.2);
-            color: #4caf50;
-            border: 1px solid #4caf50;
+        .info-banner h3 {
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+            font-size: 1.4rem;
         }
 
-        .error {
-            background: rgba(244, 67, 54, 0.2);
-            color: #f44336;
-            border: 1px solid #f44336;
+        .info-banner p {
+            color: #e0e0e0;
+            font-size: 1rem;
+            line-height: 1.6;
         }
 
         footer {
@@ -515,20 +418,35 @@
                 display: flex;
             }
 
-            .payment-options {
+            .membership-options {
                 grid-template-columns: 1fr;
+                gap: 2rem;
             }
 
-            .tabs {
-                flex-direction: column;
-            }
-
-            .section {
-                padding: 2rem;
+            .membership-section {
+                padding: 2rem 1.5rem;
             }
 
             .page-title {
-                font-size: 2rem;
+                font-size: 2.2rem;
+            }
+
+            .card-title {
+                font-size: 1.5rem;
+            }
+
+            .membership-card {
+                padding: 2rem 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .membership-options {
+                grid-template-columns: 1fr;
+            }
+
+            .membership-card {
+                min-width: auto;
             }
         }
 
@@ -572,235 +490,82 @@
     </header>
 
     <main class="container">
-        <section class="section">
-            <h2 class="page-title">Membership Registration</h2>
+        <section class="membership-section">
+            <h1 class="page-title">Membership Portal</h1>
+            <p class="page-subtitle">Choose your membership path to join our thriving community</p>
             
-            <div class="form-container">
-                <div class="tabs">
-                    <button class="tab active" onclick="switchMembershipTab('existing')">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 20px; height: 20px; margin-right: 8px; vertical-align: middle;">
-                            <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-                            <circle cx="9" cy="7" r="4"/>
-                            <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
-                            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-                        </svg>
-                        Existing Members
-                    </button>
-                    <button class="tab" onclick="switchMembershipTab('new')">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 20px; height: 20px; margin-right: 8px; vertical-align: middle;">
+            <div class="info-banner">
+                <h3>🏠 Welcome to Persatuan Penduduk E5 QNA</h3>
+                <p>Join our vibrant community and enjoy exclusive benefits, events, and services designed to enhance your living experience in QNA Residence 5. Choose the option that best fits your current status below.</p>
+            </div>
+
+            <div class="membership-options">
+                <!-- New Members Card -->
+                <div class="membership-card" onclick="window.location.href='membership-new.html'">
+                    <div class="card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
                             <circle cx="9" cy="7" r="4"/>
                             <path d="M20 8v6"/>
                             <path d="M23 11h-6"/>
                         </svg>
-                        New Members
+                    </div>
+                    
+                    <div>
+                        <h2 class="card-title">New Members</h2>
+                        <p class="card-description">
+                            Welcome! Start your journey with us by registering as a new member. Perfect for residents who haven't joined our community association yet.
+                        </p>
+                        
+                        <ul class="card-features">
+                            <li>Complete registration form</li>
+                            <li>One-time registration fee (RM 50)</li>
+                            <li>Choose membership duration</li>
+                            <li>Immediate community access</li>
+                            <li>Welcome package included</li>
+                        </ul>
+                    </div>
+                    
+                    <button class="card-button">
+                        Register Now
                     </button>
                 </div>
-                <div id="existingMemberTab" class="tab-content active">
-                    <div class="info-box">
-                        <h4>
-                            
-                            For Existing Members
-                        </h4>
-                        <p>You have already paid the RM 50 one-time membership fee. Use this form to renew your membership or update your information.</p>
+
+                <!-- Existing Members Card -->
+                <div class="membership-card" onclick="window.location.href='membership-existing.html'">
+                    <div class="card-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                            <circle cx="9" cy="7" r="4"/>
+                            <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                        </svg>
                     </div>
-
-                    <form id="existingMemberForm">
-                        <div class="form-group">
-                            <label for="existingMemberId">
-                                <svg class="label-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-                                    <polyline points="14,2 14,8 20,8"/>
-                                    <line x1="16" y1="13" x2="8" y2="13"/>
-                                    <line x1="16" y1="17" x2="8" y2="17"/>
-                                    <polyline points="10,9 9,9 8,9"/>
-                                </svg>
-                                Membership ID *
-                            </label>
-                            <input type="text" id="existingMemberId" name="existingMemberId" placeholder="e.g., E5-2024-001" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="existingFullName">
-                                <svg class="label-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-                                    <circle cx="12" cy="7" r="4"/>
-                                </svg>
-                                Full Name *
-                            </label>
-                            <input type="text" id="existingFullName" name="existingFullName" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="existingEmail">
-                                <svg class="label-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-                                    <polyline points="22,6 12,13 2,6"/>
-                                </svg>
-                                Email Address *
-                            </label>
-                            <input type="email" id="existingEmail" name="existingEmail" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="existingPhone">
-                                <svg class="label-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
-                                </svg>
-                                Phone Number *
-                            </label>
-                            <input type="tel" id="existingPhone" name="existingPhone" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="existingAddress">
-                                <svg class="label-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
-                                    <circle cx="12" cy="10" r="3"/>
-                                </svg>
-                                Address *
-                            </label>
-                            <textarea id="existingAddress" name="existingAddress" rows="3" required></textarea>
-                        </div>
-
-                        <h3 class="section-heading">Select Renewal Period</h3>
+                    
+                    <div>
+                        <h2 class="card-title">Existing Members</h2>
+                        <p class="card-description">
+                            Already a member? Check your status, renew your membership, or update your information. Quick and easy renewal process available.
+                        </p>
                         
-                        <div class="payment-options">
-                            <div class="payment-option" onclick="selectExistingPlan('6months', 60)">
-                                <h3>6 Months</h3>
-                                <div class="price">RM 60</div>
-                                <p>Perfect for trying out renewed benefits</p>
-                            </div>
-                            <div class="payment-option" onclick="selectExistingPlan('1year', 120)">
-                                <h3>1 Year</h3>
-                                <div class="price">RM 120</div>
-                                <p>Best value for active members</p>
-                            </div>
-                        </div>
-
-                        <div id="existingPaymentSection" style="display: none;">
-                            <h3 class="section-heading">Renewal Information</h3>
-                            <div class="form-group">
-                                <label>Selected Plan:</label>
-                                <div id="existingSelectedPlan" style="font-weight: bold; color: #FFD700;"></div>
-                            </div>
-                            <div class="form-group">
-                                <label>Amount:</label>
-                                <div id="existingSelectedAmount" class="total-amount"></div>
-                            </div>
-                            <button type="button" onclick="processExistingMemberPayment()" class="btn" style="width: 100%; margin-top: 1rem;">
-                                Proceed to Payment
-                            </button>
-                        </div>
-                    </form>
-
-                    <div id="existingStatusMessage"></div>
-                </div>
-
-                <!-- New Members Tab -->
-                <div id="newMemberTab" class="tab-content">
-                    <div class="info-box">
-                        <h4>
-                        
-                            For New Members
-                        </h4>
-                        <p>Welcome! New members need to pay a one-time registration fee of RM 50 plus your chosen membership period.</p>
+                        <ul class="card-features">
+                            <li>Check membership status</li>
+                            <li>Renew existing membership</li>
+                            <li>Update personal information</li>
+                            <li>No registration fee required</li>
+                            <li>Seamless renewal process</li>
+                        </ul>
                     </div>
-
-                    <form id="newMemberForm">
-                        <div class="form-group">
-                            <label for="newFullName">
-                                <svg class="label-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-                                    <circle cx="12" cy="7" r="4"/>
-                                </svg>
-                                Full Name *
-                            </label>
-                            <input type="text" id="newFullName" name="newFullName" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="newEmail">
-                                <svg class="label-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-                                    <polyline points="22,6 12,13 2,6"/>
-                                </svg>
-                                Email Address *
-                            </label>
-                            <input type="email" id="newEmail" name="newEmail" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="newPhone">
-                                <svg class="label-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
-                                </svg>
-                                Phone Number *
-                            </label>
-                            <input type="tel" id="newPhone" name="newPhone" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="newAddress">
-                                <svg class="label-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
-                                    <circle cx="12" cy="10" r="3"/>
-                                </svg>
-                                Address *
-                            </label>
-                            <textarea id="newAddress" name="newAddress" rows="3" required></textarea>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="newIcNumber">
-                                <svg class="label-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
-                                    <line x1="8" y1="21" x2="16" y2="21"/>
-                                    <line x1="12" y1="17" x2="12" y2="21"/>
-                                </svg>
-                                IC Number *
-                            </label>
-                            <input type="text" id="newIcNumber" name="newIcNumber" required>
-                        </div>
-
-                        <h3 class="section-heading">Select Membership Plan</h3>
-                        
-                        <div class="payment-options">
-                            <div class="payment-option" onclick="selectNewPlan('6months', 110)">
-                                <h3>6 Months</h3>
-                                <div class="price">RM 110</div>
-                                <p>RM 50 registration + RM 60 membership</p>
-                            </div>
-                            <div class="payment-option" onclick="selectNewPlan('1year', 170)">
-                                <h3>1 Year</h3>
-                                <div class="price">RM 170</div>
-                                <p>RM 50 registration + RM 120 membership</p>
-                            </div>
-                        </div>
-
-                        <div id="newPaymentSection" style="display: none;">
-                            <h3 class="section-heading">Payment Breakdown</h3>
-                            <div class="payment-breakdown">
-                                <div class="breakdown-row">
-                                    <span>Registration Fee (One-time):</span>
-                                    <span style="font-weight: bold; color: #FFD700;">RM 50</span>
-                                </div>
-                                <div class="breakdown-row">
-                                    <span id="newMembershipFee">Membership Fee:</span>
-                                    <span id="newMembershipAmount" style="font-weight: bold; color: #FFD700;"></span>
-                                </div>
-                                <div class="breakdown-total">
-                                    <span>Total Amount:</span>
-                                    <span id="newTotalAmount" class="total-amount"></span>
-                                </div>
-                            </div>
-                            <button type="button" onclick="processNewMemberPayment()" class="btn" style="width: 100%; margin-top: 1rem;">
-                                Proceed to Payment
-                            </button>
-                        </div>
-                    </form>
-
-                    <div id="newStatusMessage"></div>
+                    
+                    <button class="card-button">
+                        Manage Membership
+                    </button>
                 </div>
+            </div>
+
+            <div class="info-banner">
+                <h3>💳 Membership Benefits</h3>
+                <p>Both new and existing members enjoy access to community events, priority booking for facilities, exclusive discounts with local businesses, quarterly newsletters, and voting rights in community decisions. Monthly membership fee: RM 10</p>
             </div>
         </section>
     </main>
@@ -833,14 +598,23 @@
                 </div>
                 <div class="footer-section">
                     <h4>Quick Links</h4>
-                    <a href="membership.html">
+                    <a href="membership-new.html">
+                        <svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                            <circle cx="9" cy="7" r="4"/>
+                            <path d="M20 8v6"/>
+                            <path d="M23 11h-6"/>
+                        </svg>
+                        Register as New Member
+                    </a>
+                    <a href="membership-existing.html">
                         <svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
                             <circle cx="9" cy="7" r="4"/>
                             <path d="M22 21v-2a4 4 0 0 0-3-3.87"/>
                             <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
                         </svg>
-                        Join Us
+                        Renew/Check Status
                     </a>
                     <a href="events.html">
                         <svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -850,13 +624,6 @@
                             <line x1="3" y1="10" x2="21" y2="10"/>
                         </svg>
                         Upcoming Events
-                    </a>
-                    <a href="forms.html">
-                        <svg class="footer-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/>
-                            <polyline points="14,2 14,8 20,8"/>
-                        </svg>
-                        Submit Forms
                     </a>
                 </div>
                 <div class="footer-section">
@@ -872,12 +639,6 @@
     </footer>
 
     <script>
-        // Global variables
-        let existingSelectedPlan = null;
-        let existingSelectedAmount = 0;
-        let newSelectedPlan = null;
-        let newSelectedAmount = 0;
-
         // Mobile menu functionality  
         document.querySelector('.mobile-menu').addEventListener('click', function() {
             const navLinks = document.querySelector('.nav-links');
@@ -894,204 +655,51 @@
             }
         });
 
-        // Membership tab switching
-        function switchMembershipTab(tab) {
-            const tabs = document.querySelectorAll('.tab');
-            const tabContents = document.querySelectorAll('.tab-content');
-            
-            tabs.forEach(t => t.classList.remove('active'));
-            tabContents.forEach(tc => tc.classList.remove('active'));
-            
-            if (tab === 'existing') {
-                tabs[0].classList.add('active');
-                document.getElementById('existingMemberTab').classList.add('active');
-            } else {
-                tabs[1].classList.add('active');
-                document.getElementById('newMemberTab').classList.add('active');
-            }
-        }
-
-        // Existing member plan selection
-        function selectExistingPlan(plan, amount) {
-            const options = document.querySelectorAll('#existingMemberTab .payment-option');
-            options.forEach(option => option.classList.remove('selected'));
-            event.target.closest('.payment-option').classList.add('selected');
-            
-            existingSelectedPlan = plan;
-            existingSelectedAmount = amount;
-            
-            document.getElementById('existingSelectedPlan').textContent = 
-                plan === '6months' ? '6 Months Renewal' : '1 Year Renewal';
-            document.getElementById('existingSelectedAmount').textContent = `RM ${amount}`;
-            document.getElementById('existingPaymentSection').style.display = 'block';
-        }
-
-        // New member plan selection
-        function selectNewPlan(plan, amount) {
-            const options = document.querySelectorAll('#newMemberTab .payment-option');
-            options.forEach(option => option.classList.remove('selected'));
-            event.target.closest('.payment-option').classList.add('selected');
-            
-            newSelectedPlan = plan;
-            newSelectedAmount = amount;
-            
-            const membershipFee = amount - 50;
-            document.getElementById('newMembershipFee').textContent = 
-                `Membership Fee (${plan === '6months' ? '6 Months' : '1 Year'}):`;
-            document.getElementById('newMembershipAmount').textContent = `RM ${membershipFee}`;
-            document.getElementById('newTotalAmount').textContent = `RM ${amount}`;
-            document.getElementById('newPaymentSection').style.display = 'block';
-        }
-
-        // Process existing member payment
-        function processExistingMemberPayment() {
-            const form = document.getElementById('existingMemberForm');
-            const formData = new FormData(form);
-            
-            const requiredFields = ['existingMemberId', 'existingFullName', 'existingEmail', 'existingPhone', 'existingAddress'];
-            let isValid = true;
-            
-            requiredFields.forEach(field => {
-                if (!formData.get(field)) isValid = false;
+        // Add smooth transitions and enhanced hover effects
+        document.querySelectorAll('.membership-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.filter = 'brightness(1.1)';
             });
             
-            if (!existingSelectedPlan) isValid = false;
-            
-            if (!isValid) {
-                showExistingStatus('Please fill in all required fields and select a renewal plan.', 'error');
-                return;
-            }
-            
-            showExistingStatus('Processing renewal payment... Please wait.', 'success');
-            
-            setTimeout(() => {
-                showExistingStatus(`Renewal successful! Your membership has been extended. 
-                                 Confirmation details will be sent to your email.
-                                 Note: Replace this with your actual payment gateway integration.`, 'success');
-                
-                setTimeout(() => {
-                    form.reset();
-                    document.getElementById('existingPaymentSection').style.display = 'none';
-                    existingSelectedPlan = null;
-                    existingSelectedAmount = 0;
-                    document.querySelectorAll('#existingMemberTab .payment-option').forEach(option => 
-                        option.classList.remove('selected'));
-                }, 3000);
-            }, 2000);
-        }
-
-        // Process new member payment
-        function processNewMemberPayment() {
-            const form = document.getElementById('newMemberForm');
-            const formData = new FormData(form);
-            
-            const requiredFields = ['newFullName', 'newEmail', 'newPhone', 'newAddress', 'newIcNumber'];
-            let isValid = true;
-            
-            requiredFields.forEach(field => {
-                if (!formData.get(field)) isValid = false;
+            card.addEventListener('mouseleave', function() {
+                this.style.filter = 'brightness(1)';
             });
-            
-            if (!newSelectedPlan) isValid = false;
-            
-            if (!isValid) {
-                showNewStatus('Please fill in all required fields and select a membership plan.', 'error');
-                return;
-            }
-            
-            showNewStatus('Processing registration and payment... Please wait.', 'success');
-            
-            setTimeout(() => {
-                showNewStatus(`Welcome to Persatuan Penduduk E5 QNA! Your membership registration is complete.
-                             You will receive your membership ID and confirmation email shortly.
-                             Note: Replace this with your actual payment gateway integration.`, 'success');
+        });
+
+        // Add click animation
+        document.querySelectorAll('.membership-card').forEach(card => {
+            card.addEventListener('click', function(e) {
+                // Add ripple effect
+                const ripple = document.createElement('div');
+                ripple.style.position = 'absolute';
+                ripple.style.borderRadius = '50%';
+                ripple.style.background = 'rgba(255, 215, 0, 0.3)';
+                ripple.style.transform = 'scale(0)';
+                ripple.style.animation = 'ripple 0.6s linear';
+                ripple.style.left = e.offsetX + 'px';
+                ripple.style.top = e.offsetY + 'px';
+                ripple.style.width = ripple.style.height = '20px';
+                ripple.style.marginLeft = ripple.style.marginTop = '-10px';
+                
+                this.appendChild(ripple);
                 
                 setTimeout(() => {
-                    form.reset();
-                    document.getElementById('newPaymentSection').style.display = 'none';
-                    newSelectedPlan = null;
-                    newSelectedAmount = 0;
-                    document.querySelectorAll('#newMemberTab .payment-option').forEach(option => 
-                        option.classList.remove('selected'));
-                }, 3000);
-            }, 2000);
-        }
-
-        // Status message functions
-        function showExistingStatus(message, type) {
-            const statusDiv = document.getElementById('existingStatusMessage');
-            statusDiv.innerHTML = `<div class="status-message ${type}">${message}</div>`;
-            
-            if (type === 'success') {
-                setTimeout(() => {
-                    statusDiv.innerHTML = '';
-                }, 5000);
-            }
-        }
-
-        function showNewStatus(message, type) {
-            const statusDiv = document.getElementById('newStatusMessage');
-            statusDiv.innerHTML = `<div class="status-message ${type}">${message}</div>`;
-            
-            if (type === 'success') {
-                setTimeout(() => {
-                    statusDiv.innerHTML = '';
-                }, 5000);
-            }
-        }
-
-        // Form validation
-        function validateEmail(email) {
-            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            return re.test(email);
-        }
-
-        function validatePhone(phone) {
-            const re = /^[0-9\-\+\s\(\)]+$/;
-            return re.test(phone) && phone.length >= 10;
-        }
-
-        // Enhanced form validation for existing members
-        document.getElementById('existingMemberForm').addEventListener('input', function(e) {
-            const field = e.target;
-            
-            if (field.type === 'email' && field.value) {
-                if (!validateEmail(field.value)) {
-                    field.style.borderColor = '#f44336';
-                } else {
-                    field.style.borderColor = '#4caf50';
-                }
-            }
-            
-            if (field.type === 'tel' && field.value) {
-                if (!validatePhone(field.value)) {
-                    field.style.borderColor = '#f44336';
-                } else {
-                    field.style.borderColor = '#4caf50';
-                }
-            }
+                    ripple.remove();
+                }, 600);
+            });
         });
 
-        // Enhanced form validation for new members
-        document.getElementById('newMemberForm').addEventListener('input', function(e) {
-            const field = e.target;
-            
-            if (field.type === 'email' && field.value) {
-                if (!validateEmail(field.value)) {
-                    field.style.borderColor = '#f44336';
-                } else {
-                    field.style.borderColor = '#4caf50';
+        // Add CSS for ripple animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes ripple {
+                to {
+                    transform: scale(4);
+                    opacity: 0;
                 }
             }
-            
-            if (field.type === 'tel' && field.value) {
-                if (!validatePhone(field.value)) {
-                    field.style.borderColor = '#f44336';
-                } else {
-                    field.style.borderColor = '#4caf50';
-                }
-            }
-        });
+        `;
+        document.head.appendChild(style);
     </script>
 </body>
 </html>
