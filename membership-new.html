@@ -683,12 +683,23 @@
         }
 
         .table-section {
-          font-size: 0.9rem;
+          font-size: 0.8rem;
+          overflow-x: auto;
+        }
+
+        table {
+          min-width: 800px; /* Force table to be wider than screen */
+          width: 800px; /* Set specific width */
         }
 
         th,
         td {
-          padding: 0.5rem 0.25rem;
+          padding: 0.4rem 0.2rem; /* Reduce padding to fit more */
+          white-space: nowrap; /* Prevent text wrapping */
+        }
+        td input {
+          min-width: 80px; /* Minimum input width */
+          font-size: 0.8rem; /* Smaller input text */
         }
 
         .payment-options {
