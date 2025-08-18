@@ -1,777 +1,1263 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>New Member Registration - Persatuan Penduduk E5 QNA</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+        color: #ffffff;
+        background: linear-gradient(
+          135deg,
+          #1a0000 0%,
+          #2d0000 25%,
+          #4a0000 50%,
+          #2d0000 75%,
+          #1a0000 100%
+        );
+        min-height: 100vh;
+        position: relative;
+      }
+
+      body::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: radial-gradient(
+            circle at 20% 20%,
+            rgba(255, 215, 0, 0.1) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 80% 80%,
+            rgba(220, 20, 60, 0.1) 0%,
+            transparent 50%
+          ),
+          radial-gradient(
+            circle at 40% 60%,
+            rgba(255, 69, 0, 0.05) 0%,
+            transparent 50%
+          );
+        pointer-events: none;
+        z-index: -1;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+
+      header {
+        background: linear-gradient(
+          135deg,
+          rgba(0, 0, 0, 0.9) 0%,
+          rgba(20, 0, 0, 0.95) 100%
+        );
+        backdrop-filter: blur(20px);
+        border-bottom: 2px solid #ffd700;
+        box-shadow: 0 4px 30px rgba(255, 215, 0, 0.2);
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+      }
+
+      nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 0;
+      }
+
+      .logo {
+        font-size: 1.8rem;
+        font-weight: bold;
+        background: linear-gradient(45deg, #ffd700, #ffa500, #dc143c);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        text-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+      }
+
+      .back-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: #ffd700;
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      .back-link:hover {
+        color: #ffa500;
+        text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        transform: translateX(-5px);
+      }
+
+      main {
+        padding: 2rem 0;
+      }
+
+      .form-container {
+        background: linear-gradient(
+          135deg,
+          rgba(0, 0, 0, 0.85) 0%,
+          rgba(20, 0, 0, 0.9) 100%
+        );
+        backdrop-filter: blur(15px);
+        border-radius: 25px;
+        padding: 3rem;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5),
+          0 0 0 1px rgba(255, 215, 0, 0.1), inset 0 1px 0 rgba(255, 215, 0, 0.1);
+        position: relative;
+        overflow: hidden;
+        animation: fadeIn 0.5s ease-in;
+        margin-top: 4rem;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 2.5rem;
+        list-style: none;
+      }
+
+      .nav-links a {
+        text-decoration: none;
+        color: #ffffff;
+        font-weight: 600;
+        position: relative;
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      .nav-links a::before {
+        content: "";
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: -5px;
+        left: 50%;
+        background: linear-gradient(90deg, #ffd700, #dc143c);
+        transition: all 0.3s ease;
+        transform: translateX(-50%);
+      }
+
+      .nav-links a:hover,
+      .nav-links a.active {
+        color: #ffd700;
+        text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+      }
+
+      .nav-links a:hover::before,
+      .nav-links a.active::before {
+        width: 100%;
+      }
+
+      .mobile-menu {
+        display: none;
+        flex-direction: column;
+        cursor: pointer;
+      }
+
+      .mobile-menu span {
+        width: 25px;
+        height: 3px;
+        background: linear-gradient(90deg, #ffd700, #dc143c);
+        margin: 3px 0;
+        transition: 0.3s;
+      }
+
+      .form-header {
+        text-align: center;
+        margin-bottom: 2rem;
+        border-bottom: 2px solid rgba(255, 215, 0, 0.1);
+        padding-bottom: 1.5rem;
+      }
+
+      .form-header h1 {
+        background: linear-gradient(135deg, #ffd700, #dc143c);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        font-size: 2.5rem;
+        margin-bottom: 0.5rem;
+        font-weight: 700;
+      }
+
+      .form-header p {
+        color: #cccccc;
+        font-size: 1.1rem;
+        margin-bottom: 1rem;
+      }
+
+      .section {
+        margin: 2rem 0;
+        padding: 2rem;
+        background: linear-gradient(
+          135deg,
+          rgba(255, 215, 0, 0.05) 0%,
+          rgba(220, 20, 60, 0.05) 100%
+        );
+        border-radius: 15px;
+        border: 1px solid rgba(255, 215, 0, 0.2);
+        position: relative;
+      }
+
+      .section-title {
+        background: linear-gradient(135deg, #ffd700, #ffa500);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        font-size: 1.3rem;
+        font-weight: bold;
+        margin-bottom: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .form-group {
+        margin-bottom: 1.5rem;
+      }
+
+      .form-row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+        color: #ffd700;
+      }
+
+      .required {
+        color: #dc143c;
+      }
+
+      input,
+      select,
+      textarea {
+        width: 100%;
+        padding: 0.75rem;
+        border: 2px solid rgba(255, 215, 0, 0.3);
+        border-radius: 10px;
+        font-size: 1rem;
+        background: rgba(0, 0, 0, 0.3);
+        color: #ffffff;
+        transition: all 0.3s ease;
+      }
+
+      input::placeholder,
+      textarea::placeholder {
+        color: #cccccc;
+      }
+
+      input:focus,
+      select:focus,
+      textarea:focus {
+        outline: none;
+        border-color: #ffd700;
+        box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.2);
+        background: rgba(0, 0, 0, 0.5);
+      }
+
+      .radio-group {
+        display: flex;
+        gap: 1.5rem;
+        margin-top: 0.5rem;
+        flex-wrap: wrap;
+      }
+
+      .radio-option {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        cursor: pointer;
+        padding: 0.5rem 1rem;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+        border: 1px solid rgba(255, 215, 0, 0.3);
+      }
+
+      .radio-option:hover {
+        background: rgba(255, 215, 0, 0.1);
+        border-color: #ffd700;
+      }
+
+      .radio-option input[type="radio"] {
+        width: auto;
+        margin: 0;
+        accent-color: #ffd700;
+      }
+
+      .table-section {
+        overflow-x: auto;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        background: rgba(0, 0, 0, 0.3);
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      }
+
+      th {
+        background: linear-gradient(135deg, #dc143c, #ffd700);
+        color: white;
+        padding: 1rem 0.75rem;
+        text-align: left;
+        font-weight: 600;
+      }
+
+      td {
+        padding: 0.75rem;
+        border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+      }
+
+      td input {
+        border: 1px solid rgba(255, 215, 0, 0.3);
+        padding: 0.5rem;
+        border-radius: 6px;
+        background: rgba(0, 0, 0, 0.3);
+      }
+
+      .add-row-btn {
+        margin-top: 1rem;
+        padding: 0.75rem 1.5rem;
+        background: linear-gradient(135deg, #28a745, #20c997);
+        color: white;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        font-size: 0.9rem;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .add-row-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(40, 167, 69, 0.3);
+      }
+
+      .remove-row-btn {
+        background: #e74c3c;
+        color: white;
+        border: none;
+        padding: 0.4rem 0.8rem;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 0.8rem;
+        transition: all 0.2s ease;
+      }
+
+      .remove-row-btn:hover {
+        background: #c0392b;
+        transform: scale(1.05);
+      }
+
+      .declaration {
+        background: linear-gradient(
+          135deg,
+          rgba(255, 193, 7, 0.1) 0%,
+          rgba(255, 165, 0, 0.1) 100%
+        );
+        border: 2px solid rgba(255, 193, 7, 0.5);
+        border-radius: 15px;
+        padding: 1.5rem;
+        margin: 2rem 0;
+      }
+
+      .declaration label {
+        display: flex;
+        align-items: flex-start;
+        gap: 1rem;
+        cursor: pointer;
+        color: #e0e0e0;
+      }
+
+      .declaration input[type="checkbox"] {
+        width: auto;
+        margin-top: 0.2rem;
+        accent-color: #ffd700;
+        transform: scale(1.2);
+      }
+
+      .payment-section {
+        background: linear-gradient(
+          135deg,
+          rgba(255, 215, 0, 0.1) 0%,
+          rgba(220, 20, 60, 0.1) 100%
+        );
+        border: 2px solid #ffd700;
+        border-radius: 20px;
+        padding: 2.5rem;
+        margin: 2rem 0;
+        text-align: center;
+      }
+
+      .payment-section h3 {
+        background: linear-gradient(135deg, #ffd700, #dc143c);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 1.5rem;
+        font-size: 1.8rem;
+        font-weight: 700;
+      }
+
+      .payment-options {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+        margin: 2rem 0;
+      }
+
+      .payment-card {
+        background: linear-gradient(
+          135deg,
+          rgba(0, 0, 0, 0.8) 0%,
+          rgba(20, 0, 0, 0.9) 100%
+        );
+        border: 2px solid rgba(255, 215, 0, 0.3);
+        border-radius: 15px;
+        padding: 2rem;
+        text-align: center;
+        transition: all 0.4s ease;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .payment-card::before {
+        content: "";
+        position: absolute;
+        top: -2px;
+        left: -2px;
+        right: -2px;
+        bottom: -2px;
+        background: linear-gradient(45deg, #ffd700, #dc143c, #000, #ffd700);
+        border-radius: 15px;
+        z-index: -1;
+        opacity: 0;
+        transition: opacity 0.4s ease;
+      }
+
+      .payment-card:hover::before {
+        opacity: 1;
+      }
+
+      .payment-card:hover {
+        transform: translateY(-8px);
+        border-color: #ffd700;
+        box-shadow: 0 15px 35px rgba(255, 215, 0, 0.3);
+      }
+
+      .payment-card.popular {
+        border-color: #28a745;
+        background: linear-gradient(
+          135deg,
+          rgba(40, 167, 69, 0.1) 0%,
+          rgba(0, 0, 0, 0.8) 100%
+        );
+      }
+
+      .payment-price {
+        font-size: 3rem;
+        font-weight: bold;
+        background: linear-gradient(135deg, #ffd700, #ffa500);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin: 1rem 0;
+        text-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+      }
+
+      .payment-card.popular .payment-price {
+        background: linear-gradient(135deg, #28a745, #20c997);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+
+      .payment-duration {
+        color: #cccccc;
+        font-size: 1.1rem;
+        margin-bottom: 1rem;
+        font-weight: 600;
+      }
+
+      .package-description {
+        color: #e0e0e0;
+        font-size: 0.95rem;
+        margin-bottom: 1.5rem;
+        line-height: 1.5;
+      }
+
+      .payment-btn {
+        background: linear-gradient(
+          135deg,
+          #dc143c 0%,
+          #8b0000 25%,
+          #ffd700 50%,
+          #ffa500 75%,
+          #dc143c 100%
+        );
+        background-size: 200% 200%;
+        color: white;
+        padding: 1rem 2rem;
+        border: none;
+        border-radius: 12px;
+        font-size: 1rem;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.4s ease;
+        width: 100%;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .payment-btn::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.2),
+          transparent
+        );
+        transition: left 0.5s;
+      }
+
+      .payment-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 25px rgba(220, 20, 60, 0.4);
+        background-position: right center;
+      }
+
+      .payment-btn:hover::before {
+        left: 100%;
+      }
+
+      .payment-card.popular .payment-btn {
+        background: linear-gradient(
+          135deg,
+          #28a745 0%,
+          #20c997 25%,
+          #ffd700 50%,
+          #ffa500 75%,
+          #28a745 100%
+        );
+        background-size: 200% 200%;
+      }
+
+      .payment-card.popular .payment-btn:hover {
+        box-shadow: 0 10px 25px rgba(40, 167, 69, 0.4);
+      }
+
+      .payment-btn:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none;
+      }
+
+      .info-notice {
+        background: linear-gradient(
+          135deg,
+          rgba(255, 193, 7, 0.1) 0%,
+          rgba(255, 165, 0, 0.1) 100%
+        );
+        border: 1px solid rgba(255, 193, 7, 0.5);
+        border-radius: 10px;
+        padding: 1rem;
+        margin: 1rem 0;
+        font-size: 0.9rem;
+        color: #f0d03f;
+      }
+
+      .payment-status {
+        display: none;
+        text-align: center;
+        padding: 1.5rem;
+        margin-top: 1.5rem;
+        border-radius: 10px;
+        font-weight: 600;
+      }
+
+      .payment-status.success {
+        background: rgba(40, 167, 69, 0.2);
+        color: #4caf50;
+        border: 2px solid #28a745;
+      }
+
+      .payment-status.pending {
+        background: rgba(255, 193, 7, 0.2);
+        color: #ffc107;
+        border: 2px solid #ffc107;
+      }
+
+      .payment-status.error {
+        background: rgba(231, 76, 60, 0.2);
+        color: #ff6b6b;
+        border: 2px solid #e74c3c;
+      }
+
+      @media (max-width: 768px) {
+        .nav-links {
+          display: none;
+          position: absolute;
+          top: 100%;
+          left: 0;
+          right: 0;
+          background: linear-gradient(
+            135deg,
+            rgba(0, 0, 0, 0.95) 0%,
+            rgba(20, 0, 0, 0.9) 100%
+          );
+          backdrop-filter: blur(20px);
+          flex-direction: column;
+          padding: 1rem;
+          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+          border-top: 1px solid rgba(255, 215, 0, 0.2);
         }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: #ffffff;
-            background: linear-gradient(135deg, #1a0000 0%, #2d0000 25%, #4a0000 50%, #2d0000 75%, #1a0000 100%);
-            min-height: 100vh;
-            position: relative;
+        .nav-links.show {
+          display: flex;
         }
 
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: 
-                radial-gradient(circle at 20% 20%, rgba(255, 215, 0, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 80%, rgba(220, 20, 60, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 40% 60%, rgba(255, 69, 0, 0.05) 0%, transparent 50%);
-            pointer-events: none;
-            z-index: -1;
+        .mobile-menu {
+          display: flex;
         }
 
         .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        header {
-            background: linear-gradient(135deg, rgba(0, 0, 0, 0.9) 0%, rgba(20, 0, 0, 0.95) 100%);
-            backdrop-filter: blur(20px);
-            border-bottom: 2px solid #FFD700;
-            box-shadow: 0 4px 30px rgba(255, 215, 0, 0.2);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 0;
-        }
-
-        .logo {
-            font-size: 1.8rem;
-            font-weight: bold;
-            background: linear-gradient(45deg, #FFD700, #FFA500, #DC143C);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
-        }
-
-        .back-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: #FFD700;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .back-link:hover {
-            color: #FFA500;
-            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
-            transform: translateX(-5px);
-        }
-
-        main {
-            padding: 2rem 0;
+          padding: 0 15px;
         }
 
         .form-container {
-            background: linear-gradient(135deg, rgba(0, 0, 0, 0.85) 0%, rgba(20, 0, 0, 0.9) 100%);
-            backdrop-filter: blur(15px);
-            border-radius: 25px;
-            padding: 3rem;
-            box-shadow: 
-                0 15px 35px rgba(0, 0, 0, 0.5),
-                0 0 0 1px rgba(255, 215, 0, 0.1),
-                inset 0 1px 0 rgba(255, 215, 0, 0.1);
-            position: relative;
-            overflow: hidden;
-            animation: fadeIn 0.5s ease-in;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .form-header {
-            text-align: center;
-            margin-bottom: 2rem;
-            border-bottom: 2px solid rgba(255, 215, 0, 0.1);
-            padding-bottom: 1.5rem;
-        }
-
-        .form-header h1 {
-            background: linear-gradient(135deg, #FFD700, #DC143C);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
-            font-weight: 700;
-        }
-
-        .form-header p {
-            color: #cccccc;
-            font-size: 1.1rem;
-            margin-bottom: 1rem;
-        }
-
-        .section {
-            margin: 2rem 0;
-            padding: 2rem;
-            background: linear-gradient(135deg, rgba(255, 215, 0, 0.05) 0%, rgba(220, 20, 60, 0.05) 100%);
-            border-radius: 15px;
-            border: 1px solid rgba(255, 215, 0, 0.2);
-            position: relative;
-        }
-
-        .section-title {
-            background: linear-gradient(135deg, #FFD700, #FFA500);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            font-size: 1.3rem;
-            font-weight: bold;
-            margin-bottom: 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
+          padding: 2rem 1.5rem;
         }
 
         .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-            color: #FFD700;
-        }
-
-        .required {
-            color: #DC143C;
-        }
-
-        input, select, textarea {
-            width: 100%;
-            padding: 0.75rem;
-            border: 2px solid rgba(255, 215, 0, 0.3);
-            border-radius: 10px;
-            font-size: 1rem;
-            background: rgba(0, 0, 0, 0.3);
-            color: #ffffff;
-            transition: all 0.3s ease;
-        }
-
-        input::placeholder, textarea::placeholder {
-            color: #cccccc;
-        }
-
-        input:focus, select:focus, textarea:focus {
-            outline: none;
-            border-color: #FFD700;
-            box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.2);
-            background: rgba(0, 0, 0, 0.5);
+          grid-template-columns: 1fr;
         }
 
         .radio-group {
-            display: flex;
-            gap: 1.5rem;
-            margin-top: 0.5rem;
-            flex-wrap: wrap;
-        }
-
-        .radio-option {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            cursor: pointer;
-            padding: 0.5rem 1rem;
-            border-radius: 8px;
-            transition: all 0.3s ease;
-            border: 1px solid rgba(255, 215, 0, 0.3);
-        }
-
-        .radio-option:hover {
-            background: rgba(255, 215, 0, 0.1);
-            border-color: #FFD700;
-        }
-
-        .radio-option input[type="radio"] {
-            width: auto;
-            margin: 0;
-            accent-color: #FFD700;
+          flex-direction: column;
         }
 
         .table-section {
-            overflow-x: auto;
+          font-size: 0.9rem;
         }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-        }
-
-        th {
-            background: linear-gradient(135deg, #DC143C, #FFD700);
-            color: white;
-            padding: 1rem 0.75rem;
-            text-align: left;
-            font-weight: 600;
-        }
-
+        th,
         td {
-            padding: 0.75rem;
-            border-bottom: 1px solid rgba(255, 215, 0, 0.2);
-        }
-
-        td input {
-            border: 1px solid rgba(255, 215, 0, 0.3);
-            padding: 0.5rem;
-            border-radius: 6px;
-            background: rgba(0, 0, 0, 0.3);
-        }
-
-        .add-row-btn {
-            margin-top: 1rem;
-            padding: 0.75rem 1.5rem;
-            background: linear-gradient(135deg, #28a745, #20c997);
-            color: white;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            font-size: 0.9rem;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .add-row-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(40, 167, 69, 0.3);
-        }
-
-        .remove-row-btn {
-            background: #e74c3c;
-            color: white;
-            border: none;
-            padding: 0.4rem 0.8rem;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 0.8rem;
-            transition: all 0.2s ease;
-        }
-
-        .remove-row-btn:hover {
-            background: #c0392b;
-            transform: scale(1.05);
-        }
-
-        .declaration {
-            background: linear-gradient(135deg, rgba(255, 193, 7, 0.1) 0%, rgba(255, 165, 0, 0.1) 100%);
-            border: 2px solid rgba(255, 193, 7, 0.5);
-            border-radius: 15px;
-            padding: 1.5rem;
-            margin: 2rem 0;
-        }
-
-        .declaration label {
-            display: flex;
-            align-items: flex-start;
-            gap: 1rem;
-            cursor: pointer;
-            color: #e0e0e0;
-        }
-
-        .declaration input[type="checkbox"] {
-            width: auto;
-            margin-top: 0.2rem;
-            accent-color: #FFD700;
-            transform: scale(1.2);
-        }
-
-        .payment-section {
-            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1) 0%, rgba(220, 20, 60, 0.1) 100%);
-            border: 2px solid #FFD700;
-            border-radius: 20px;
-            padding: 2.5rem;
-            margin: 2rem 0;
-            text-align: center;
-        }
-
-        .payment-section h3 {
-            background: linear-gradient(135deg, #FFD700, #DC143C);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 1.5rem;
-            font-size: 1.8rem;
-            font-weight: 700;
+          padding: 0.5rem 0.25rem;
         }
 
         .payment-options {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-            margin: 2rem 0;
-        }
-
-        .payment-card {
-            background: linear-gradient(135deg, rgba(0, 0, 0, 0.8) 0%, rgba(20, 0, 0, 0.9) 100%);
-            border: 2px solid rgba(255, 215, 0, 0.3);
-            border-radius: 15px;
-            padding: 2rem;
-            text-align: center;
-            transition: all 0.4s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .payment-card::before {
-            content: '';
-            position: absolute;
-            top: -2px;
-            left: -2px;
-            right: -2px;
-            bottom: -2px;
-            background: linear-gradient(45deg, #FFD700, #DC143C, #000, #FFD700);
-            border-radius: 15px;
-            z-index: -1;
-            opacity: 0;
-            transition: opacity 0.4s ease;
-        }
-
-        .payment-card:hover::before {
-            opacity: 1;
-        }
-
-        .payment-card:hover {
-            transform: translateY(-8px);
-            border-color: #FFD700;
-            box-shadow: 0 15px 35px rgba(255, 215, 0, 0.3);
-        }
-
-        .payment-card.popular {
-            border-color: #28a745;
-            background: linear-gradient(135deg, rgba(40, 167, 69, 0.1) 0%, rgba(0, 0, 0, 0.8) 100%);
+          grid-template-columns: 1fr;
         }
 
         .payment-price {
-            font-size: 3rem;
-            font-weight: bold;
-            background: linear-gradient(135deg, #FFD700, #FFA500);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin: 1rem 0;
-            text-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+          font-size: 2.5rem;
         }
 
-        .payment-card.popular .payment-price {
-            background: linear-gradient(135deg, #28a745, #20c997);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+        .form-header h1 {
+          font-size: 2rem;
         }
+      }
 
-        .payment-duration {
-            color: #cccccc;
-            font-size: 1.1rem;
-            margin-bottom: 1rem;
-            font-weight: 600;
-        }
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
 
-        .package-description {
-            color: #e0e0e0;
-            font-size: 0.95rem;
-            margin-bottom: 1.5rem;
-            line-height: 1.5;
-        }
+      ::-webkit-scrollbar-track {
+        background: #1a0000;
+      }
 
-        .payment-btn {
-            background: linear-gradient(135deg, #DC143C 0%, #8B0000 25%, #FFD700 50%, #FFA500 75%, #DC143C 100%);
-            background-size: 200% 200%;
-            color: white;
-            padding: 1rem 2rem;
-            border: none;
-            border-radius: 12px;
-            font-size: 1rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.4s ease;
-            width: 100%;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            position: relative;
-            overflow: hidden;
-        }
+      ::-webkit-scrollbar-thumb {
+        background: linear-gradient(135deg, #ffd700, #dc143c);
+        border-radius: 4px;
+      }
 
-        .payment-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.5s;
-        }
+      ::-webkit-scrollbar-thumb:hover {
+        background: linear-gradient(135deg, #ffa500, #8b0000);
+      }
 
-        .payment-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(220, 20, 60, 0.4);
-            background-position: right center;
-        }
+      footer {
+        background: linear-gradient(
+          135deg,
+          rgba(0, 0, 0, 0.95) 0%,
+          rgba(20, 0, 0, 0.9) 100%
+        );
+        backdrop-filter: blur(15px);
+        margin-top: 4rem;
+        padding: 3rem 0;
+        border-top: 2px solid rgba(255, 215, 0, 0.3);
+      }
 
-        .payment-btn:hover::before {
-            left: 100%;
-        }
+      .footer-content {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+        margin-bottom: 2rem;
+      }
 
-        .payment-card.popular .payment-btn {
-            background: linear-gradient(135deg, #28a745 0%, #20c997 25%, #FFD700 50%, #FFA500 75%, #28a745 100%);
-            background-size: 200% 200%;
-        }
+      .footer-section h4 {
+        background: linear-gradient(135deg, #ffd700, #ffa500);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 1rem;
+        font-size: 1.2rem;
+        font-weight: 700;
+      }
 
-        .payment-card.popular .payment-btn:hover {
-            box-shadow: 0 10px 25px rgba(40, 167, 69, 0.4);
-        }
+      .footer-section p,
+      .footer-section a {
+        color: #cccccc;
+        text-decoration: none;
+        margin-bottom: 0.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
+        transition: all 0.3s ease;
+      }
 
-        .payment-btn:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none;
-        }
+      .footer-icon {
+        width: 18px;
+        height: 18px;
+        stroke: #ffd700;
+        flex-shrink: 0;
+      }
 
-        .info-notice {
-            background: linear-gradient(135deg, rgba(255, 193, 7, 0.1) 0%, rgba(255, 165, 0, 0.1) 100%);
-            border: 1px solid rgba(255, 193, 7, 0.5);
-            border-radius: 10px;
-            padding: 1rem;
-            margin: 1rem 0;
-            font-size: 0.9rem;
-            color: #f0d03f;
-        }
+      .footer-section a:hover {
+        color: #ffd700;
+        text-shadow: 0 0 5px rgba(255, 215, 0, 0.3);
+        transform: translateX(5px);
+      }
 
-        .payment-status {
-            display: none;
-            text-align: center;
-            padding: 1.5rem;
-            margin-top: 1.5rem;
-            border-radius: 10px;
-            font-weight: 600;
-        }
+      .footer-section a:hover .footer-icon {
+        stroke: #ffa500;
+        filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.5));
+      }
 
-        .payment-status.success {
-            background: rgba(40, 167, 69, 0.2);
-            color: #4caf50;
-            border: 2px solid #28a745;
-        }
-
-        .payment-status.pending {
-            background: rgba(255, 193, 7, 0.2);
-            color: #ffc107;
-            border: 2px solid #ffc107;
-        }
-
-        .payment-status.error {
-            background: rgba(231, 76, 60, 0.2);
-            color: #ff6b6b;
-            border: 2px solid #e74c3c;
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                padding: 0 15px;
-            }
-
-            .form-container {
-                padding: 2rem 1.5rem;
-            }
-
-            .form-row {
-                grid-template-columns: 1fr;
-            }
-
-            .radio-group {
-                flex-direction: column;
-            }
-
-            .table-section {
-                font-size: 0.9rem;
-            }
-
-            th, td {
-                padding: 0.5rem 0.25rem;
-            }
-
-            .payment-options {
-                grid-template-columns: 1fr;
-            }
-
-            .payment-price {
-                font-size: 2.5rem;
-            }
-
-            .form-header h1 {
-                font-size: 2rem;
-            }
-        }
-
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: #1a0000;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: linear-gradient(135deg, #FFD700, #DC143C);
-            border-radius: 4px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: linear-gradient(135deg, #FFA500, #8B0000);
-        }
+      .footer-bottom {
+        text-align: center;
+        color: #999;
+        border-top: 1px solid rgba(255, 215, 0, 0.2);
+        padding-top: 2rem;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <header>
-        <nav class="container">
-            <div class="logo">PP E5 QNA</div>
-            <a href="membership.html" class="back-link">← Back to Membership</a>
-        </nav>
+      <nav class="container">
+        <div class="logo">PP E5 QNA</div>
+        <ul class="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="membership.html" class="active">Membership</a></li>
+          <li><a href="events.html">Events</a></li>
+          <li><a href="businesses.html">Businesses</a></li>
+          <li><a href="forms.html">Forms</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="announcements.html">Announcements</a></li>
+        </ul>
+        <div class="mobile-menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </nav>
     </header>
 
     <div class="container">
-        <div class="form-container">
-            <div class="form-header">
-                <h1>New Member Registration</h1>
-                <p>Welcome to Persatuan Penduduk E5 QNA Community</p>
+      <div class="form-container">
+        <div class="form-header">
+          <h1>New Member Registration</h1>
+          <p>Welcome to Persatuan Penduduk E5 QNA Community</p>
+        </div>
+
+        <form id="membershipForm">
+          <!-- Section A: Member Information -->
+          <div class="section">
+            <h3 class="section-title">A. Member Information</h3>
+
+            <div class="form-group">
+              <label for="fullName"
+                >Full Name <span class="required">*</span></label
+              >
+              <input type="text" id="fullName" name="fullName" required />
             </div>
 
-            <form id="membershipForm">
-                <!-- Section A: Member Information -->
-                <div class="section">
-                    <h3 class="section-title">A. Member Information</h3>
-                    
-                    <div class="form-group">
-                        <label for="fullName">Full Name <span class="required">*</span></label>
-                        <input type="text" id="fullName" name="fullName" required>
-                    </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="icNumber"
+                  >IC Number <span class="required">*</span></label
+                >
+                <input
+                  type="text"
+                  id="icNumber"
+                  name="icNumber"
+                  pattern="[0-9]{12}"
+                  placeholder="123456789012"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="gender"
+                  >Gender <span class="required">*</span></label
+                >
+                <select id="gender" name="gender" required>
+                  <option value="">Select Gender</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                </select>
+              </div>
+            </div>
 
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="icNumber">IC Number <span class="required">*</span></label>
-                            <input type="text" id="icNumber" name="icNumber" pattern="[0-9]{12}" placeholder="123456789012" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="gender">Gender <span class="required">*</span></label>
-                            <select id="gender" name="gender" required>
-                                <option value="">Select Gender</option>
-                                <option value="Male">Male</option>
-                                <option value="Female">Female</option>
-                            </select>
-                        </div>
-                    </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="race">Race</label>
+                <input
+                  type="text"
+                  id="race"
+                  name="race"
+                  placeholder="Malay, Chinese, Indian, etc."
+                />
+              </div>
+              <div class="form-group">
+                <label for="houseNumber"
+                  >House Number <span class="required">*</span></label
+                >
+                <input
+                  type="text"
+                  id="houseNumber"
+                  name="houseNumber"
+                  placeholder="e.g., 15, Jalan E5/1"
+                  required
+                />
+              </div>
+            </div>
 
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="race">Race</label>
-                            <input type="text" id="race" name="race" placeholder="Malay, Chinese, Indian, etc.">
-                        </div>
-                        <div class="form-group">
-                            <label for="houseNumber">House Number <span class="required">*</span></label>
-                            <input type="text" id="houseNumber" name="houseNumber" placeholder="e.g., 15, Jalan E5/1" required>
-                        </div>
-                    </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="phoneNumber"
+                  >Phone Number <span class="required">*</span></label
+                >
+                <input
+                  type="tel"
+                  id="phoneNumber"
+                  name="phoneNumber"
+                  pattern="[0-9+\-\s]+"
+                  placeholder="+60 12-345 6789"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="email">Email Address</label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  placeholder="your.email@gmail.com"
+                />
+              </div>
+            </div>
 
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="phoneNumber">Phone Number <span class="required">*</span></label>
-                            <input type="tel" id="phoneNumber" name="phoneNumber" pattern="[0-9+\-\s]+" placeholder="+60 12-345 6789" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Email Address</label>
-                            <input type="email" id="email" name="email" placeholder="your.email@gmail.com">
-                        </div>
-                    </div>
+            <div class="form-group">
+              <label for="occupation">Occupation</label>
+              <input
+                type="text"
+                id="occupation"
+                name="occupation"
+                placeholder="e.g., Teacher, Engineer, Business Owner"
+              />
+            </div>
 
-                    <div class="form-group">
-                        <label for="occupation">Occupation</label>
-                        <input type="text" id="occupation" name="occupation" placeholder="e.g., Teacher, Engineer, Business Owner">
-                    </div>
-
-                    <div class="form-group">
-                        <label>Status <span class="required">*</span></label>
-                        <div class="radio-group">
-                            <div class="radio-option">
-                                <input type="radio" id="owner" name="status" value="OWNER" required>
-                                <label for="owner">Property Owner</label>
-                            </div>
-                            <div class="radio-option">
-                                <input type="radio" id="familyMember" name="status" value="FAMILY_MEMBER" required>
-                                <label for="familyMember">Family Member of Owner</label>
-                            </div>
-                            <div class="radio-option">
-                                <input type="radio" id="tenant" name="status" value="TENANT" required>
-                                <label for="tenant">Tenant</label>
-                            </div>
-                        </div>
-                    </div>
+            <div class="form-group">
+              <label>Status <span class="required">*</span></label>
+              <div class="radio-group">
+                <div class="radio-option">
+                  <input
+                    type="radio"
+                    id="owner"
+                    name="status"
+                    value="OWNER"
+                    required
+                  />
+                  <label for="owner">Property Owner</label>
                 </div>
-
-                <!-- Section B: Household Information -->
-                <div class="section">
-                    <h3 class="section-title">B. Household Information</h3>
-                    <p style="margin-bottom: 1rem; color: #cccccc; font-size: 0.9rem;">Please list all family members living at your address (optional but helps us understand our community better)</p>
-                    <div class="table-section">
-                        <table id="householdTable">
-                            <thead>
-                                <tr>
-                                    <th>No.</th>
-                                    <th>Full Name</th>
-                                    <th>IC Number</th>
-                                    <th>Relationship</th>
-                                    <th>Phone Number</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody id="householdTableBody">
-                                <tr>
-                                    <td>1</td>
-                                    <td><input type="text" name="household[0][name]" placeholder="Full Name"></td>
-                                    <td><input type="text" name="household[0][ic]" placeholder="IC Number"></td>
-                                    <td><input type="text" name="household[0][relationship]" placeholder="e.g., Spouse, Child"></td>
-                                    <td><input type="text" name="household[0][phone]" placeholder="Phone Number"></td>
-                                    <td>-</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <button type="button" class="add-row-btn" onclick="addHouseholdRow()">+ Add Family Member</button>
-                    </div>
+                <div class="radio-option">
+                  <input
+                    type="radio"
+                    id="familyMember"
+                    name="status"
+                    value="FAMILY_MEMBER"
+                    required
+                  />
+                  <label for="familyMember">Family Member of Owner</label>
                 </div>
-
-                <!-- Section C: Vehicle Information -->
-                <div class="section">
-                    <h3 class="section-title">C. Vehicle Information</h3>
-                    <p style="margin-bottom: 1rem; color: #cccccc; font-size: 0.9rem;">Please register your vehicles for parking and security purposes (optional)</p>
-                    <div class="table-section">
-                        <table id="vehicleTable">
-                            <thead>
-                                <tr>
-                                    <th>No.</th>
-                                    <th>Vehicle Type</th>
-                                    <th>Color</th>
-                                    <th>Registration Number</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody id="vehicleTableBody">
-                                <tr>
-                                    <td>1</td>
-                                    <td><input type="text" name="vehicle[0][type]" placeholder="e.g., Car, Motorcycle"></td>
-                                    <td><input type="text" name="vehicle[0][color]" placeholder="Vehicle Color"></td>
-                                    <td><input type="text" name="vehicle[0][registration]" placeholder="ABC 1234"></td>
-                                    <td>-</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <button type="button" class="add-row-btn" onclick="addVehicleRow()">+ Add Vehicle</button>
-                    </div>
+                <div class="radio-option">
+                  <input
+                    type="radio"
+                    id="tenant"
+                    name="status"
+                    value="TENANT"
+                    required
+                  />
+                  <label for="tenant">Tenant</label>
                 </div>
+              </div>
+            </div>
+          </div>
 
-                <!-- Declaration -->
-                <div class="declaration">
-                    <label>
-                        <input type="checkbox" id="declaration" name="declaration" required>
-                        <span><strong>Declaration:</strong> I declare that all information provided is true and accurate. I agree to comply with the association's constitution, rules, and regulations. I understand that membership fees are required and payment must be completed to activate my membership.</span>
-                    </label>
+          <!-- Section B: Household Information -->
+          <div class="section">
+            <h3 class="section-title">B. Household Information</h3>
+            <p style="margin-bottom: 1rem; color: #cccccc; font-size: 0.9rem">
+              Please list all family members living at your address (optional
+              but helps us understand our community better)
+            </p>
+            <div class="table-section">
+              <table id="householdTable">
+                <thead>
+                  <tr>
+                    <th>No.</th>
+                    <th>Full Name</th>
+                    <th>IC Number</th>
+                    <th>Relationship</th>
+                    <th>Phone Number</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="householdTableBody">
+                  <tr>
+                    <td>1</td>
+                    <td>
+                      <input
+                        type="text"
+                        name="household[0][name]"
+                        placeholder="Full Name"
+                      />
+                    </td>
+                    <td>
+                      <input
+                        type="text"
+                        name="household[0][ic]"
+                        placeholder="IC Number"
+                      />
+                    </td>
+                    <td>
+                      <input
+                        type="text"
+                        name="household[0][relationship]"
+                        placeholder="e.g., Spouse, Child"
+                      />
+                    </td>
+                    <td>
+                      <input
+                        type="text"
+                        name="household[0][phone]"
+                        placeholder="Phone Number"
+                      />
+                    </td>
+                    <td>-</td>
+                  </tr>
+                </tbody>
+              </table>
+              <button
+                type="button"
+                class="add-row-btn"
+                onclick="addHouseholdRow()"
+              >
+                + Add Family Member
+              </button>
+            </div>
+          </div>
+
+          <!-- Section C: Vehicle Information -->
+          <div class="section">
+            <h3 class="section-title">C. Vehicle Information</h3>
+            <p style="margin-bottom: 1rem; color: #cccccc; font-size: 0.9rem">
+              Please register your vehicles for parking and security purposes
+              (optional)
+            </p>
+            <div class="table-section">
+              <table id="vehicleTable">
+                <thead>
+                  <tr>
+                    <th>No.</th>
+                    <th>Vehicle Type</th>
+                    <th>Color</th>
+                    <th>Registration Number</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="vehicleTableBody">
+                  <tr>
+                    <td>1</td>
+                    <td>
+                      <input
+                        type="text"
+                        name="vehicle[0][type]"
+                        placeholder="e.g., Car, Motorcycle"
+                      />
+                    </td>
+                    <td>
+                      <input
+                        type="text"
+                        name="vehicle[0][color]"
+                        placeholder="Vehicle Color"
+                      />
+                    </td>
+                    <td>
+                      <input
+                        type="text"
+                        name="vehicle[0][registration]"
+                        placeholder="ABC 1234"
+                      />
+                    </td>
+                    <td>-</td>
+                  </tr>
+                </tbody>
+              </table>
+              <button
+                type="button"
+                class="add-row-btn"
+                onclick="addVehicleRow()"
+              >
+                + Add Vehicle
+              </button>
+            </div>
+          </div>
+
+          <!-- Declaration -->
+          <div class="declaration">
+            <label>
+              <input
+                type="checkbox"
+                id="declaration"
+                name="declaration"
+                required
+              />
+              <span
+                ><strong>Declaration:</strong> I declare that all information
+                provided is true and accurate. I agree to comply with the
+                association's constitution, rules, and regulations. I understand
+                that membership fees are required and payment must be completed
+                to activate my membership.</span
+              >
+            </label>
+          </div>
+
+          <!-- Payment Section -->
+          <div class="payment-section">
+            <h3>Choose Your Membership Package</h3>
+            <p>Select one to submit your application and process payment</p>
+
+            <div class="payment-options">
+              <!-- 6 Months Package -->
+              <div class="payment-card">
+                <div class="payment-price">RM 110</div>
+                <div class="payment-duration"><strong>6 Months</strong></div>
+                <div class="package-description">
+                  RM50 Registration Fee + RM60 (6 months × RM10)
                 </div>
+                <button
+                  type="button"
+                  class="payment-btn"
+                  onclick="processPayment('package_6months', 110)"
+                >
+                  Select 6 Months Package
+                </button>
+              </div>
 
-                <!-- Payment Section -->
-                <div class="payment-section">
-                    <h3>Choose Your Membership Package</h3>
-                    <p>Select one to submit your application and process payment</p>
-                    
-
-                    <div class="payment-options">
-                        <!-- 6 Months Package -->
-                        <div class="payment-card">
-                            <div class="payment-price">RM 110</div>
-                            <div class="payment-duration"><strong>6 Months</strong></div>
-                            <div class="package-description">
-                                RM50 Registration Fee + RM60 (6 months × RM10)
-                            </div>
-                            <button type="button" class="payment-btn" onclick="processPayment('package_6months', 110)">
-                                Select 6 Months Package
-                            </button>
-                        </div>
-
-                        <!-- 12 Months Package -->
-                        <div class="payment-card popular">
-                            <div class="payment-price">RM 170</div>
-                            <div class="payment-duration"><strong>12 Months</strong></div>
-                            <div class="package-description">
-                                RM50 Registration Fee + RM120 (12 months × RM10)
-                            </div>
-                            <button type="button" class="payment-btn" onclick="processPayment('package_12months', 170)">
-                                Select 12 Months Package
-                            </button>
-                        </div>
-                    </div>
-
-                    <div id="paymentStatus" class="payment-status">
-                        <!-- Payment status will be shown here -->
-                    </div>
+              <!-- 12 Months Package -->
+              <div class="payment-card popular">
+                <div class="payment-price">RM 170</div>
+                <div class="payment-duration"><strong>12 Months</strong></div>
+                <div class="package-description">
+                  RM50 Registration Fee + RM120 (12 months × RM10)
                 </div>
-            </form>
-        </div>
+                <button
+                  type="button"
+                  class="payment-btn"
+                  onclick="processPayment('package_12months', 170)"
+                >
+                  Select 12 Months Package
+                </button>
+              </div>
+            </div>
+
+            <div id="paymentStatus" class="payment-status">
+              <!-- Payment status will be shown here -->
+            </div>
+          </div>
+        </form>
+      </div>
     </div>
+    <footer>
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-section">
+            <h4>Contact Info</h4>
+            <p>
+              <svg
+                class="footer-icon"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path
+                  d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
+                />
+                <polyline points="22,6 12,13 2,6" />
+              </svg>
+              ppqna.e5@gmail.com
+            </p>
+            <p>
+              <svg
+                class="footer-icon"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path
+                  d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"
+                />
+              </svg>
+              +60 12-345 6789
+            </p>
+            <p>
+              <svg
+                class="footer-icon"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                <circle cx="12" cy="10" r="3" />
+              </svg>
+              QNA Residence 5, Jalan Springhill, Port Dickson, N.Sembilan
+            </p>
+          </div>
+          <div class="footer-section">
+            <h4>Quick Links</h4>
+            <a href="membership-new.html">
+              <svg
+                class="footer-icon"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                <circle cx="9" cy="7" r="4" />
+                <path d="M20 8v6" />
+                <path d="M23 11h-6" />
+              </svg>
+              Register as New Member
+            </a>
+            <a href="membership-existing.html">
+              <svg
+                class="footer-icon"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                <circle cx="9" cy="7" r="4" />
+                <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+                <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+              </svg>
+              Renew/Check Status
+            </a>
+            <a href="events.html">
+              <svg
+                class="footer-icon"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                <line x1="16" y1="2" x2="16" y2="6" />
+                <line x1="8" y1="2" x2="8" y2="6" />
+                <line x1="3" y1="10" x2="21" y2="10" />
+              </svg>
+              Upcoming Events
+            </a>
+          </div>
+          <div class="footer-section">
+            <h4>Community</h4>
+            <p>Building stronger neighborhoods</p>
+            <p>Together we thrive</p>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>&copy; 2025 Persatuan Penduduk E5 QNA. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
 
     <script>
-        // ==========================================
-        // CONFIGURATION - UPDATE THIS URL
-        // ==========================================
-        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyGfTPiStXlIxfIFEeBvp31yu_K0IWF52ZMSsqRinHPWxdWpvxlFa0Uqp2BjI1C2qnqbA/exec';
-        // Replace with your actual deployed Apps Script URL
-        // Example: 'https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec'
+      // ==========================================
+      // CONFIGURATION - UPDATE THIS URL
+      // ==========================================
+      const APPS_SCRIPT_URL =
+        "https://script.google.com/macros/s/AKfycbyGfTPiStXlIxfIFEeBvp31yu_K0IWF52ZMSsqRinHPWxdWpvxlFa0Uqp2BjI1C2qnqbA/exec";
+      // Replace with your actual deployed Apps Script URL
+      // Example: 'https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec'
 
-        let householdRowCount = 1;
-        let vehicleRowCount = 1;
+      let householdRowCount = 1;
+      let vehicleRowCount = 1;
 
-        function addHouseholdRow() {
-            const tbody = document.getElementById('householdTableBody');
-            const newRow = tbody.insertRow();
-            newRow.innerHTML = `
+      function addHouseholdRow() {
+        const tbody = document.getElementById("householdTableBody");
+        const newRow = tbody.insertRow();
+        newRow.innerHTML = `
                 <td>${householdRowCount + 1}</td>
                 <td><input type="text" name="household[${householdRowCount}][name]" placeholder="Full Name"></td>
                 <td><input type="text" name="household[${householdRowCount}][ic]" placeholder="IC Number"></td>
@@ -779,266 +1265,303 @@
                 <td><input type="text" name="household[${householdRowCount}][phone]" placeholder="Phone Number"></td>
                 <td><button type="button" class="remove-row-btn" onclick="removeRow(this, 'household')">Remove</button></td>
             `;
-            householdRowCount++;
-        }
+        householdRowCount++;
+      }
 
-        function addVehicleRow() {
-            const tbody = document.getElementById('vehicleTableBody');
-            const newRow = tbody.insertRow();
-            newRow.innerHTML = `
+      function addVehicleRow() {
+        const tbody = document.getElementById("vehicleTableBody");
+        const newRow = tbody.insertRow();
+        newRow.innerHTML = `
                 <td>${vehicleRowCount + 1}</td>
                 <td><input type="text" name="vehicle[${vehicleRowCount}][type]" placeholder="e.g., Car, Motorcycle"></td>
                 <td><input type="text" name="vehicle[${vehicleRowCount}][color]" placeholder="Vehicle Color"></td>
                 <td><input type="text" name="vehicle[${vehicleRowCount}][registration]" placeholder="ABC 1234"></td>
                 <td><button type="button" class="remove-row-btn" onclick="removeRow(this, 'vehicle')">Remove</button></td>
             `;
-            vehicleRowCount++;
+        vehicleRowCount++;
+      }
+
+      function removeRow(button, type) {
+        const row = button.closest("tr");
+        row.remove();
+        updateRowNumbers(type);
+      }
+
+      function updateRowNumbers(type) {
+        const tableId =
+          type === "household" ? "householdTableBody" : "vehicleTableBody";
+        const rows = document.querySelectorAll(`#${tableId} tr`);
+        rows.forEach((row, index) => {
+          row.cells[0].textContent = index + 1;
+        });
+      }
+
+      async function processPayment(packageType, amount) {
+        console.log("Processing payment for:", packageType, amount);
+
+        // Validate form before allowing payment
+        if (!validateForm()) {
+          return;
         }
 
-        function removeRow(button, type) {
-            const row = button.closest('tr');
-            row.remove();
-            updateRowNumbers(type);
-        }
+        const packageNames = {
+          package_6months: "6 Months Package",
+          package_12months: "12 Months Package",
+        };
 
-        function updateRowNumbers(type) {
-            const tableId = type === 'household' ? 'householdTableBody' : 'vehicleTableBody';
-            const rows = document.querySelectorAll(`#${tableId} tr`);
-            rows.forEach((row, index) => {
-                row.cells[0].textContent = index + 1;
-            });
-        }
-
-        async function processPayment(packageType, amount) {
-            console.log('Processing payment for:', packageType, amount);
-
-            // Validate form before allowing payment
-            if (!validateForm()) {
-                return;
-            }
-
-            const packageNames = {
-                'package_6months': '6 Months Package',
-                'package_12months': '12 Months Package'
-            };
-
-            // Show processing status
-            const statusDiv = document.getElementById('paymentStatus');
-            statusDiv.className = 'payment-status pending';
-            statusDiv.style.display = 'block';
-            statusDiv.innerHTML = `
+        // Show processing status
+        const statusDiv = document.getElementById("paymentStatus");
+        statusDiv.className = "payment-status pending";
+        statusDiv.style.display = "block";
+        statusDiv.innerHTML = `
                 <strong>Processing Application</strong><br>
                 Preparing ${packageNames[packageType]} (RM ${amount}) for submission...
             `;
 
-            // Disable all buttons
-            document.querySelectorAll('.payment-btn').forEach(btn => {
-                btn.disabled = true;
-                btn.innerHTML = 'Processing...';
-            });
+        // Disable all buttons
+        document.querySelectorAll(".payment-btn").forEach((btn) => {
+          btn.disabled = true;
+          btn.innerHTML = "Processing...";
+        });
 
-            // Collect form data
-            const formData = collectFormData();
-            formData.packageType = packageType;
-            formData.amount = amount;
-            formData.submissionTime = new Date().toISOString();
-            
-            // Submit to Apps Script
-            await submitToAppsScript(formData);
+        // Collect form data
+        const formData = collectFormData();
+        formData.packageType = packageType;
+        formData.amount = amount;
+        formData.submissionTime = new Date().toISOString();
+
+        // Submit to Apps Script
+        await submitToAppsScript(formData);
+      }
+
+      function validateForm() {
+        const requiredFields = [
+          "fullName",
+          "icNumber",
+          "phoneNumber",
+          "houseNumber",
+        ];
+        let hasRequiredInfo = true;
+        let missingFields = [];
+
+        requiredFields.forEach((fieldName) => {
+          const field = document.getElementById(fieldName);
+          if (!field.value.trim()) {
+            hasRequiredInfo = false;
+            missingFields.push(field.labels[0].textContent.replace(" *", ""));
+            field.style.borderColor = "#e74c3c";
+          } else {
+            field.style.borderColor = "#28a745";
+          }
+        });
+
+        // Check gender selection
+        const gender = document.getElementById("gender");
+        if (!gender.value) {
+          hasRequiredInfo = false;
+          missingFields.push("Gender");
+          gender.style.borderColor = "#e74c3c";
+        } else {
+          gender.style.borderColor = "#28a745";
         }
 
-        function validateForm() {
-            const requiredFields = ['fullName', 'icNumber', 'phoneNumber', 'houseNumber'];
-            let hasRequiredInfo = true;
-            let missingFields = [];
-            
-            requiredFields.forEach(fieldName => {
-                const field = document.getElementById(fieldName);
-                if (!field.value.trim()) {
-                    hasRequiredInfo = false;
-                    missingFields.push(field.labels[0].textContent.replace(' *', ''));
-                    field.style.borderColor = '#e74c3c';
-                } else {
-                    field.style.borderColor = '#28a745';
-                }
-            });
-
-            // Check gender selection
-            const gender = document.getElementById('gender');
-            if (!gender.value) {
-                hasRequiredInfo = false;
-                missingFields.push('Gender');
-                gender.style.borderColor = '#e74c3c';
-            } else {
-                gender.style.borderColor = '#28a745';
-            }
-
-            // Check status radio buttons
-            const statusRadios = document.querySelectorAll('input[name="status"]');
-            const statusChecked = Array.from(statusRadios).some(radio => radio.checked);
-            if (!statusChecked) {
-                hasRequiredInfo = false;
-                missingFields.push('Status');
-            }
-
-            // Check declaration checkbox
-            const declaration = document.getElementById('declaration');
-            if (!declaration.checked) {
-                hasRequiredInfo = false;
-                missingFields.push('Declaration');
-            }
-
-            if (!hasRequiredInfo) {
-                alert(`Required Information Missing\n\nPlease complete the following fields:\n• ${missingFields.join('\n• ')}`);
-                document.getElementById('fullName').focus();
-                return false;
-            }
-
-            return true;
+        // Check status radio buttons
+        const statusRadios = document.querySelectorAll('input[name="status"]');
+        const statusChecked = Array.from(statusRadios).some(
+          (radio) => radio.checked
+        );
+        if (!statusChecked) {
+          hasRequiredInfo = false;
+          missingFields.push("Status");
         }
 
-        function collectFormData() {
-            const formData = new FormData(document.getElementById('membershipForm'));
-            const data = {};
-            
-            // Convert FormData to object
-            for (let [key, value] of formData.entries()) {
-                data[key] = value;
-            }
-
-            // Collect household data
-            data.household = [];
-            const householdRows = document.querySelectorAll('#householdTableBody tr');
-            householdRows.forEach((row, index) => {
-                const inputs = row.querySelectorAll('input');
-                if (inputs[0].value.trim()) { // Only add if name is provided
-                    data.household.push({
-                        name: inputs[0].value,
-                        ic: inputs[1].value,
-                        relationship: inputs[2].value,
-                        phone: inputs[3].value
-                    });
-                }
-            });
-
-            // Collect vehicle data
-            data.vehicles = [];
-            const vehicleRows = document.querySelectorAll('#vehicleTableBody tr');
-            vehicleRows.forEach((row, index) => {
-                const inputs = row.querySelectorAll('input');
-                if (inputs[0].value.trim()) { // Only add if type is provided
-                    data.vehicles.push({
-                        type: inputs[0].value,
-                        color: inputs[1].value,
-                        registration: inputs[2].value
-                    });
-                }
-            });
-
-            return data;
+        // Check declaration checkbox
+        const declaration = document.getElementById("declaration");
+        if (!declaration.checked) {
+          hasRequiredInfo = false;
+          missingFields.push("Declaration");
         }
 
-        async function submitToAppsScript(formData) {
-            const statusDiv = document.getElementById('paymentStatus');
-            
-            try {
-                console.log('Submitting to Apps Script:', formData);
-                
-                const response = await fetch(APPS_SCRIPT_URL, {
-                    method: 'POST',
-                    mode: 'cors',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                    },
-                    body: new URLSearchParams({
-                        action: 'submitMembership',
-                        data: JSON.stringify(formData)
-                    })
-                });
+        if (!hasRequiredInfo) {
+          alert(
+            `Required Information Missing\n\nPlease complete the following fields:\n• ${missingFields.join(
+              "\n• "
+            )}`
+          );
+          document.getElementById("fullName").focus();
+          return false;
+        }
 
-                if (!response.ok) {
-                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-                }
-                
-                const result = await response.json();
-                console.log('Response from Apps Script:', result);
-                
-                if (result.success) {
-                    // Show success message
-                    statusDiv.className = 'payment-status success';
-                    statusDiv.innerHTML = `
+        return true;
+      }
+
+      function collectFormData() {
+        const formData = new FormData(
+          document.getElementById("membershipForm")
+        );
+        const data = {};
+
+        // Convert FormData to object
+        for (let [key, value] of formData.entries()) {
+          data[key] = value;
+        }
+
+        // Collect household data
+        data.household = [];
+        const householdRows = document.querySelectorAll(
+          "#householdTableBody tr"
+        );
+        householdRows.forEach((row, index) => {
+          const inputs = row.querySelectorAll("input");
+          if (inputs[0].value.trim()) {
+            // Only add if name is provided
+            data.household.push({
+              name: inputs[0].value,
+              ic: inputs[1].value,
+              relationship: inputs[2].value,
+              phone: inputs[3].value,
+            });
+          }
+        });
+
+        // Collect vehicle data
+        data.vehicles = [];
+        const vehicleRows = document.querySelectorAll("#vehicleTableBody tr");
+        vehicleRows.forEach((row, index) => {
+          const inputs = row.querySelectorAll("input");
+          if (inputs[0].value.trim()) {
+            // Only add if type is provided
+            data.vehicles.push({
+              type: inputs[0].value,
+              color: inputs[1].value,
+              registration: inputs[2].value,
+            });
+          }
+        });
+
+        return data;
+      }
+
+      async function submitToAppsScript(formData) {
+        const statusDiv = document.getElementById("paymentStatus");
+
+        try {
+          console.log("Submitting to Apps Script:", formData);
+
+          const response = await fetch(APPS_SCRIPT_URL, {
+            method: "POST",
+            mode: "cors",
+            headers: {
+              "Content-Type": "application/x-www-form-urlencoded",
+            },
+            body: new URLSearchParams({
+              action: "submitMembership",
+              data: JSON.stringify(formData),
+            }),
+          });
+
+          if (!response.ok) {
+            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+          }
+
+          const result = await response.json();
+          console.log("Response from Apps Script:", result);
+
+          if (result.success) {
+            // Show success message
+            statusDiv.className = "payment-status success";
+            statusDiv.innerHTML = `
                         <strong>Application Submitted Successfully!</strong><br>
                         Membership ID: <strong>${result.membershipId}</strong><br>
                         You will be redirected to payment in 3 seconds...
                     `;
-                    
-                    // Redirect to Stripe payment link after 3 seconds
-                    setTimeout(() => {
-                        window.location.href = result.checkoutUrl;
-                    }, 3000);
-                    
-                } else {
-                    throw new Error(result.message || 'Unknown error occurred');
-                }
-                
-            } catch (error) {
-                console.error('Error submitting to Apps Script:', error);
-                
-                // Show error status
-                statusDiv.className = 'payment-status error';
-                statusDiv.innerHTML = `
+
+            // Redirect to Stripe payment link after 3 seconds
+            setTimeout(() => {
+              window.location.href = result.checkoutUrl;
+            }, 3000);
+          } else {
+            throw new Error(result.message || "Unknown error occurred");
+          }
+        } catch (error) {
+          console.error("Error submitting to Apps Script:", error);
+
+          // Show error status
+          statusDiv.className = "payment-status error";
+          statusDiv.innerHTML = `
                     <strong>Submission Failed</strong><br>
                     ${error.message}<br>
                     <button onclick="retrySubmission()" style="margin-top: 1rem; padding: 0.5rem 1rem; background: #e74c3c; color: white; border: none; border-radius: 5px; cursor: pointer;">
                         Try Again
                     </button>
                 `;
-                
-                // Re-enable buttons
-                enablePaymentButtons();
-            }
-        }
 
-        function retrySubmission() {
-            // Clear error and try again
-            document.getElementById('paymentStatus').style.display = 'none';
-            enablePaymentButtons();
-            alert('Please try submitting your application again.');
+          // Re-enable buttons
+          enablePaymentButtons();
         }
+      }
 
-        function enablePaymentButtons() {
-            document.querySelectorAll('.payment-btn').forEach((btn, index) => {
-                btn.disabled = false;
-                if (index === 0) {
-                    btn.innerHTML = 'Select 6 Months Package';
-                } else {
-                    btn.innerHTML = 'Select 12 Months Package';
-                }
-            });
-        }
+      function retrySubmission() {
+        // Clear error and try again
+        document.getElementById("paymentStatus").style.display = "none";
+        enablePaymentButtons();
+        alert("Please try submitting your application again.");
+      }
 
-        // IC Number formatting
-        document.getElementById('icNumber').addEventListener('input', function(e) {
-            let value = e.target.value.replace(/\D/g, '');
-            if (value.length > 12) {
-                value = value.slice(0, 12);
-            }
-            e.target.value = value;
+      function enablePaymentButtons() {
+        document.querySelectorAll(".payment-btn").forEach((btn, index) => {
+          btn.disabled = false;
+          if (index === 0) {
+            btn.innerHTML = "Select 6 Months Package";
+          } else {
+            btn.innerHTML = "Select 12 Months Package";
+          }
+        });
+      }
+
+      // IC Number formatting
+      document
+        .getElementById("icNumber")
+        .addEventListener("input", function (e) {
+          let value = e.target.value.replace(/\D/g, "");
+          if (value.length > 12) {
+            value = value.slice(0, 12);
+          }
+          e.target.value = value;
         });
 
-        // Phone number formatting
-        document.getElementById('phoneNumber').addEventListener('input', function(e) {
-            let value = e.target.value.replace(/[^\d+\-\s]/g, '');
-            e.target.value = value;
+      // Phone number formatting
+      document
+        .getElementById("phoneNumber")
+        .addEventListener("input", function (e) {
+          let value = e.target.value.replace(/[^\d+\-\s]/g, "");
+          e.target.value = value;
         });
 
-        // Auto-focus on form load
-        window.addEventListener('load', function() {
-            document.getElementById('fullName').focus();
+      // Auto-focus on form load
+      window.addEventListener("load", function () {
+        document.getElementById("fullName").focus();
+      });
+
+      console.log("New member registration form initialized");
+      console.log("Apps Script URL:", APPS_SCRIPT_URL);
+      // Mobile menu functionality
+      document
+        .querySelector(".mobile-menu")
+        .addEventListener("click", function () {
+          const navLinks = document.querySelector(".nav-links");
+          navLinks.classList.toggle("show");
         });
 
-        console.log('New member registration form initialized');
-        console.log('Apps Script URL:', APPS_SCRIPT_URL);
+      // Close mobile menu when clicking outside
+      document.addEventListener("click", function (e) {
+        const mobileMenu = document.querySelector(".mobile-menu");
+        const navLinks = document.querySelector(".nav-links");
+
+        if (!mobileMenu.contains(e.target) && !navLinks.contains(e.target)) {
+          navLinks.classList.remove("show");
+        }
+      });
     </script>
-</body>
+  </body>
 </html>

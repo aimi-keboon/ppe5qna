@@ -54,10 +54,10 @@
       }
 
       .container {
-        max-width: 700px;
-        margin: 0 auto;
-        padding: 0 20px;
-      }
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
 
       header {
         background: linear-gradient(
@@ -78,6 +78,124 @@
         justify-content: space-between;
         align-items: center;
         padding: 1rem 0;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 2.5rem;
+        list-style: none;
+      }
+
+      .nav-links a {
+        text-decoration: none;
+        color: #ffffff;
+        font-weight: 600;
+        position: relative;
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      .nav-links a::before {
+        content: "";
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: -5px;
+        left: 50%;
+        background: linear-gradient(90deg, #ffd700, #dc143c);
+        transition: all 0.3s ease;
+        transform: translateX(-50%);
+      }
+
+      .nav-links a:hover,
+      .nav-links a.active {
+        color: #ffd700;
+        text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+      }
+
+      .nav-links a:hover::before,
+      .nav-links a.active::before {
+        width: 100%;
+      }
+
+      footer {
+        background: linear-gradient(
+          135deg,
+          rgba(0, 0, 0, 0.95) 0%,
+          rgba(20, 0, 0, 0.9) 100%
+        );
+        backdrop-filter: blur(15px);
+        margin-top: 4rem;
+        padding: 3rem 0;
+        border-top: 2px solid rgba(255, 215, 0, 0.3);
+      }
+
+      .footer-content {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+        margin-bottom: 2rem;
+      }
+
+      .footer-section h4 {
+        background: linear-gradient(135deg, #ffd700, #ffa500);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 1rem;
+        font-size: 1.2rem;
+        font-weight: 700;
+      }
+
+      .footer-section p,
+      .footer-section a {
+        color: #cccccc;
+        text-decoration: none;
+        margin-bottom: 0.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
+        transition: all 0.3s ease;
+      }
+
+      .footer-icon {
+        width: 18px;
+        height: 18px;
+        stroke: #ffd700;
+        flex-shrink: 0;
+      }
+
+      .footer-section a:hover {
+        color: #ffd700;
+        text-shadow: 0 0 5px rgba(255, 215, 0, 0.3);
+        transform: translateX(5px);
+      }
+
+      .footer-section a:hover .footer-icon {
+        stroke: #ffa500;
+        filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.5));
+      }
+
+      .footer-bottom {
+        text-align: center;
+        color: #999;
+        border-top: 1px solid rgba(255, 215, 0, 0.2);
+        padding-top: 2rem;
+      }
+
+      .mobile-menu {
+        display: none;
+        flex-direction: column;
+        cursor: pointer;
+      }
+
+      .mobile-menu span {
+        width: 25px;
+        height: 3px;
+        background: linear-gradient(90deg, #ffd700, #dc143c);
+        margin: 3px 0;
+        transition: 0.3s;
       }
 
       .logo {
@@ -126,6 +244,7 @@
         position: relative;
         overflow: hidden;
         animation: fadeIn 0.5s ease-in;
+        margin-top: 4rem;
       }
 
       @keyframes fadeIn {
@@ -628,37 +747,63 @@
       }
 
       @media (max-width: 768px) {
-        .container {
-          padding: 0 15px;
-        }
-
-        .form-container {
-          padding: 2rem 1.5rem;
-        }
-
-        .form-row {
-          grid-template-columns: 1fr;
-        }
-
-        .renewal-options {
-          grid-template-columns: 1fr;
-        }
-
-        .renewal-price {
-          font-size: 2.5rem;
-        }
-
-        .member-info-grid {
-          grid-template-columns: 1fr;
-        }
-
-        .action-buttons {
+        .nav-links {
+          display: none;
+          position: absolute;
+          top: 100%;
+          left: 0;
+          right: 0;
+          background: linear-gradient(
+            135deg,
+            rgba(0, 0, 0, 0.95) 0%,
+            rgba(20, 0, 0, 0.9) 100%
+          );
+          backdrop-filter: blur(20px);
           flex-direction: column;
+          padding: 1rem;
+          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+          border-top: 1px solid rgba(255, 215, 0, 0.2);
         }
 
-        .form-header h1 {
-          font-size: 2rem;
+        .nav-links.show {
+          display: flex;
         }
+
+        .mobile-menu {
+          display: flex;
+        }
+      }
+
+      .container {
+        padding: 0 15px;
+      }
+
+      .form-container {
+        padding: 2rem 1.5rem;
+      }
+
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+
+      .renewal-options {
+        grid-template-columns: 1fr;
+      }
+
+      .renewal-price {
+        font-size: 2.5rem;
+      }
+
+      .member-info-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .action-buttons {
+        flex-direction: column;
+      }
+
+      .form-header h1 {
+        font-size: 2rem;
       }
 
       ::-webkit-scrollbar {
@@ -683,7 +828,20 @@
     <header>
       <nav class="container">
         <div class="logo">PP E5 QNA</div>
-        <a href="membership.html" class="back-link">← Back to Membership</a>
+        <ul class="nav-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="membership.html" class="active">Membership</a></li>
+          <li><a href="events.html">Events</a></li>
+          <li><a href="businesses.html">Businesses</a></li>
+          <li><a href="forms.html">Forms</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="announcements.html">Announcements</a></li>
+        </ul>
+        <div class="mobile-menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
       </nav>
     </header>
 
@@ -784,6 +942,113 @@
         </div>
       </div>
     </div>
+    <footer>
+      <div class="container">
+        <div class="footer-content">
+          <div class="footer-section">
+            <h4>Contact Info</h4>
+            <p>
+              <svg
+                class="footer-icon"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path
+                  d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"
+                />
+                <polyline points="22,6 12,13 2,6" />
+              </svg>
+              ppqna.e5@gmail.com
+            </p>
+            <p>
+              <svg
+                class="footer-icon"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path
+                  d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"
+                />
+              </svg>
+              +60 12-345 6789
+            </p>
+            <p>
+              <svg
+                class="footer-icon"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+                <circle cx="12" cy="10" r="3" />
+              </svg>
+              QNA Residence 5, Jalan Springhill, Port Dickson, N.Sembilan
+            </p>
+          </div>
+          <div class="footer-section">
+            <h4>Quick Links</h4>
+            <a href="membership-new.html">
+              <svg
+                class="footer-icon"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                <circle cx="9" cy="7" r="4" />
+                <path d="M20 8v6" />
+                <path d="M23 11h-6" />
+              </svg>
+              Register as New Member
+            </a>
+            <a href="membership-existing.html">
+              <svg
+                class="footer-icon"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                <circle cx="9" cy="7" r="4" />
+                <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+                <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+              </svg>
+              Renew/Check Status
+            </a>
+            <a href="events.html">
+              <svg
+                class="footer-icon"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                <line x1="16" y1="2" x2="16" y2="6" />
+                <line x1="8" y1="2" x2="8" y2="6" />
+                <line x1="3" y1="10" x2="21" y2="10" />
+              </svg>
+              Upcoming Events
+            </a>
+          </div>
+          <div class="footer-section">
+            <h4>Community</h4>
+            <p>Building stronger neighborhoods</p>
+            <p>Together we thrive</p>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>&copy; 2025 Persatuan Penduduk E5 QNA. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
 
     <script>
       // ==========================================
@@ -831,7 +1096,7 @@
         document.getElementById("searchBtn").disabled = true;
 
         try {
-          console.log("Searching membership:", { membershipId});
+          console.log("Searching membership:", { membershipId });
 
           const response = await fetch(APPS_SCRIPT_URL, {
             method: "POST",
@@ -1241,6 +1506,24 @@
 
       console.log("Existing member status and renewal form initialized");
       console.log("Apps Script URL:", APPS_SCRIPT_URL);
+
+      // Mobile menu functionality
+      document
+        .querySelector(".mobile-menu")
+        .addEventListener("click", function () {
+          const navLinks = document.querySelector(".nav-links");
+          navLinks.classList.toggle("show");
+        });
+
+      // Close mobile menu when clicking outside
+      document.addEventListener("click", function (e) {
+        const mobileMenu = document.querySelector(".mobile-menu");
+        const navLinks = document.querySelector(".nav-links");
+
+        if (!mobileMenu.contains(e.target) && !navLinks.contains(e.target)) {
+          navLinks.classList.remove("show");
+        }
+      });
     </script>
   </body>
 </html>
